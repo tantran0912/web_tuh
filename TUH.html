@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ Thống Học & Giải Bài Tập Tối Ưu Hóa - IT6095</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- KaTeX hiển thị công thức toán học chuẩn giáo trình -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; }
+    .tab-active { border-bottom: 3px solid #2563eb; color: #1d4ed8; font-weight: 700; background-color: #eff6ff; }
+    .cell-box { position: relative; min-width: 92px; height: 68px; border: 1px solid #cbd5e1; background: #fff; }
+    .cost-tag { position: absolute; top: 3px; left: 6px; font-size: 0.82rem; font-weight: 600; color: #475569; padding: 0 4px; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+    .alloc-tag { position: absolute; bottom: 4px; right: 8px; font-size: 1.05rem; font-weight: 700; color: #0f172a; }
+    .cycle-plus { background-color: #dcfce7 !important; border: 2px solid #16a34a !important; }
+    .cycle-minus { background-color: #fee2e2 !important; border: 2px solid #dc2626 !important; }
+    .pivot-circle { display: inline-block; padding: 2px 9px; border: 2px solid #dc2626; border-radius: 9999px; font-weight: 800; color: #dc2626; background: #fef2f2; }
+  </style>
+</head>
+<body class="text-slate-800">
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="bg-amber-400 text-slate-900 text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider">Học phần IT6095</span>
+        <h1 class="text-2xl md:text-3xl font-extrabold mt-1">Web Học Tập & Giải Tự Động Môn Tối Ưu Hóa</h1>
+        <p class="text-blue-200 text-sm mt-0.5">Chuẩn form trình bày Đề cương bài giảng & Phiếu bài tập của Trường</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="switchMainTab('theory')" id="nav-theory" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📚 Bài giảng & Video (5 Chương)</button>
+        <button onclick="switchMainTab('lp')" id="nav-lp" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">🧮 Giải QHTT & Đối Ngẫu (Bài 2, 3)</button>
+        <button onclick="switchMainTab('tp')" id="nav-tp" class="px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-bold text-sm transition">🚚 Giải Bài Toán Vận Tải (Bài 4)</button>
+        <button onclick="switchMainTab('exercises')" id="nav-exercises" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📝 Ngân Hàng Bài Tập Trường</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-6">
+
+    <!-- ========================================================= -->
+    <!-- PHÂN KHU 1: BÀI GIẢNG LÝ THUYẾT & VIDEO THEO 5 CHƯƠNG     -->
+    <!-- ========================================================= -->
+    <section id="sec-theory" class="hidden space-y-6">
+      <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
+        <h2 class="text-xl font-bold text-blue-900 mb-4">Hệ thống Chương trình Học phần Tối Ưu Hóa (IT6095)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-2 mb-6">
+          <button onclick="showChapter(1)" id="chap-btn-1" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 1:</b> Bài toán tối ưu hóa tổng quát</button>
+          <button onclick="showChapter(2)" id="chap-btn-2" class="p-3 rounded-lg border text-left text-sm bg-blue-50 border-blue-500 font-semibold"><b>Chương 2:</b> QHTT & Phương pháp đơn hình</button>
+          <button onclick="showChapter(3)" id="chap-btn-3" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 3:</b> Bài toán QHTT đối ngẫu</button>
+          <button onclick="showChapter(4)" id="chap-btn-4" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 4:</b> Bài toán vận tải & Thế vị</button>
+          <button onclick="showChapter(5)" id="chap-btn-5" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 5:</b> Tối ưu hóa rời rạc</button>
+        </div>
+
+        <div id="chapter-content" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Nội dung chương được render động bằng JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PHÂN KHU 2: BỘ GIẢI QHTT, PHƯƠNG PHÁP M & ĐỐI NGẪU       -->
+    <!-- ========================================================= -->
+    <section id="sec-lp" class="hidden space-y-6">
+      <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4 mb-5">
+          <div>
+            <h2 class="text-xl font-bold text-blue-900">Bộ Giải Quy Hoạch Tuyến Tính & Bài Toán Đối Ngẫu (Chuẩn IT6095)</h2>
+            <p class="text-sm text-slate-600">Tự động đưa về dạng chính tắc, lập bài toán đối ngẫu, giải từng bước bằng Đơn hình / Phương pháp phạt M (hiển thị phân số chính xác)</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <select id="lp-preset" onchange="loadLPPreset(this.value)" class="border border-blue-300 bg-blue-50 text-blue-900 rounded-lg px-3 py-2 text-sm font-medium">
+              <option value="">-- Chọn bài mẫu trong Đề cương / Phiếu BT --</option>
+              <option value="ex2_5">Đề cương Bài 2 - Ví dụ 2.5 (Đơn hình chuẩn Max)</option>
+              <option value="ex2_6">Đề cương Bài 2 - Ví dụ 2.6 (Phương pháp phạt M)</option>
+              <option value="hw2_4b">Phiếu BT Bài 2 - Bài 4b (f_max = 152)</option>
+              <option value="hw2_4a">Phiếu BT Bài 2 - Bài 4a (f_min = -274)</option>
+              <option value="hw2_4h">Phiếu BT Bài 2 - Bài 4h (f_min = 79)</option>
+              <option value="ex3_dual">Đề cương Bài 3 - Ví dụ 2 (Đơn hình đối ngẫu)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Cấu hình kích thước bài toán -->
+        <div class="flex flex-wrap items-center gap-4 mb-6 bg-slate-50 p-4 rounded-lg border">
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Mục tiêu</label>
+            <select id="lp-type" class="border rounded px-3 py-1.5 text-sm font-bold text-blue-800">
+              <option value="max"> → max</option>
+              <option value="min"> → min</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Số biến gốc (n)</label>
+            <input type="number" id="lp-n" value="3" min="2" max="8" onchange="buildLPInputGrid()" class="border rounded px-3 py-1.5 w-20 text-sm font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Số ràng buộc (m)</label>
+            <input type="number" id="lp-m" value="3" min="1" max="8" onchange="buildLPInputGrid()" class="border rounded px-3 py-1.5 w-20 text-sm font-semibold" />
+          </div>
+          <div class="mt-4 md:mt-5 flex gap-2">
+            <button onclick="solveLP()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg shadow transition">🚀 Giải từng bước theo Form Trường</button>
+            <button onclick="generateDualOnly()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-900 font-semibold px-4 py-2 rounded-lg transition">🔄 Viết Bài Toán Đối Ngẫu</button>
+          </div>
+        </div>
+
+        <!-- Lưới nhập hệ số QHTT -->
+        <div id="lp-input-container" class="overflow-x-auto mb-4"></div>
+      </div>
+
+      <!-- Khu vực xuất lời giải QHTT -->
+      <div id="lp-output" class="space-y-6"></div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PHÂN KHU 3: BỘ GIẢI BÀI TOÁN VẬN TẢI - PHƯƠNG PHÁP THẾ VỊ -->
+    <!-- ========================================================= -->
+    <section id="sec-tp" class="space-y-6">
+      <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4 mb-5">
+          <div>
+            <h2 class="text-xl font-bold text-blue-900">Bộ Giải Bài Toán Vận Tải Bằng Phương Pháp Thế Vị (Chuẩn Bài 4 - IT6095)</h2>
+            <p class="text-sm text-slate-600">Tự động kiểm tra cân bằng thu phát, tìm phương án xuất phát theo 4 phương pháp, xử lý suy biến (ô-chọn-không), tính thế vị \(U_i, V_j\), \(\Delta_{ij} = (U_i + V_j) - c_{ij}\) và vẽ chu trình điều chỉnh</p>
+          </div>
+          <div>
+            <select id="tp-preset" onchange="loadTPPreset(this.value)" class="border border-amber-400 bg-amber-50 text-slate-900 rounded-lg px-3 py-2 text-sm font-semibold">
+              <option value="">-- Chọn bài tập trong Đề cương / Phiếu BT Bài 4 --</option>
+              <option value="ex4_1">Đề cương Bài 4 (Trực tiếp) - Ví dụ 4.1 & 4.4 (Cân bằng, KQ = 115)</option>
+              <option value="ex4_4_1">Đề cương Bài 4 (Trực tuyến) - Mục 4.4.1 (Tổng Phát > Thu, KQ = 1100)</option>
+              <option value="ex4_4_2">Đề cương Bài 4 (Trực tuyến) - Mục 4.4.2 (Tổng Thu > Phát, Suy biến, KQ = 720)</option>
+              <option value="ws4_1">Phiếu BT Bài 4 (P2) - Bài 1 (4 Phát × 3 Thu, Góc Tây Bắc)</option>
+              <option value="ws4_2">Phiếu BT Bài 4 (P2) - Bài 2 (3 Phát × 3 Thu, Chi phí nhỏ nhất)</option>
+              <option value="ws4_3">Phiếu BT Bài 4 (P2) - Bài 3 (4 Phát × 4 Thu, 4 phương pháp)</option>
+              <option value="dc4_b1">Đề cương Bài 4 (Trực tuyến) - Bài tập 1 (4 Phát × 5 Thu)</option>
+              <option value="dc4_b2">Đề cương Bài 4 (Trực tuyến) - Bài tập 2 (4 Phát × 5 Thu)</option>
+              <option value="dc4_b3">Đề cương Bài 4 (Trực tuyến) - Bài tập 3 (Bài toán 3 Ngân hàng - 4 Dự án)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Cấu hình bài toán vận tải -->
+        <div class="flex flex-wrap items-center gap-4 mb-6 bg-slate-50 p-4 rounded-lg border">
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Số trạm phát (m)</label>
+            <input type="number" id="tp-m" value="3" min="2" max="7" onchange="buildTPInputGrid()" class="border rounded px-3 py-1.5 w-20 text-sm font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Số trạm thu (n)</label>
+            <input type="number" id="tp-n" value="4" min="2" max="7" onchange="buildTPInputGrid()" class="border rounded px-3 py-1.5 w-20 text-sm font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Phương pháp tìm PACB xuất phát</label>
+            <select id="tp-init-method" class="border rounded px-3 py-1.5 text-sm font-semibold text-blue-900 bg-white">
+              <option value="nw">1. Phương pháp góc Tây Bắc</option>
+              <option value="mincost">2. Phương pháp cực tiểu cước phí toàn bảng (Chi phí nhỏ nhất)</option>
+              <option value="rowmin">3. Phương pháp cực tiểu cước phí theo hàng</option>
+              <option value="colmin">4. Phương pháp cực tiểu cước phí theo cột</option>
+            </select>
+          </div>
+          <div class="mt-4 md:mt-5">
+            <button onclick="solveTransportation()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-lg shadow transition">🚚 Giải Chi Tiết Từng Bước</button>
+          </div>
+        </div>
+
+        <!-- Bảng nhập dữ liệu vận tải -->
+        <div id="tp-input-container" class="overflow-x-auto"></div>
+      </div>
+
+      <!-- Khu vực xuất lời giải Vận tải -->
+      <div id="tp-output" class="space-y-6"></div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PHÂN KHU 4: TUYỂN TẬP ĐỀ ÔN & PHIẾU BÀI TẬP CỦA TRƯỜNG   -->
+    <!-- ========================================================= -->
+    <section id="sec-exercises" class="hidden space-y-6">
+      <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
+        <h2 class="text-xl font-bold text-blue-900 mb-2">Tuyển Tập Phiếu Giao Bài Tập & Đề Ôn Tập (IT6095)</h2>
+        <p class="text-sm text-slate-600 mb-6">Bấm vào nút <b>"Giải tự động bài này"</b> để nạp thẳng đề bài vào bộ giải và xem từng bảng biến đổi chi tiết.</p>
+        <div id="exercise-bank-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT ENGINE: PHÂN SỐ CHÍNH XÁC + THUẬT TOÁN IT6095  -->
+  <!-- ========================================================= -->
+  <script>
+    // -------------------------------------------------------------
+    // 1. LỚP PHÂN SỐ (FRACTION) ĐỂ HIỂN THỊ PHÂN SỐ CHÍNH XÁC 100%
+    // -------------------------------------------------------------
+    function gcd(a, b) {
+      a = Math.abs(a); b = Math.abs(b);
+      while (b) { let t = b; b = a % b; a = t; }
+      return a || 1;
+    }
+
+    class Frac {
+      constructor(num, den = 1) {
+        if (num instanceof Frac) { this.n = num.n; this.d = num.d; return; }
+        if (typeof num === 'string') {
+          num = num.trim();
+          if (num.includes('/')) {
+            let parts = num.split('/');
+            num = parseInt(parts[0], 10);
+            den = parseInt(parts[1], 10);
+          } else {
+            let f = parseFloat(num);
+            if (Number.isInteger(f)) { num = f; den = 1; }
+            else {
+              let s = f.toString();
+              let dec = s.includes('.') ? s.split('.')[1].length : 0;
+              den = Math.pow(10, dec);
+              num = Math.round(f * den);
+            }
+          }
+        } else if (!Number.isInteger(num)) {
+          let dec = 1000000;
+          num = Math.round(num * dec);
+          den = dec;
+        }
+        if (den < 0) { num = -num; den = -den; }
+        if (num === 0) { this.n = 0; this.d = 1; }
+        else {
+          let g = gcd(num, den);
+          this.n = num / g;
+          this.d = den / g;
+        }
+      }
+      add(o) { o = new Frac(o); return new Frac(this.n * o.d + o.n * this.d, this.d * o.d); }
+      sub(o) { o = new Frac(o); return new Frac(this.n * o.d - o.n * this.d, this.d * o.d); }
+      mul(o) { o = new Frac(o); return new Frac(this.n * o.n, this.d * o.d); }
+      div(o) { o = new Frac(o); return new Frac(this.n * o.d, this.d * o.n); }
+      neg() { return new Frac(-this.n, this.d); }
+      val() { return this.n / this.d; }
+      eq(o) { o = new Frac(o); return this.n === o.n && this.d === o.d; }
+      lt(o) { o = new Frac(o); return this.n * o.d < o.n * this.d; }
+      le(o) { o = new Frac(o); return this.n * o.d <= o.n * this.d; }
+      gt(o) { o = new Frac(o); return this.n * o.d > o.n * this.d; }
+      ge(o) { o = new Frac(o); return this.n * o.d >= o.n * this.d; }
+      str() { return this.d === 1 ? `${this.n}` : `${this.n}/${this.d}`; }
+      tex() { return this.d === 1 ? `${this.n}` : `\\frac{${this.n}}{${this.d}}`; }
+    }
+
+    // -------------------------------------------------------------
+    // 2. ĐIỀU HƯỚNG TAB & NỘI DUNG 5 CHƯƠNG HỌC
+    // -------------------------------------------------------------
+    function switchMainTab(tab) {
+      ['theory', 'lp', 'tp', 'exercises'].forEach(t => {
+        document.getElementById(`sec-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`nav-${t}`);
+        btn.className = 'px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition';
+      });
+      document.getElementById(`sec-${tab}`).classList.remove('hidden');
+      document.getElementById(`nav-${tab}`).className = 'px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-bold text-sm transition';
+      renderMath();
+    }
+
+    const CHAPTER_DATA = {
+      1: {
+        title: "Chương 1: Bài toán tối ưu hóa tổng quát",
+        summary: `
+          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+            <li><b>Phát biểu bài toán tổng quát:</b> Tìm cực trị (cực đại hoặc cực tiểu) của hàm mục tiêu $f(x)$ trên miền ràng buộc $D \\subset \\mathbb{R}^n$.</li>
+            <li><b>Phân loại bài toán tối ưu:</b> Quy hoạch tuyến tính (hàm mục tiêu và các ràng buộc đều tuyến tính), Quy hoạch phi tuyến, Quy hoạch rời rạc / nguyên.</li>
+            <li><b>Tập lồi và Điểm cực biên:</b> Tập $D$ là tập lồi nếu với mọi $x^1, x^2 \\in D$ thì $\\alpha x^1 + (1-\\alpha)x^2 \\in D$ ($0 \\le \\alpha \\le 1$).</li>
+          </ul>
+        `,
+        videoNote: "Video bài giảng: Cách lập mô hình toán học từ bài toán kinh tế thực tế & nhận diện tập lồi."
+      },
+      2: {
+        title: "Chương 2: Bài toán quy hoạch tuyến tính và phương pháp đơn hình",
+        summary: `
+          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+            <li><b>Dạng chuẩn:</b> Hàm mục tiêu $\\sum c_j x_j \\to \\max$ với ràng buộc $\\sum a_{ij}x_j \\le b_i, x_j \\ge 0$ (hoặc $\\to \\min$ với $\\sum a_{ij}x_j \\ge b_i, x_j \\ge 0$).</li>
+            <li><b>Dạng chính tắc:</b> Hệ ràng buộc đẳng thức $\\sum_{j=1}^n a_{ij}x_j = b_i$ ($b_i \\ge 0$) và $x_j \\ge 0$. Ràng buộc $\\le$ cộng thêm biến phụ $+x_{n+i}$, ràng buộc $\\ge$ trừ đi biến phụ $-x_{n+i}$.</li>
+            <li><b>Công thức tính ước lượng chuẩn IT6095:</b> $\\Delta_k = z_k - c_k = \\sum_{j \\in J} z_{jk}c_j - c_k$.</li>
+            <li><b>Tiêu chuẩn tối ưu & Chọn cột xoay:</b>
+              <br/>• <i>Bài toán Max:</i> Tối ưu khi $\\Delta_k \\ge 0, \\forall k$. Chọn cột xoay $\\Delta_s = \\min\\{\\Delta_k \\mid \\Delta_k < 0\\}$.
+              <br/>• <i>Bài toán Min:</i> Tối ưu khi $\\Delta_k \\le 0, \\forall k$. Chọn cột xoay $\\Delta_s = \\max\\{\\Delta_k \\mid \\Delta_k > 0\\}$.
+            </li>
+            <li><b>Phương pháp phạt (Bài toán M):</b> Bổ sung biến giả tạo với hệ số $-M$ (cho Max) hoặc $+M$ (cho Min). Tách dòng ước lượng thành $\\Delta_k = \\delta_k + \\eta_k M$.</li>
+          </ul>
+        `,
+        videoNote: "Video hướng dẫn: Giải bài toán QHTT bằng phương pháp đồ thị, lập bảng đơn hình và bảng đánh thuế M."
+      },
+      3: {
+        title: "Chương 3: Bài toán quy hoạch tuyến tính đối ngẫu",
+        summary: `
+          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+            <li><b>Sơ đồ đối ngẫu tổng quát:</b> Bài toán gốc $(P): f(x) = \\langle c, x \\rangle \\to \\min$ tương ứng với bài toán đối ngẫu $(P'): g(y) = \\langle b, y \\rangle \\to \\max$.</li>
+            <li><b>Quy tắc dấu (Gốc Min $\\leftrightarrow$ Đối ngẫu Max):</b>
+              <br/>• Ràng buộc $i$ dạng $\\ge b_i \\leftrightarrow y_i \\ge 0$; dạng $= b_i \\leftrightarrow y_i$ tùy ý; dạng $\\le b_i \\leftrightarrow y_i \\le 0$.
+              <br/>• Biến $x_j \\ge 0 \\leftrightarrow$ Ràng buộc đối ngẫu thứ $j$ dạng $\\le c_j$.
+            </li>
+            <li><b>Định lý độ lệch bù:</b> $\\langle Ax - b, y \\rangle = 0$ và $\\langle c - A'y, x \\rangle = 0$.</li>
+            <li><b>Thuật toán đơn hình đối ngẫu:</b> Khi bảng có $\\Delta_k \\le 0$ nhưng cột phương án có $x_r < 0$: chọn dòng xoay có $x_r$ âm nhỏ nhất, chọn cột xoay theo $\\min\\left\\{\\frac{\\Delta_k}{z_{rk}} \\mid z_{rk} < 0\\right\\}$.</li>
+          </ul>
+        `,
+        videoNote: "Video hướng dẫn: Cách viết nhanh bài toán đối ngẫu, dạng bài dùng Định lý độ lệch bù và Đơn hình đối ngẫu."
+      },
+      4: {
+        title: "Chương 4: Bài toán vận tải và phương pháp thế vị giải bài toán vận tải",
+        summary: `
+          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+            <li><b>Bước 1 (Cân bằng thu phát):</b> Nếu $\\sum a_i > \\sum b_j$ thêm cột thu ảo $b_{n+1} = \\sum a_i - \\sum b_j$ ($c_{i,n+1}=0$). Nếu $\\sum a_i < \\sum b_j$ thêm hàng phát ảo $a_{m+1} = \\sum b_j - \\sum a_i$ ($c_{m+1,j}=0$). Ưu tiên phân phối ô thực trước, ô ảo sau.</li>
+            <li><b>Bước 2 (Tìm PACB xuất phát):</b> Góc Tây Bắc, Cực tiểu cước phí toàn bảng, Cực tiểu cước phí theo hàng, Cực tiểu cước phí theo cột. Đủ $m+n-1$ ô sử dụng (nếu thiếu bổ sung <i>ô-chọn-không</i>).</li>
+            <li><b>Bước 3 (Phương pháp Thế vị):</b>
+              <br/>• Tính thế vị $U_i, V_j$ tại các ô chọn: $U_i + V_j = c_{ij}$ (cho $U_1 = 0$).
+              <br/>• Tính ước lượng cho ô trống: $\\Delta_{ij} = (U_i + V_j) - c_{ij}$.
+              <br/>• Tối ưu khi $\\Delta_{ij} \\le 0, \\forall (i,j) \\notin G$. Nếu có $\\Delta_{ij} > 0$, chọn ô có $\\Delta_{ij}$ lớn nhất làm đỉnh $+$, lập chu trình xen kẽ $+, -$, tìm $\\theta = \\min\\{x_{ij} \\mid (i,j) \\in K^-\\}$ và điều chỉnh.
+            </li>
+          </ul>
+        `,
+        videoNote: "Video hướng dẫn: Giải mẫu bài toán vận tải cân bằng, không cân bằng và cách xử lý suy biến (ô-chọn-không)."
+      },
+      5: {
+        title: "Chương 5: Bài toán tối ưu hóa rời rạc và các phương pháp giải",
+        summary: `
+          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+            <li><b>Quy hoạch tuyến tính nguyên:</b> Các biến $x_j$ đòi hỏi nhận giá trị nguyên ($x_j \\in \\mathbb{Z}_+$).</li>
+            <li><b>Phương pháp mặt phẳng cắt Gomory:</b> Giải bài toán nới lỏng bằng đơn hình, sau đó sinh lát cắt từ dòng có phần lẻ lớn nhất để thu hẹp miền ràng buộc.</li>
+            <li><b>Phương pháp Nhánh và Cận (Branch and Bound):</b> Phân nhánh theo biến chưa nguyên và đánh giá cận để tìm nghiệm nguyên tối ưu.</li>
+          </ul>
+        `,
+        videoNote: "Video hướng dẫn: Giải bài toán quy hoạch nguyên bằng lát cắt Gomory và sơ đồ cây Nhánh - Cận."
+      }
+    };
+
+    function showChapter(num) {
+      for (let i = 1; i <= 5; i++) {
+        const b = document.getElementById(`chap-btn-${i}`);
+        b.className = i === num
+          ? "p-3 rounded-lg border text-left text-sm bg-blue-50 border-blue-500 font-semibold text-blue-900"
+          : "p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition";
+      }
+      const data = CHAPTER_DATA[num];
+      document.getElementById('chapter-content').innerHTML = `
+        <div class="lg:col-span-2 bg-slate-50 p-5 rounded-xl border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-900 mb-3">${data.title}</h3>
+          ${data.summary}
+          <div class="mt-5 pt-4 border-t flex gap-3">
+            ${num === 2 || num === 3 ? `<button onclick="switchMainTab('lp')" class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Mở Bộ Giải Chương ${num}</button>` : ''}
+            ${num === 4 ? `<button onclick="switchMainTab('tp')" class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Mở Bộ Giải Vận Tải (Chương 4)</button>` : ''}
+          </div>
+        </div>
+        <div class="bg-slate-900 text-white p-5 rounded-xl flex flex-col justify-between">
+          <div>
+            <span class="text-xs uppercase tracking-wider bg-red-600 px-2 py-0.5 rounded font-bold">Video Bài Giảng & Chữa Bài Tập</span>
+            <h4 class="font-bold text-base mt-2">${data.title}</h4>
+            <p class="text-xs text-slate-300 mt-2">${data.videoNote}</p>
+          </div>
+          <div class="my-4 bg-slate-800 border border-slate-700 rounded-lg h-44 flex flex-col items-center justify-center text-center p-4">
+            <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-xl mb-2">▶</div>
+            <p class="text-xs text-slate-300">Khung nhúng Video (Thay link YouTube/Drive bài giảng của bạn vào thuộc tính <code>iframe</code>)</p>
+          </div>
+          <button onclick="switchMainTab('exercises')" class="w-full bg-amber-400 text-slate-900 font-bold py-2 rounded-lg text-sm">Luyện Bài Tập Chương Này</button>
+        </div>
+      `;
+      renderMath();
+    }
+
+    // -------------------------------------------------------------
+    // 3. MODULE BÀI TOÁN VẬN TẢI & PHƯƠNG PHÁP THẾ VỊ (CHƯƠNG 4)
+    // -------------------------------------------------------------
+    const TP_PRESETS = {
+      ex4_1: {
+        name: "Đề cương Bài 4 - Ví dụ 4.1 & 4.4",
+        m: 3, n: 4, method: "nw",
+        a: [10, 25, 15], b: [5, 15, 20, 10],
+        c: [[2, 1, 4, 3], [6, 0, 5, 2], [1, 4, 8, 2]]
+      },
+      ex4_4_1: {
+        name: "Đề cương Bài 4 (Trực tuyến) - Mục 4.4.1 (Tổng phát > Tổng thu)",
+        m: 3, n: 3, method: "mincost",
+        a: [80, 100, 50], b: [60, 30, 20],
+        c: [[14, 18, 12], [12, 22, 18], [7, 8, 9]]
+      },
+      ex4_4_2: {
+        name: "Đề cương Bài 4 (Trực tuyến) - Mục 4.4.2 (Tổng thu > Tổng phát)",
+        m: 3, n: 4, method: "mincost",
+        a: [80, 70, 50], b: [100, 50, 30, 70],
+        c: [[3, 5, 6, 5], [4, 5, 7, 8], [3, 4, 4, 3]]
+      },
+      ws4_1: {
+        name: "Phiếu BT Bài 4 (P2) - Bài 1",
+        m: 4, n: 3, method: "nw",
+        a: [20, 18, 22, 19], b: [30, 15, 25],
+        c: [[1, 3, 5], [3, 2, 4], [5, 1, 2], [2, 4, 3]]
+      },
+      ws4_2: {
+        name: "Phiếu BT Bài 4 (P2) - Bài 2",
+        m: 3, n: 3, method: "mincost",
+        a: [15, 25, 35], b: [45, 20, 30],
+        c: [[2, 1, 3], [3, 1, 2], [4, 2, 1]]
+      },
+      ws4_3: {
+        name: "Phiếu BT Bài 4 (P2) - Bài 3",
+        m: 4, n: 4, method: "mincost",
+        a: [15, 25, 35, 20], b: [18, 35, 22, 10],
+        c: [[2, 1, 3, 4], [3, 2, 1, 5], [4, 2, 1, 3], [5, 4, 3, 1]]
+      },
+      dc4_b1: {
+        name: "Đề cương Bài 4 (Trực tuyến) - Bài tập 1",
+        m: 4, n: 5, method: "nw",
+        a: [20, 35, 42, 20], b: [17, 25, 23, 30, 10],
+        c: [[5, 6, 1, 4, 2], [3, 4, 2, 1, 5], [5, 2, 1, 3, 6], [5, 3, 6, 1, 4]]
+      },
+      dc4_b2: {
+        name: "Đề cương Bài 4 (Trực tuyến) - Bài tập 2",
+        m: 4, n: 5, method: "mincost",
+        a: [30, 55, 62, 15], b: [27, 35, 13, 20, 10],
+        c: [[6, 2, 1, 4, 7], [7, 3, 2, 1, 5], [4, 1, 5, 3, 6], [4, 3, 5, 6, 2]]
+      },
+      dc4_b3: {
+        name: "Đề cương Bài 4 (Trực tuyến) - Bài tập 3 (Ngân hàng - Dự án)",
+        m: 3, n: 4, method: "nw",
+        a: [60, 50, 30], b: [40, 20, 50, 30],
+        c: [[6, 3, 5, 8], [4, 5, 4, 6], [7, 6, 6, 4]]
+      }
+    };
+
+    function buildTPInputGrid(data = null) {
+      const m = data ? data.m : parseInt(document.getElementById('tp-m').value, 10);
+      const n = data ? data.n : parseInt(document.getElementById('tp-n').value, 10);
+      document.getElementById('tp-m').value = m;
+      document.getElementById('tp-n').value = n;
+      if (data && data.method) document.getElementById('tp-init-method').value = data.method;
+
+      let html = `<table class="border-collapse border border-slate-300 text-sm mx-auto">
+        <thead>
+          <tr class="bg-slate-100">
+            <th class="border border-slate-300 p-2 text-center font-bold">Phát $A_i$ \\ Thu $B_j$</th>`;
+      for (let j = 0; j < n; j++) {
+        const bVal = data ? data.b[j] : (j === 0 ? 5 : j === 1 ? 15 : j === 2 ? 20 : 10);
+        html += `<th class="border border-slate-300 p-2 bg-blue-50">
+          <div class="text-xs text-blue-800 font-bold mb-1">Trạm thu $B_{${j+1}}$ ($b_{${j+1}}$)</div>
+          <input type="number" id="tp-b-${j}" value="${bVal}" class="w-20 border rounded px-2 py-1 text-center font-bold bg-white" />
+        </th>`;
+      }
+      html += `</tr></thead><tbody>`;
+
+      for (let i = 0; i < m; i++) {
+        const aVal = data ? data.a[i] : (i === 0 ? 10 : i === 1 ? 25 : 15);
+        html += `<tr>
+          <td class="border border-slate-300 p-2 bg-amber-50 font-bold">
+            <div class="text-xs text-amber-900 mb-1">Trạm phát $A_{${i+1}}$ ($a_{${i+1}}$)</div>
+            <input type="number" id="tp-a-${i}" value="${aVal}" class="w-20 border rounded px-2 py-1 text-center font-bold bg-white" />
+          </td>`;
+        for (let j = 0; j < n; j++) {
+          const cVal = data ? data.c[i][j] : ((i + j) % 5 + 1);
+          html += `<td class="border border-slate-300 p-2 text-center">
+            <div class="text-[11px] text-slate-400 mb-0.5">$c_{${i+1}${j+1}}$</div>
+            <input type="number" id="tp-c-${i}-${j}" value="${cVal}" class="w-16 border rounded px-2 py-1 text-center font-semibold" />
+          </td>`;
+        }
+        html += `</tr>`;
+      }
+      html += `</tbody></table>`;
+      document.getElementById('tp-input-container').innerHTML = html;
+      renderMath();
+    }
+
+    function loadTPPreset(key) {
+      if (!key || !TP_PRESETS[key]) return;
+      buildTPInputGrid(TP_PRESETS[key]);
+      solveTransportation();
+    }
+
+    // Kiểm tra liên thông / chu trình bằng BFS trên tập ô cơ sở
+    function findPathInBasis(basis, startR, startC, targetR, targetC) {
+      // Tìm đường đi xen kẽ hàng - cột trong tập basis
+      // Trạng thái: { r, c, nextMove: 'row' | 'col', path: [[r,c], ...] }
+      let queue = [{ r: startR, c: startC, mode: 'row', path: [[startR, startC]] }];
+      let visited = new Set();
+
+      while (queue.length > 0) {
+        let cur = queue.shift();
+        if (cur.mode === 'row') {
+          // Di chuyển trên cùng hàng cur.r tới một ô cơ sở hoặc đích (nếu chiều dài >= 3)
+          for (let cell of basis) {
+            if (cell.r === cur.r && cell.c !== cur.c) {
+              let key = `${cell.r},${cell.c},col`;
+              if (!visited.has(key)) {
+                visited.add(key);
+                queue.push({ r: cell.r, c: cell.c, mode: 'col', path: [...cur.path, [cell.r, cell.c]] });
+              }
+            }
+          }
+        } else {
+          // Di chuyển trên cùng cột cur.c
+          if (cur.c === targetC && cur.path.length >= 4) {
+            return cur.path;
+          }
+          for (let cell of basis) {
+            if (cell.c === cur.c && cell.r !== cur.r) {
+              let key = `${cell.r},${cell.c},row`;
+              if (!visited.has(key)) {
+                visited.add(key);
+                queue.push({ r: cell.r, c: cell.c, mode: 'row', path: [...cur.path, [cell.r, cell.c]] });
+              }
+            }
+          }
+        }
+      }
+      return null;
+    }
+
+    // Kiểm tra xem thêm ô (r,c) vào basis có tạo chu trình không
+    function createsCycle(basis, r, c) {
+      return findPathInBasis(basis, r, c, r, c) !== null;
+    }
+
+    function solveTransportation() {
+      const mOrig = parseInt(document.getElementById('tp-m').value, 10);
+      const nOrig = parseInt(document.getElementById('tp-n').value, 10);
+      const method = document.getElementById('tp-init-method').value;
+
+      let a = [], b = [], c = [];
+      for (let i = 0; i < mOrig; i++) a.push(parseFloat(document.getElementById(`tp-a-${i}`).value) || 0);
+      for (let j = 0; j < nOrig; j++) b.push(parseFloat(document.getElementById(`tp-b-${j}`).value) || 0);
+      for (let i = 0; i < mOrig; i++) {
+        let row = [];
+        for (let j = 0; j < nOrig; j++) row.push(parseFloat(document.getElementById(`tp-c-${i}-${j}`).value) || 0);
+        c.push(row);
+      }
+
+      const sumA = a.reduce((s, v) => s + v, 0);
+      const sumB = b.reduce((s, v) => s + v, 0);
+
+      let m = mOrig, n = nOrig;
+      let dummyType = 'none'; // 'col' hoặc 'row'
+      let step1Html = '';
+
+      if (Math.abs(sumA - sumB) < 1e-9) {
+        step1Html = `
+          <p class="mb-1">Ta có: $\\sum_{i=1}^{${mOrig}} a_i = ${ a.join(' + ') } = ${sumA}$ và $\\sum_{j=1}^{${nOrig}} b_j = ${ b.join(' + ') } = ${sumB}$.</p>
+          <p class="font-semibold text-green-700">✓ Vì $\\sum a_i = \\sum b_j = ${sumA}$ nên bài toán đã cân bằng thu phát. Chuyển sang Bước 2.</p>
+        `;
+      } else if (sumA > sumB) {
+        dummyType = 'col';
+        let diff = sumA - sumB;
+        b.push(diff);
+        for (let i = 0; i < m; i++) c[i].push(0);
+        n = nOrig + 1;
+        step1Html = `
+          <p class="mb-1">Ta thấy: $\\sum_{i=1}^{${mOrig}} a_i = ${a.join(' + ')} = ${sumA} > \\sum_{j=1}^{${nOrig}} b_j = ${b.slice(0, nOrig).join(' + ')} = ${sumB}$.</p>
+          <p class="font-semibold text-amber-800">→ Bài toán không cân bằng thu phát (Tổng phát lớn hơn tổng thu). Do vậy phải bổ sung một <b>cột thu ảo $B_{${n}}$</b> có lượng thu $b_{${n}} = ${sumA} - ${sumB} = ${diff}$ và cước phí $c_{i,${n}} = 0, \\forall i=\\overline{1,${m}}$.</p>
+        `;
+      } else {
+        dummyType = 'row';
+        let diff = sumB - sumA;
+        a.push(diff);
+        let zeroRow = new Array(n).fill(0);
+        c.push(zeroRow);
+        m = mOrig + 1;
+        step1Html = `
+          <p class="mb-1">Ta thấy: $\\sum_{i=1}^{${mOrig}} a_i = ${a.slice(0, mOrig).join(' + ')} = ${sumA} < \\sum_{j=1}^{${nOrig}} b_j = ${b.join(' + ')} = ${sumB}$.</p>
+          <p class="font-semibold text-amber-800">→ Bài toán không cân bằng thu phát (Tổng thu lớn hơn tổng phát). Do vậy phải bổ sung một <b>hàng phát ảo $A_{${m}}$</b> có lượng phát $a_{${m}} = ${sumB} - ${sumA} = ${diff}$ và cước phí $c_{${m},j} = 0, \\forall j=\\overline{1,${n}}$.</p>
+        `;
+      }
+
+      // BƯỚC 2: TÌM PHƯƠNG ÁN CỰC BIÊN XUẤT PHÁT
+      let remA = [...a], remB = [...b];
+      let X = Array.from({ length: m }, () => new Array(n).fill(0));
+      let basis = [];
+      let rowDone = new Array(m).fill(false);
+      let colDone = new Array(n).fill(false);
+
+      function isDummyCell(i, j) {
+        if (dummyType === 'col' && j === n - 1) return true;
+        if (dummyType === 'row' && i === m - 1) return true;
+        return false;
+      }
+
+      if (method === 'nw') {
+        let i = 0, j = 0;
+        while (i < m && j < n) {
+          let qty = Math.min(remA[i], remB[j]);
+          X[i][j] = qty;
+          basis.push({ r: i, c: j });
+          remA[i] -= qty;
+          remB[j] -= qty;
+          if (i === m - 1 && j === n - 1) break;
+          if (remA[i] === 0 && i < m - 1) i++;
+          else j++;
+        }
+      } else if (method === 'mincost') {
+        while (true) {
+          let bestI = -1, bestJ = -1, bestDummy = 2, bestCost = Infinity;
+          for (let i = 0; i < m; i++) {
+            if (rowDone[i]) continue;
+            for (let j = 0; j < n; j++) {
+              if (colDone[j]) continue;
+              // Ưu tiên phân phối ô thực trước, ô ảo sau theo đúng đề cương 4.4
+              let dFlag = isDummyCell(i, j) ? 1 : 0;
+              if (dFlag < bestDummy || (dFlag === bestDummy && c[i][j] < bestCost)) {
+                bestDummy = dFlag;
+                bestCost = c[i][j];
+                bestI = i; bestJ = j;
+              }
+            }
+          }
+          if (bestI === -1) break;
+          let qty = Math.min(remA[bestI], remB[bestJ]);
+          X[bestI][bestJ] = qty;
+          basis.push({ r: bestI, c: bestJ });
+          remA[bestI] -= qty;
+          remB[bestJ] -= qty;
+          if (remA[bestI] === 0 && remB[bestJ] === 0) {
+            rowDone[bestI] = true;
+            // Chỉ xóa 1 hàng hoặc 1 cột trừ bước cuối
+            let activeRows = rowDone.filter(x => !x).length;
+            let activeCols = colDone.filter(x => !x).length;
+            if (activeRows === 0 && activeCols === 1) colDone[bestJ] = true;
+          } else if (remA[bestI] === 0) {
+            rowDone[bestI] = true;
+          } else {
+            colDone[bestJ] = true;
+          }
+        }
+      } else if (method === 'rowmin') {
+        for (let i = 0; i < m; i++) {
+          while (remA[i] > 0) {
+            let bestJ = -1, bestDummy = 2, bestCost = Infinity;
+            for (let j = 0; j < n; j++) {
+              if (colDone[j]) continue;
+              let dFlag = isDummyCell(i, j) ? 1 : 0;
+              if (dFlag < bestDummy || (dFlag === bestDummy && c[i][j] < bestCost)) {
+                bestDummy = dFlag; bestCost = c[i][j]; bestJ = j;
+              }
+            }
+            if (bestJ === -1) break;
+            let qty = Math.min(remA[i], remB[bestJ]);
+            X[i][bestJ] = qty;
+            basis.push({ r: i, c: bestJ });
+            remA[i] -= qty; remB[bestJ] -= qty;
+            if (remB[bestJ] === 0 && remA[i] > 0) colDone[bestJ] = true;
+            else if (remB[bestJ] === 0 && remA[i] === 0) colDone[bestJ] = true;
+          }
+        }
+      } else if (method === 'colmin') {
+        for (let j = 0; j < n; j++) {
+          while (remB[j] > 0) {
+            let bestI = -1, bestDummy = 2, bestCost = Infinity;
+            for (let i = 0; i < m; i++) {
+              if (rowDone[i]) continue;
+              let dFlag = isDummyCell(i, j) ? 1 : 0;
+              if (dFlag < bestDummy || (dFlag === bestDummy && c[i][j] < bestCost)) {
+                bestDummy = dFlag; bestCost = c[i][j]; bestI = i;
+              }
+            }
+            if (bestI === -1) break;
+            let qty = Math.min(remA[bestI], remB[j]);
+            X[bestI][j] = qty;
+            basis.push({ r: bestI, c: j });
+            remA[bestI] -= qty; remB[j] -= qty;
+            if (remA[bestI] === 0) rowDone[bestI] = true;
+          }
+        }
+      }
+
+      // Lọc các ô thực sự dương trước khi kiểm tra suy biến
+      basis = [];
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+          if (X[i][j] > 0) basis.push({ r: i, c: j, zeroBasic: false });
+        }
+      }
+
+      const initialPositiveCount = basis.length;
+      let addedZeroCells = [];
+
+      // Bổ sung ô-chọn-không nếu |G| < m + n - 1 (ưu tiên cước phí nhỏ nhất và không tạo chu trình)
+      while (basis.length < m + n - 1) {
+        let candidates = [];
+        for (let i = 0; i < m; i++) {
+          for (let j = 0; j < n; j++) {
+            if (!basis.some(bCell => bCell.r === i && bCell.c === j)) {
+              candidates.push({ r: i, c: j, cost: c[i][j] });
+            }
+          }
+        }
+        candidates.sort((x, y) => x.cost - y.cost || x.r - y.r || x.c - y.c);
+        let picked = null;
+        for (let cand of candidates) {
+          if (!createsCycle(basis, cand.r, cand.c)) {
+            picked = cand;
+            break;
+          }
+        }
+        if (!picked) break;
+        basis.push({ r: picked.r, c: picked.c, zeroBasic: true });
+        addedZeroCells.push(`(${picked.r + 1}, ${picked.c + 1})`);
+      }
+
+      const methodNames = {
+        nw: "phương pháp góc Tây Bắc",
+        mincost: "phương pháp cực tiểu cước phí toàn bảng",
+        rowmin: "phương pháp cực tiểu cước phí theo hàng",
+        colmin: "phương pháp cực tiểu cước phí theo cột"
+      };
+
+      let matInitLatex = `X = \\begin{bmatrix} ${X.map(r => r.join(' & ')).join(' \\\\ ')} \\end{bmatrix}`;
+      let degenHtml = initialPositiveCount === m + n - 1
+        ? `<p>• Số ô sử dụng $|G| = ${initialPositiveCount} = m + n - 1$, phương án $X$ <b>không thoái hóa</b>. Tập các ô sử dụng $G$ không tạo thành chu trình nên $X$ là phương án cực biên xuất phát.</p>`
+        : `<p class="text-amber-800">• Số ô có lượng hàng dương $|G| = ${initialPositiveCount} < m + n - 1 = ${m + n - 1}$, phương án $X$ <b>thoái hóa (suy biến)</b>. Ta bổ sung <b>ô-chọn-không</b> ($x_{ij}=0$) tại ô <b>${addedZeroCells.join(', ')}</b> để đủ ${m + n - 1} ô cơ sở và không tạo chu trình.</p>`;
+
+      // BƯỚC 3: VÒNG LẶP THUẬT TOÁN THẾ VỊ
+      let iterationsHtml = '';
+      let iter = 1;
+      const MAX_ITER = 25;
+
+      while (iter <= MAX_ITER) {
+        // Đảm bảo đủ m + n - 1 ô cơ sở liên thông
+        while (basis.length < m + n - 1) {
+          let added = false;
+          for (let i = 0; i < m && !added; i++) {
+            for (let j = 0; j < n && !added; j++) {
+              if (!basis.some(bCell => bCell.r === i && bCell.c === j) && !createsCycle(basis, i, j)) {
+                basis.push({ r: i, c: j, zeroBasic: true });
+                added = true;
+              }
+            }
+          }
+          if (!added) break;
+        }
+
+        // Tính thế vị U_i, V_j với U_1 = 0
+        let U = new Array(m).fill(null);
+        let V = new Array(n).fill(null);
+        U[0] = 0;
+        let uvSteps = [`Cho $U_1 = 0$`];
+
+        let changed = true;
+        while (changed) {
+          changed = false;
+          for (let cell of basis) {
+            let i = cell.r, j = cell.c;
+            if (U[i] !== null && V[j] === null) {
+              V[j] = c[i][j] - U[i];
+              uvSteps.push(`Từ $U_{${i+1}} = ${U[i]} \\Rightarrow V_{${j+1}} = c_{${i+1}${j+1}} - U_{${i+1}} = ${c[i][j]} - (${U[i]}) = ${V[j]}$`);
+              changed = true;
+            } else if (V[j] !== null && U[i] === null) {
+              U[i] = c[i][j] - V[j];
+              uvSteps.push(`Từ $V_{${j+1}} = ${V[j]} \\Rightarrow U_{${i+1}} = c_{${i+1}${j+1}} - V_{${j+1}} = ${c[i][j]} - (${V[j]}) = ${U[i]}$`);
+              changed = true;
+            }
+          }
+          if (!changed && (U.includes(null) || V.includes(null))) {
+            let idx = U.findIndex(v => v === null);
+            if (idx !== -1) { U[idx] = 0; changed = true; }
+          }
+        }
+
+        // Tính Delta_ij = (U_i + V_j) - c_ij cho các ô không sử dụng
+        let deltas = [];
+        let maxDelta = 0;
+        let enterCell = null;
+
+        for (let i = 0; i < m; i++) {
+          for (let j = 0; j < n; j++) {
+            let inG = basis.some(bCell => bCell.r === i && bCell.c === j);
+            if (!inG) {
+              let dVal = (U[i] + V[j]) - c[i][j];
+              deltas.push({
+                i, j, dVal,
+                tex: `\\Delta_{${i+1}${j+1}} = U_{${i+1}} + V_{${j+1}} - c_{${i+1}${j+1}} = ${U[i]} + (${V[j]}) - ${c[i][j]} = ${dVal}${dVal > 0 ? ' > 0' : ''}`
+              });
+              if (dVal > maxDelta) {
+                maxDelta = dVal;
+                enterCell = { r: i, c: j, dVal };
+              }
+            }
+          }
+        }
+
+        // Nếu chưa tối ưu, tìm chu trình K đi qua enterCell
+        let cyclePath = null;
+        let plusSet = new Set(), minusSet = new Set();
+        let theta = 0;
+
+        if (enterCell) {
+          cyclePath = findPathInBasis(basis, enterCell.r, enterCell.c, enterCell.r, enterCell.c);
+          if (cyclePath) {
+            let minusVals = [];
+            cyclePath.forEach((pt, idx) => {
+              let key = `${pt[0]},${pt[1]}`;
+              if (idx % 2 === 0) plusSet.add(key);
+              else {
+                minusSet.add(key);
+                minusVals.push(X[pt[0]][pt[1]]);
+              }
+            });
+            theta = Math.min(...minusVals);
+          }
+        }
+
+        // Vẽ Bảng vận tải đúng chuẩn IT6095
+        let tableHtml = `<div class="overflow-x-auto my-3">
+          <table class="border-collapse border border-slate-400 mx-auto text-sm">
+            <thead>
+              <tr class="bg-slate-100">
+                <th class="border border-slate-400 p-2">Phát $A_i$ \\ Thu $B_j$</th>`;
+        for (let j = 0; j < n; j++) {
+          let labelB = (dummyType === 'col' && j === n - 1) ? `Cột thu ảo $b_{${j+1}}=${b[j]}$` : `$b_{${j+1}}=${b[j]}$`;
+          tableHtml += `<th class="border border-slate-400 p-2">${labelB}</th>`;
+        }
+        tableHtml += `<th class="border border-slate-400 p-2 bg-indigo-50 text-indigo-900">Thế vị $U_i$</th></tr></thead><tbody>`;
+
+        for (let i = 0; i < m; i++) {
+          let labelA = (dummyType === 'row' && i === m - 1) ? `Hàng phát ảo $a_{${i+1}}=${a[i]}$` : `$a_{${i+1}}=${a[i]}$`;
+          tableHtml += `<tr><td class="border border-slate-400 p-2 font-bold bg-slate-50">${labelA}</td>`;
+          for (let j = 0; j < n; j++) {
+            let bObj = basis.find(bCell => bCell.r === i && bCell.c === j);
+            let key = `${i},${j}`;
+            let isPlus = plusSet.has(key);
+            let isMinus = minusSet.has(key);
+            let cellClass = isPlus ? 'cell-box cycle-plus' : isMinus ? 'cell-box cycle-minus' : 'cell-box';
+            let signStr = isPlus ? '<span class="text-green-700 font-extrabold ml-0.5">+</span>' : isMinus ? '<span class="text-red-600 font-extrabold ml-0.5">-</span>' : '';
+            let allocStr = bObj ? (X[i][j] === 0 ? '<span class="text-amber-700">0</span>' : X[i][j]) : '';
+
+            tableHtml += `<td class="${cellClass}">
+              <span class="cost-tag">${c[i][j]}${signStr}</span>
+              <span class="alloc-tag">${allocStr}</span>
+            </td>`;
+          }
+          tableHtml += `<td class="border border-slate-400 p-2 text-center font-bold bg-indigo-50 text-indigo-900">$U_{${i+1}} = ${U[i]}$</td></tr>`;
+        }
+
+        // Hàng thế vị V_j
+        tableHtml += `<tr class="bg-indigo-50 font-bold text-indigo-900">
+          <td class="border border-slate-400 p-2 text-center">Thế vị $V_j$</td>`;
+        for (let j = 0; j < n; j++) {
+          tableHtml += `<td class="border border-slate-400 p-2 text-center">$V_{${j+1}} = ${V[j]}$</td>`;
+        }
+        tableHtml += `<td class="border border-slate-400 p-2"></td></tr></tbody></table></div>`;
+
+        // Tổng hợp thông tin bước lặp
+        let deltaListHtml = deltas.map(d => `<div class="${d.dVal > 0 ? 'font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded' : ''}">$${d.tex}$</div>`).join('');
+
+        if (!enterCell) {
+          // ĐÃ TỐI ƯU -> KẾT LUẬN
+          let finalMat = X.slice(0, mOrig).map(r => r.slice(0, nOrig));
+          let costTerms = [];
+          let totalCost = 0;
+          for (let i = 0; i < mOrig; i++) {
+            for (let j = 0; j < nOrig; j++) {
+              if (finalMat[i][j] > 0) {
+                costTerms.push(`${c[i][j]} \\cdot ${finalMat[i][j]}`);
+                totalCost += c[i][j] * finalMat[i][j];
+              }
+            }
+          }
+
+          iterationsHtml += `
+            <div class="bg-white rounded-xl shadow p-6 border-l-4 border-green-600">
+              <h4 class="text-lg font-bold text-green-800 mb-2">Bảng vận tải số ${iter} (Kiểm tra điều kiện tối ưu)</h4>
+              ${tableHtml}
+              <div class="mt-3 text-sm space-y-2">
+                <p class="font-bold text-slate-700">✓ Tính thế vị $U_i, V_j$ ($U_i + V_j = c_{ij}, \\forall (i,j) \\in G$):</p>
+                <p class="text-slate-600">${uvSteps.join('; &nbsp; ')}.</p>
+                <p class="font-bold text-slate-700 mt-2">✓ Tính các ước lượng $\\Delta_{ij} = (U_i + V_j) - c_{ij}$ đối với các ô không sử dụng:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-50 p-3 rounded border">${deltaListHtml}</div>
+                <div class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg text-green-950">
+                  <p class="font-bold text-base">✓ KẾT LUẬN TỐI ƯU:</p>
+                  <p class="mt-1">Ta thấy $\\Delta_{ij} \\le 0, \\forall (i,j) \\notin G$. Do đó phương án $X$ hiện tại là <b>phương án tối ưu</b>.</p>
+                  ${dummyType !== 'none' ? `<p class="mt-1">Bỏ ${dummyType === 'col' ? 'cột thu ảo' : 'hàng phát ảo'} vừa thêm, ta có phương án tối ưu của bài toán ban đầu là:</p>` : ''}
+                  <div class="my-2">$$X^* = \\begin{bmatrix} ${finalMat.map(r => r.join(' & ')).join(' \\\\ ')} \\end{bmatrix}$$</div>
+                  <p class="font-bold text-lg text-blue-900">Giá trị hàm mục tiêu tối ưu (Tổng cước phí nhỏ nhất): $$f(X^*) = ${costTerms.join(' + ')} = ${totalCost}$$</p>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        } else {
+          // CHƯA TỐI ƯU -> ĐIỀU CHỈNH PHƯƠNG ÁN
+          let cycleStr = cyclePath ? cyclePath.map((pt, idx) => `(${pt[0]+1}, ${pt[1]+1})^{${idx % 2 === 0 ? '+' : '-'}}`).join(' \\to ') : '';
+          let tieNote = '';
+
+          // Thực hiện điều chỉnh X và cập nhật tập cơ sở G
+          if (cyclePath) {
+            let zeroCandidates = [];
+            cyclePath.forEach((pt, idx) => {
+              if (idx % 2 === 0) X[pt[0]][pt[1]] += theta;
+              else {
+                if (X[pt[0]][pt[1]] === theta) zeroCandidates.push({ r: pt[0], c: pt[1] });
+                X[pt[0]][pt[1]] -= theta;
+              }
+            });
+            // Loại đúng 1 ô có giá trị bằng theta ra khỏi G, các ô còn lại (nếu có) giữ làm ô-chọn-không
+            let removed = zeroCandidates[0];
+            basis = basis.filter(bCell => !(bCell.r === removed.r && bCell.c === removed.c));
+            basis.push({ r: enterCell.r, c: enterCell.c, zeroBasic: X[enterCell.r][enterCell.c] === 0 });
+            if (zeroCandidates.length > 1) {
+              tieNote = `<p class="text-amber-800 font-medium mt-1">Lưu ý: Do có ${zeroCandidates.length} ô trên $K^-$ cùng đạt $\\theta = ${theta}$, khi phá vỡ chu trình ta chỉ loại 1 ô $(${removed.r+1}, ${removed.c+1})$ khỏi $G$ và giữ lại ô còn lại làm <b>ô-chọn-không</b> ($0$) để phương án mới không bị thoái hóa.</p>`;
+            }
+          }
+
+          iterationsHtml += `
+            <div class="bg-white rounded-xl shadow p-6 border-l-4 border-blue-600">
+              <h4 class="text-lg font-bold text-blue-900 mb-2">Bảng vận tải số ${iter}</h4>
+              ${tableHtml}
+              <div class="mt-3 text-sm space-y-2">
+                <p class="font-bold text-slate-700">✓ Tính thế vị $U_i, V_j$ ($U_i + V_j = c_{ij}, \\forall (i,j) \\in G$):</p>
+                <p class="text-slate-600">${uvSteps.join('; &nbsp; ')}.</p>
+                <p class="font-bold text-slate-700 mt-2">✓ Tính các $\\Delta_{ij} = (U_i + V_j) - c_{ij}$ đối với các ô không sử dụng:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-50 p-3 rounded border">${deltaListHtml}</div>
+                <div class="mt-3 p-3 bg-amber-50 border border-amber-300 rounded-lg">
+                  <p class="font-bold text-amber-900">✓ Điều chỉnh phương án:</p>
+                  <p>Ta thấy tồn tại $\\Delta_{ij} > 0$ nên phương án chưa tối ưu. Chọn ô <b>$(${enterCell.r+1}, ${enterCell.c+1})$</b> có $\\Delta_{${enterCell.r+1}${enterCell.c+1}} = ${enterCell.dVal} > 0$ lớn nhất làm ô vi phạm, gán ô $(${enterCell.r+1}, ${enterCell.c+1}) \\in K^+$.</p>
+                  <p>Chu trình điều chỉnh $K$: $${cycleStr}$$</p>
+                  <p>Tiến hành phá vỡ chu trình với lượng điều chỉnh: $$\\theta = \\min\\{x_{ij} \\mid (i,j) \\in K^-\\} = ${theta}$$</p>
+                  ${tieNote}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        iter++;
+      }
+
+      document.getElementById('tp-output').innerHTML = `
+        <div class="bg-white rounded-xl shadow p-6 border border-slate-200 space-y-4">
+          <h3 class="text-lg font-bold text-blue-900 border-b pb-2">Bước 1: Kiểm tra điều kiện cân bằng thu phát</h3>
+          <div class="text-sm leading-relaxed">${step1Html}</div>
+
+          <h3 class="text-lg font-bold text-blue-900 border-b pb-2 pt-2">Bước 2: Tìm phương án cực biên xuất phát</h3>
+          <div class="text-sm leading-relaxed space-y-2">
+            <p>Sử dụng <b>${methodNames[method]}</b> để tìm phương án cực biên xuất phát, ta thu được ma trận phương án $X$:</p>
+            <div>$$${matInitLatex}$$</div>
+            ${degenHtml}
+          </div>
+        </div>
+        ${iterationsHtml}
+      `;
+      renderMath();
+    }
+
+    // -------------------------------------------------------------
+    // 4. MODULE QUY HOẠCH TUYẾN TÍNH, BIG-M & ĐỐI NGẪU (BÀI 2 & 3)
+    // -------------------------------------------------------------
+    const LP_PRESETS = {
+      ex2_5: {
+        type: 'max', n: 3, m: 3,
+        c: [3, -1, 2],
+        A: [[-1, 3, 1], [3, -4, 8], [4, -2, 0]],
+        signs: ['<=', '<=', '<='],
+        b: [7, 10, 12]
+      },
+      ex2_6: {
+        type: 'max', n: 4, m: 3,
+        c: [2, 1, -1, -1],
+        A: [[1, -1, 2, -1], [2, 1, -3, 1], [1, 1, 1, 1]],
+        signs: ['=', '=', '='],
+        b: [2, 6, 7]
+      },
+      hw2_4b: {
+        type: 'max', n: 3, m: 3,
+        c: [6, 10, 12],
+        A: [[1, 2, 4], [2, 1, 2], [3, 2, 2]],
+        signs: ['<=', '<=', '<='],
+        b: [32, 42, 30]
+      },
+      hw2_4a: {
+        type: 'min', n: 6, m: 3,
+        c: [-2, 5, -4, -1, 5, 0],
+        A: [[1, 6, -2, 0, -9, 0], [0, 2, 1, 1, 3, 0], [0, 3, 0, 0, 1, 1]],
+        signs: ['=', '=', '='],
+        b: [32, 30, 36]
+      },
+      hw2_4h: {
+        type: 'min', n: 6, m: 3,
+        c: [5, 4, 5, 2, 1, 3],
+        A: [[2, 4, 3, 1, 0, 0], [4, 2, 3, 0, 1, 0], [3, 0, 1, 0, 0, 1]],
+        signs: ['=', '=', '='],
+        b: [46, 38, 21]
+      },
+      ex3_dual: {
+        type: 'min', n: 5, m: 3,
+        c: [1, 3, 2, 3, 5],
+        A: [[1, 2, -1, 1, -1], [0, -1, -1, 2, 4], [0, -1, -3, 0, 2]],
+        signs: ['=', '>=', '<='],
+        b: [-3, 18, 10]
+      }
+    };
+
+    function buildLPInputGrid(data = null) {
+      const n = data ? data.n : parseInt(document.getElementById('lp-n').value, 10);
+      const m = data ? data.m : parseInt(document.getElementById('lp-m').value, 10);
+      document.getElementById('lp-n').value = n;
+      document.getElementById('lp-m').value = m;
+      if (data) document.getElementById('lp-type').value = data.type;
+
+      let html = `<div class="space-y-4">
+        <div class="bg-blue-50 p-3 rounded-lg border border-blue-200 flex flex-wrap items-center gap-2 text-sm">
+          <span class="font-bold text-blue-900">Hàm mục tiêu $f(x) =$</span>`;
+      for (let j = 0; j < n; j++) {
+        let cVal = data ? data.c[j] : (j === 0 ? 3 : j === 1 ? -1 : 2);
+        html += `<div class="flex items-center gap-1">
+          <input type="number" step="any" id="lp-c-${j}" value="${cVal}" class="w-16 border rounded px-2 py-1 text-center font-bold bg-white" />
+          <span>$x_{${j+1}}$ ${j < n - 1 ? '+' : ''}</span>
+        </div>`;
+      }
+      html += `</div><div class="space-y-2"><div class="text-xs font-bold uppercase text-slate-500">Hệ ràng buộc:</div>`;
+
+      for (let i = 0; i < m; i++) {
+        html += `<div class="flex flex-wrap items-center gap-2 bg-slate-50 p-2.5 rounded border text-sm">
+          <span class="text-xs font-bold text-slate-400 w-6">(${i+1})</span>`;
+        for (let j = 0; j < n; j++) {
+          let aVal = data ? data.A[i][j] : (i === j ? 1 : 2);
+          html += `<div class="flex items-center gap-1">
+            <input type="number" step="any" id="lp-a-${i}-${j}" value="${aVal}" class="w-16 border rounded px-2 py-1 text-center font-semibold bg-white" />
+            <span>$x_{${j+1}}$ ${j < n - 1 ? '+' : ''}</span>
+          </div>`;
+        }
+        let sVal = data ? data.signs[i] : '<=';
+        let bVal = data ? data.b[i] : 10;
+        html += `
+          <select id="lp-s-${i}" class="border rounded px-2 py-1 font-bold bg-white">
+            <option value="<=" ${sVal === '<=' ? 'selected' : ''}>≤</option>
+            <option value="=" ${sVal === '=' ? 'selected' : ''}>=</option>
+            <option value=">=" ${sVal === '>=' ? 'selected' : ''}>≥</option>
+          </select>
+          <input type="number" step="any" id="lp-b-${i}" value="${bVal}" class="w-20 border rounded px-2 py-1 text-center font-bold bg-white" />
+        </div>`;
+      }
+      html += `<div class="text-xs text-slate-500 italic">Điều kiện dấu mặc định: $x_j \\ge 0, \\forall j = \\overline{1, ${n}}$.</div></div></div>`;
+      document.getElementById('lp-input-container').innerHTML = html;
+      renderMath();
+    }
+
+    function loadLPPreset(key) {
+      if (!key || !LP_PRESETS[key]) return;
+      buildLPInputGrid(LP_PRESETS[key]);
+      solveLP();
+    }
+
+    function readLPFromUI() {
+      const type = document.getElementById('lp-type').value;
+      const n = parseInt(document.getElementById('lp-n').value, 10);
+      const m = parseInt(document.getElementById('lp-m').value, 10);
+      let c = [], A = [], signs = [], b = [];
+      for (let j = 0; j < n; j++) c.push(new Frac(document.getElementById(`lp-c-${j}`).value || 0));
+      for (let i = 0; i < m; i++) {
+        let row = [];
+        for (let j = 0; j < n; j++) row.push(new Frac(document.getElementById(`lp-a-${i}-${j}`).value || 0));
+        A.push(row);
+        signs.push(document.getElementById(`lp-s-${i}`).value);
+        b.push(new Frac(document.getElementById(`lp-b-${i}`).value || 0));
+      }
+      return { type, n, m, c, A, signs, b };
+    }
+
+    // Tự động viết bài toán đối ngẫu chuẩn Chương 3 IT6095
+    function buildDualHtml(prob) {
+      const { type, n, m, c, A, signs, b } = prob;
+      const dualType = type === 'min' ? 'max' : 'min';
+      let objTerms = b.map((v, i) => `${v.Val >= 0 && i > 0 ? '+ ' : ''}${v.tex()}y_{${i+1}}`).join(' ');
+
+      let consLines = [];
+      for (let j = 0; j < n; j++) {
+        let lhs = [];
+        for (let i = 0; i < m; i++) {
+          let coef = A[i][j];
+          if (!coef.eq(0)) {
+            let sign = coef.gt(0) && lhs.length > 0 ? '+ ' : '';
+            lhs.push(`${sign}${coef.tex()}y_{${i+1}}`);
+          }
+        }
+        let rel = type === 'min' ? '\\le' : '\\ge';
+        consLines.push(`${lhs.length ? lhs.join(' ') : '0'} ${rel} ${c[j].tex()}`);
+      }
+
+      let yConds = [];
+      for (let i = 0; i < m; i++) {
+        if (signs[i] === '=') yConds.push(`y_{${i+1}} \\text{ tùy ý}`);
+        else if ((type === 'min' && signs[i] === '>=') || (type === 'max' && signs[i] === '<=')) yConds.push(`y_{${i+1}} \\ge 0`);
+        else yConds.push(`y_{${i+1}} \\le 0`);
+      }
+
+      return `
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-5">
+          <h3 class="text-base font-bold text-indigo-950 mb-2">🔄 Bài Toán Đối Ngẫu $(P')$ Tương Ứng (Theo Sơ Đồ Đối Ngẫu Bài 3)</h3>
+          <div class="text-sm space-y-1">
+            <p><b>Hàm mục tiêu đối ngẫu:</b> $$g(y) = ${objTerms} \\to \\${dualType}$$</p>
+            <p><b>Hệ ràng buộc đối ngẫu:</b></p>
+            <div>$$\\begin{cases} ${consLines.join(' \\\\ ')} \\end{cases}$$</div>
+            <p><b>Điều kiện dấu của biến đối ngẫu:</b> $${yConds.join(', \\quad ')}$$</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function generateDualOnly() {
+      const prob = readLPFromUI();
+      document.getElementById('lp-output').innerHTML = buildDualHtml(prob);
+      renderMath();
+    }
+
+    // Giải QHTT bằng Phương pháp Đơn hình / Phương pháp phạt M chuẩn Bài 2 IT6095
+    function solveLP() {
+      const prob = readLPFromUI();
+      const { type, n, m } = prob;
+      let A = prob.A.map(r => [...r]);
+      let b = [...prob.b];
+      let signs = [...prob.signs];
+      let cOrig = [...prob.c];
+
+      // Bước 1: Đưa về dạng chính tắc (đảm bảo b_i >= 0 trước)
+      let canonNotes = [];
+      for (let i = 0; i < m; i++) {
+        if (b[i].lt(0)) {
+          b[i] = b[i].neg();
+          A[i] = A[i].map(x => x.neg());
+          if (signs[i] === '<=') signs[i] = '>=';
+          else if (signs[i] === '>=') signs[i] = '<=';
+          canonNotes.push(`Nhân hai vế của ràng buộc (${i+1}) với $-1$ để vế phải $b_{${i+1}} \\ge 0$.`);
+        }
+      }
+
+      // Thêm biến phụ cho ràng buộc <= và >=
+      let totalVars = n;
+      let cReal = [...cOrig]; // Hệ số thực
+      let cM = new Array(n).fill(new Frac(0)); // Hệ số của M
+
+      for (let i = 0; i < m; i++) {
+        if (signs[i] === '<=') {
+          totalVars++;
+          for (let r = 0; r < m; r++) A[r].push(new Frac(r === i ? 1 : 0));
+          cReal.push(new Frac(0));
+          cM.push(new Frac(0));
+          canonNotes.push(`Ràng buộc (${i+1}) có dấu $\\le$: Cộng thêm biến phụ $x_{${totalVars}} \\ge 0$ (hệ số hàm mục tiêu bằng $0$).`);
+        } else if (signs[i] === '>=') {
+          totalVars++;
+          for (let r = 0; r < m; r++) A[r].push(new Frac(r === i ? -1 : 0));
+          cReal.push(new Frac(0));
+          cM.push(new Frac(0));
+          canonNotes.push(`Ràng buộc (${i+1}) có dấu $\\ge$: Trừ đi biến phụ $x_{${totalVars}} \\ge 0$ (hệ số hàm mục tiêu bằng $0$).`);
+        }
+      }
+
+      // Tìm các vectơ đơn vị có sẵn trong ma trận A
+      let basisVars = new Array(m).fill(-1);
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < totalVars; j++) {
+          let isUnit = A[i][j].eq(1);
+          for (let r = 0; r < m && isUnit; r++) {
+            if (r !== i && !A[r][j].eq(0)) isUnit = false;
+          }
+          if (isUnit) { basisVars[i] = j; break; }
+        }
+      }
+
+      // Bổ sung biến giả tạo (Phương pháp bài toán M) cho những hàng chưa có biến cơ sở
+      let artificialVars = new Set();
+      let removedArtificial = new Set();
+      const mSign = type === 'max' ? new Frac(-1) : new Frac(1); // -M cho max, +M cho min
+
+      for (let i = 0; i < m; i++) {
+        if (basisVars[i] === -1) {
+          totalVars++;
+          let artIdx = totalVars - 1;
+          for (let r = 0; r < m; r++) A[r].push(new Frac(r === i ? 1 : 0));
+          cReal.push(new Frac(0));
+          cM.push(mSign);
+          basisVars[i] = artIdx;
+          artificialVars.add(artIdx);
+          canonNotes.push(`Hàng (${i+1}) chưa có vectơ đơn vị cơ sở: Bổ sung biến giả tạo $x_{${totalVars}} \\ge 0$ với hệ số hàm mục tiêu ${type === 'max' ? '-M' : '+M'}.`);
+        }
+      }
+
+      const hasBigM = artificialVars.size > 0;
+
+      // Vòng lặp Bảng đơn hình
+      let tablesHtml = '';
+      let step = 1;
+      let status = 'running';
+      let finalConclusionHtml = '';
+
+      while (step <= 20) {
+        // Tính dòng ước lượng Delta_k = z_k - c_k = delta_k + eta_k * M
+        let deltaReal = new Array(totalVars).fill(new Frac(0));
+        let deltaM = new Array(totalVars).fill(new Frac(0));
+        let fReal = new Frac(0);
+        let fM = new Frac(0);
+
+        for (let i = 0; i < m; i++) {
+          let bv = basisVars[i];
+          fReal = fReal.add(cReal[bv].mul(b[i]));
+          fM = fM.add(cM[bv].mul(b[i]));
+        }
+
+        for (let k = 0; k < totalVars; k++) {
+          if (removedArtificial.has(k)) continue;
+          let zR = new Frac(0), zM = new Frac(0);
+          for (let i = 0; i < m; i++) {
+            let bv = basisVars[i];
+            zR = zR.add(A[i][k].mul(cReal[bv]));
+            zM = zM.add(A[i][k].mul(cM[bv]));
+          }
+          deltaReal[k] = zR.sub(cReal[k]);
+          deltaM[k] = zM.sub(cM[k]);
+        }
+
+        // Kiểm tra điều kiện tối ưu & Chọn cột xoay s chuẩn IT6095
+        let pivotCol = -1;
+        for (let k = 0; k < totalVars; k++) {
+          if (removedArtificial.has(k)) continue;
+          let violates = false;
+          if (type === 'max') {
+            // Vi phạm khi Delta_k < 0: eta_k < 0 hoặc (eta_k == 0 và delta_k < 0)
+            if (deltaM[k].lt(0) || (deltaM[k].eq(0) && deltaReal[k].lt(0))) violates = true;
+            if (violates) {
+              if (pivotCol === -1) pivotCol = k;
+              else if (deltaM[k].lt(deltaM[pivotCol]) || (deltaM[k].eq(deltaM[pivotCol]) && deltaReal[k].lt(deltaReal[pivotCol]))) {
+                pivotCol = k;
+              }
+            }
+          } else {
+            // Bài toán Min: Tối ưu khi Delta_k <= 0. Vi phạm khi Delta_k > 0
+            if (deltaM[k].gt(0) || (deltaM[k].eq(0) && deltaReal[k].gt(0))) violates = true;
+            if (violates) {
+              if (pivotCol === -1) pivotCol = k;
+              else if (deltaM[k].gt(deltaM[pivotCol]) || (deltaM[k].eq(deltaM[pivotCol]) && deltaReal[k].gt(deltaReal[pivotCol]))) {
+                pivotCol = k;
+              }
+            }
+          }
+        }
+
+        // Nếu có cột xoay, tìm dòng xoay r theo tỷ số theta = min { x_i / z_is | z_is > 0 }
+        let pivotRow = -1;
+        let minTheta = null;
+        if (pivotCol !== -1) {
+          for (let i = 0; i < m; i++) {
+            if (A[i][pivotCol].gt(0)) {
+              let th = b[i].div(A[i][pivotCol]);
+              if (minTheta === null || th.lt(minTheta)) {
+                minTheta = th;
+                pivotRow = i;
+              }
+            }
+          }
+        }
+
+        // Render Bảng đơn hình hiện tại
+        function fmtCoef(r, mCoef) {
+          if (mCoef.eq(0)) return `$${r.tex()}$`;
+          let mStr = mCoef.eq(1) ? 'M' : mCoef.eq(-1) ? '-M' : `${mCoef.tex()}M`;
+          if (r.eq(0)) return `$${mStr}$`;
+          return `$${r.tex()} ${mCoef.gt(0) ? '+' : ''} ${mStr}$`;
+        }
+
+        let tbl = `<div class="overflow-x-auto my-3">
+          <table class="border-collapse border border-slate-400 mx-auto text-sm text-center">
+            <thead>
+              <tr class="bg-slate-100">
+                <th class="border border-slate-400 p-2" rowspan="2">$C_j$</th>
+                <th class="border border-slate-400 p-2" rowspan="2">Cơ sở</th>
+                <th class="border border-slate-400 p-2" rowspan="2">Phương án</th>`;
+        for (let k = 0; k < totalVars; k++) {
+          tbl += `<th class="border border-slate-400 p-1.5 bg-blue-50 text-blue-900">${fmtCoef(cReal[k], cM[k])}</th>`;
+        }
+        tbl += `</tr><tr class="bg-slate-100">`;
+        for (let k = 0; k < totalVars; k++) {
+          tbl += `<th class="border border-slate-400 p-1.5 font-bold">$A_{${k+1}}$</th>`;
+        }
+        tbl += `</tr></thead><tbody>`;
+
+        for (let i = 0; i < m; i++) {
+          let bv = basisVars[i];
+          let isPivotR = i === pivotRow;
+          tbl += `<tr class="${isPivotR ? 'bg-amber-50' : 'bg-white'}">
+            <td class="border border-slate-400 p-2 font-semibold">${fmtCoef(cReal[bv], cM[bv])}</td>
+            <td class="border border-slate-400 p-2 font-bold text-blue-900">$x_{${bv+1}}$</td>
+            <td class="border border-slate-400 p-2 font-bold">$${b[i].tex()}$</td>`;
+          for (let k = 0; k < totalVars; k++) {
+            if (removedArtificial.has(k)) {
+              tbl += `<td class="border border-slate-400 p-2 bg-slate-100 text-slate-300">-</td>`;
+            } else if (i === pivotRow && k === pivotCol) {
+              tbl += `<td class="border border-slate-400 p-2"><span class="pivot-circle">$${A[i][k].tex()}$</span></td>`;
+            } else {
+              tbl += `<td class="border border-slate-400 p-2 ${k === pivotCol ? 'bg-blue-50/60 font-semibold' : ''}">$${A[i][k].tex()}$</td>`;
+            }
+          }
+          tbl += `</tr>`;
+        }
+
+        // Dòng ước lượng: nếu có Big-M thì tách 2 dòng delta_k và eta_k đúng chuẩn Ví dụ 2.6 Đề cương Bài 2
+        if (hasBigM) {
+          tbl += `<tr class="bg-indigo-50 font-bold">
+            <td class="border border-slate-400 p-2" colspan="2">$\\delta_k$ (Hệ số tự do)</td>
+            <td class="border border-slate-400 p-2">$${fReal.tex()}$</td>`;
+          for (let k = 0; k < totalVars; k++) {
+            tbl += `<td class="border border-slate-400 p-2">${removedArtificial.has(k) ? '' : `$${deltaReal[k].tex()}$`}</td>`;
+          }
+          tbl += `</tr><tr class="bg-indigo-100 font-bold text-indigo-950">
+            <td class="border border-slate-400 p-2" colspan="2">$\\eta_k$ (Hệ số của $M$)</td>
+            <td class="border border-slate-400 p-2">$${fM.tex()}$</td>`;
+          for (let k = 0; k < totalVars; k++) {
+            tbl += `<td class="border border-slate-400 p-2">${removedArtificial.has(k) ? '' : `$${deltaM[k].tex()}$`}</td>`;
+          }
+          tbl += `</tr>`;
+        } else {
+          tbl += `<tr class="bg-indigo-50 font-bold text-indigo-950">
+            <td class="border border-slate-400 p-2" colspan="2">$\\Delta_k = z_k - c_k$</td>
+            <td class="border border-slate-400 p-2">$f = ${fReal.tex()}$</td>`;
+          for (let k = 0; k < totalVars; k++) {
+            tbl += `<td class="border border-slate-400 p-2">$${deltaReal[k].tex()}$</td>`;
+          }
+          tbl += `</tr>`;
+        }
+        tbl += `</tbody></table></div>`;
+
+        // Nhận xét dưới mỗi bảng
+        let stepNote = '';
+        if (pivotCol === -1) {
+          // Kiểm tra xem còn biến giả tạo > 0 trong cơ sở không
+          let infeasible = false;
+          for (let i = 0; i < m; i++) {
+            if (artificialVars.has(basisVars[i]) && b[i].gt(0)) infeasible = true;
+          }
+          if (infeasible) {
+            status = 'infeasible';
+            stepNote = `<p class="text-red-700 font-bold">• Dòng ước lượng đã thỏa mãn điều kiện dừng nhưng biến giả tạo trong cơ sở vẫn nhận giá trị dương ($>0$). Vậy <b>bài toán gốc không có phương án</b> (vô nghiệm).</p>`;
+          } else {
+            status = 'optimal';
+            let xOpt = new Array(n).fill(new Frac(0));
+            for (let i = 0; i < m; i++) {
+              if (basisVars[i] < n) xOpt[basisVars[i]] = b[i];
+            }
+            let xFull = new Array(totalVars).fill(new Frac(0));
+            for (let i = 0; i < m; i++) xFull[basisVars[i]] = b[i];
+
+            stepNote = `<p class="text-green-800 font-bold">• Ta thấy mọi ước lượng ở dòng cuối đều thỏa mãn điều kiện tối ưu (${type === 'max' ? '$\\Delta_k \\ge 0$' : '$\\Delta_k \\le 0$'} với mọi $k$), thuật toán dừng!</p>`;
+            finalConclusionHtml = `
+              <div class="bg-green-50 border-2 border-green-500 rounded-xl p-5 text-green-950">
+                <h4 class="text-lg font-extrabold mb-2">✓ KẾT LUẬN NGHIỆM TỐI ƯU:</h4>
+                <p>• Phương án tối ưu đối với các biến ban đầu: $$x^* = \\left(${xOpt.map(v => v.tex()).join(';\\; ')}\\right)$$</p>
+                <p>• Phương án cực biên đầy đủ (kể cả biến phụ): $$x = \\left(${xFull.filter((_, idx) => !artificialVars.has(idx)).map(v => v.tex()).join(';\\; ')}\\right)$$</p>
+                <p class="font-bold text-lg text-blue-900 mt-2">• Giá trị tối ưu của hàm mục tiêu: $$f_{\\${type}}(x^*) = ${fReal.tex()}$$</p>
+              </div>
+            `;
+          }
+          tablesHtml += `<div class="bg-white rounded-xl shadow p-5 border-l-4 border-green-600">
+            <h4 class="font-bold text-blue-900">Bảng đơn hình bước ${step}</h4>
+            ${tbl}${stepNote}
+          </div>`;
+          break;
+        } else if (pivotRow === -1) {
+          status = 'unbounded';
+          stepNote = `<p class="text-red-700 font-bold">• Tại cột $A_{${pivotCol+1}}$ vi phạm điều kiện tối ưu nhưng mọi phần tử $z_{j,${pivotCol+1}} \\le 0$. Vậy <b>hàm mục tiêu không bị chặn</b> và bài toán không có phương án tối ưu.</p>`;
+          tablesHtml += `<div class="bg-white rounded-xl shadow p-5 border-l-4 border-red-600">
+            <h4 class="font-bold text-blue-900">Bảng đơn hình bước ${step}</h4>
+            ${tbl}${stepNote}
+          </div>`;
+          break;
+        } else {
+          let leavingVar = basisVars[pivotRow];
+          let pivotElem = A[pivotRow][pivotCol];
+          stepNote = `
+            <div class="text-xs md:text-sm bg-slate-50 p-3 rounded border space-y-1">
+              <p>• <b>Chọn cột xoay:</b> Cột $A_{${pivotCol+1}}$ (đưa biến $x_{${pivotCol+1}}$ vào cơ sở).</p>
+              <p>• <b>Chọn dòng xoay:</b> Dòng của biến cơ sở $x_{${leavingVar+1}}$ với tỷ số nhỏ nhất $\\theta = \\frac{${b[pivotRow].tex()}}{${pivotElem.tex()}} = ${minTheta.tex()}$ (đẩy $x_{${leavingVar+1}}$ ra khỏi cơ sở).</p>
+              <p>• <b>Phần tử trục:</b> $z_{${pivotRow+1},${pivotCol+1}} = ${pivotElem.tex()}$. Biến đổi bảng theo công thức: <i>Dòng mới = Dòng cũ – (Dòng chính × Phần tử xoay)</i>.</p>
+            </div>
+          `;
+          tablesHtml += `<div class="bg-white rounded-xl shadow p-5 border-l-4 border-blue-600">
+            <h4 class="font-bold text-blue-900">Bảng đơn hình bước ${step}</h4>
+            ${tbl}${stepNote}
+          </div>`;
+
+          // Nếu biến bị đẩy ra là biến giả tạo -> đánh dấu không tính cột đó nữa (Chú ý 2 Mục 2.5.2)
+          if (artificialVars.has(leavingVar)) removedArtificial.add(leavingVar);
+
+          // Thực hiện phép xoay Gauss-Jordan
+          for (let k = 0; k < totalVars; k++) A[pivotRow][k] = A[pivotRow][k].div(pivotElem);
+          b[pivotRow] = b[pivotRow].div(pivotElem);
+
+          for (let i = 0; i < m; i++) {
+            if (i === pivotRow) continue;
+            let factor = A[i][pivotCol];
+            if (!factor.eq(0)) {
+              for (let k = 0; k < totalVars; k++) {
+                A[i][k] = A[i][k].sub(A[pivotRow][k].mul(factor));
+              }
+              b[i] = b[i].sub(b[pivotRow].mul(factor));
+            }
+          }
+          basisVars[pivotRow] = pivotCol;
+        }
+        step++;
+      }
+
+      document.getElementById('lp-output').innerHTML = `
+        <div class="bg-white rounded-xl shadow p-6 border border-slate-200 space-y-3">
+          <h3 class="text-lg font-bold text-blue-900 border-b pb-2">Giai đoạn 1: Đưa bài toán về dạng chính tắc & Tìm PACB xuất phát</h3>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            ${canonNotes.length ? canonNotes.map(x => `<li>${x}</li>`).join('') : '<li>Bài toán đã ở dạng chính tắc và có sẵn ma trận đơn vị cơ sở.</li>'}
+          </ul>
+        </div>
+        ${tablesHtml}
+        ${finalConclusionHtml}
+        ${buildDualHtml(prob)}
+      `;
+      renderMath();
+    }
+
+    // -------------------------------------------------------------
+    // 5. NGÂN HÀNG BÀI TẬP TRONG PHIẾU GIAO BÀI TẬP CỦA TRƯỜNG
+    // -------------------------------------------------------------
+    const SCHOOL_EXERCISES = [
+      {
+        tag: "Phiếu BT Bài 2 - Câu 4b",
+        title: "Giải QHTT bằng phương pháp đơn hình (Max)",
+        desc: "$f(x) = 6x_1 + 10x_2 + 12x_3 \\to \\max$ với $x_1+2x_2+4x_3 \\le 32;\\; 2x_1+x_2+2x_3 \\le 42;\\; 3x_1+2x_2+2x_3 \\le 30$. Đáp số của trường: $x=(0,14,1,0,26,0), f_{\\max}=152$.",
+        action: () => { switchMainTab('lp'); loadLPPreset('hw2_4b'); }
+      },
+      {
+        tag: "Phiếu BT Bài 2 & 3 - Câu 4a",
+        title: "Giải QHTT dạng chính tắc (Min)",
+        desc: "$f(x) = -2x_1 + 5x_2 - 4x_3 - x_4 + 5x_5 \\to \\min$. Đáp số trong phiếu bài tập: $x=(92,0,0,30,0,36), f_{\\min}=-274$.",
+        action: () => { switchMainTab('lp'); loadLPPreset('hw2_4a'); }
+      },
+      {
+        tag: "Đề cương Bài 2 - Ví dụ 2.6",
+        title: "Giải QHTT bằng Phương pháp phạt (Bài toán M)",
+        desc: "$f(x) = 2x_1 + x_2 - x_3 - x_4 \\to \\max$ với 3 ràng buộc đẳng thức. Bổ sung 3 biến giả $x_5, x_6, x_7$. Đáp số: $x^*=(3,3,1,0), f(x^*)=8$.",
+        action: () => { switchMainTab('lp'); loadLPPreset('ex2_6'); }
+      },
+      {
+        tag: "Phiếu BT Bài 2 & 3 - Câu 3h",
+        title: "Giải QHTT 6 biến bằng đơn hình",
+        desc: "$f(x) = 5x_1 + 4x_2 + 5x_3 + 2x_4 + x_5 + 3x_6 \\to \\min$. Đáp án của trường: $x^*=(7; 5; 0; 12; 0; 0)$ và $f(x^*)=79$.",
+        action: () => { switchMainTab('lp'); loadLPPreset('hw2_4h'); }
+      },
+      {
+        tag: "Đề cương Bài 4 - Ví dụ 4.1 & 4.4",
+        title: "Bài toán vận tải cân bằng thu phát (3 Phát × 4 Thu)",
+        desc: "$a=(10, 25, 15), b=(5, 15, 20, 10)$. Giải bằng Góc Tây Bắc + Thế vị qua 4 bảng, có xử lý ô-chọn-không. Đáp số: $f(X^*)=115$.",
+        action: () => { switchMainTab('tp'); loadTPPreset('ex4_1'); }
+      },
+      {
+        tag: "Đề cương Bài 4 - Mục 4.4.1",
+        title: "Bài toán vận tải Tổng phát > Tổng thu",
+        desc: "$\\sum a_i = 230 > \\sum b_j = 110$. Bổ sung cột thu ảo $b_4 = 120$, ưu tiên phân phối ô thực trước. Đáp số: $f(X)=1100$.",
+        action: () => { switchMainTab('tp'); loadTPPreset('ex4_4_1'); }
+      },
+      {
+        tag: "Đề cương Bài 4 - Mục 4.4.2",
+        title: "Bài toán vận tải Tổng thu > Tổng phát (Có suy biến)",
+        desc: "$\\sum a_i = 200 < \\sum b_j = 250$. Bổ sung hàng phát ảo $a_4 = 50$ và bổ sung ô-chọn-không $(3,1)$. Đáp số: $F(X)=720$.",
+        action: () => { switchMainTab('tp'); loadTPPreset('ex4_4_2'); }
+      },
+      {
+        tag: "Phiếu BT Bài 4 (P2) - Bài 1, 2, 3",
+        title: "Bộ 3 bài tập trong Phiếu giao bài tập Bài 4",
+        desc: "Tự động kiểm tra cân bằng thu phát, tìm phương án xuất phát theo Góc Tây Bắc / Chi phí nhỏ nhất / Theo hàng / Theo cột và giải bằng Thế vị.",
+        action: () => { switchMainTab('tp'); loadTPPreset('ws4_1'); }
+      }
+    ];
+
+    function renderExerciseBank() {
+      const container = document.getElementById('exercise-bank-list');
+      container.innerHTML = SCHOOL_EXERCISES.map((ex, idx) => `
+        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded">${ex.tag}</span>
+            <h4 class="font-bold text-base text-slate-900 mt-2">${ex.title}</h4>
+            <p class="text-sm text-slate-600 mt-1">${ex.desc}</p>
+          </div>
+          <div class="mt-4 pt-3 border-t">
+            <button onclick="SCHOOL_EXERCISES[${idx}].action()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition">⚡ Giải tự động bài này trên Web</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderMath() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false }
+          ]
+        });
+      }
+    }
+
+    // Khởi tạo trang web khi tải xong
+    window.addEventListener('DOMContentLoaded', () => {
+      showChapter(2);
+      buildLPInputGrid(LP_PRESETS.ex2_5);
+      buildTPInputGrid(TP_PRESETS.ex4_1);
+      renderExerciseBank();
+      solveTransportation();
+    });
+  </script>
+</body>
+</html>
