@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hệ Thống Học & Giải Bài Tập Tối Ưu Hóa - IT6095</title>
+  <title>Hệ Thống Học & Giải Bài Tập Tối Ưu Hóa </title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- KaTeX hiển thị công thức toán học chuẩn giáo trình -->
@@ -27,14 +27,13 @@
   <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white shadow-lg">
     <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
       <div>
-        <span class="bg-amber-400 text-slate-900 text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider">Học phần IT6095</span>
         <h1 class="text-2xl md:text-3xl font-extrabold mt-1">Web Học Tập & Giải Tự Động Môn Tối Ưu Hóa</h1>
       </div>
       <div class="flex flex-wrap gap-2">
-        <button onclick="switchMainTab('theory')" id="nav-theory" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📚 Bài giảng & Video (5 Chương)</button>
-        <button onclick="switchMainTab('lp')" id="nav-lp" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">🧮 Giải QHTT & Đối Ngẫu (Bài 2, 3)</button>
-        <button onclick="switchMainTab('tp')" id="nav-tp" class="px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-bold text-sm transition">🚚 Giải Bài Toán Vận Tải (Bài 4)</button>
-        <button onclick="switchMainTab('exercises')" id="nav-exercises" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📝 Ngân Hàng Bài Tập Trường</button>
+        <button onclick="switchMainTab('theory')" id="nav-theory" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📚 Bài giảng & Video </button>
+        <button onclick="switchMainTab('lp')" id="nav-lp" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">🧮 Giải QHTT & Đối Ngẫu </button>
+        <button onclick="switchMainTab('tp')" id="nav-tp" class="px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-bold text-sm transition">🚚 Giải Bài Toán Vận Tải </button>
+        <button onclick="switchMainTab('exercises')" id="nav-exercises" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📝 Ngân Hàng Bài Tập </button>
       </div>
     </div>
   </header>
@@ -46,7 +45,7 @@
     <!-- ========================================================= -->
     <section id="sec-theory" class="hidden space-y-6">
       <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
-        <h2 class="text-xl font-bold text-blue-900 mb-4">Hệ thống Chương trình Học phần Tối Ưu Hóa (IT6095)</h2>
+        <h2 class="text-xl font-bold text-blue-900 mb-4">Hệ thống Chương trình Tối Ưu Hóa </h2>
         <div class="grid grid-cols-1 md:grid-cols-5 gap-2 mb-6">
           <button onclick="showChapter(1)" id="chap-btn-1" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 1:</b> Bài toán tối ưu hóa tổng quát</button>
           <button onclick="showChapter(2)" id="chap-btn-2" class="p-3 rounded-lg border text-left text-sm bg-blue-50 border-blue-500 font-semibold"><b>Chương 2:</b> QHTT & Phương pháp đơn hình</button>
@@ -123,7 +122,7 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4 mb-5">
           <div>
             <h2 class="text-xl font-bold text-blue-900">Bộ Giải Bài Toán Vận Tải Bằng Phương Pháp Thế Vị (Chuẩn Bài 4 - IT6095)</h2>
-            <p class="text-sm text-slate-600">Tự động kiểm tra cân bằng thu phát, tìm phương án xuất phát theo 4 phương pháp, xử lý suy biến (ô-chọn-không), tính thế vị \(U_i, V_j\), \(\Delta_{ij} = (U_i + V_j) - c_{ij}\) và vẽ chu trình điều chỉnh</p>
+            <p class="text-sm text-slate-600">Tự động kiểm tra cân bằng thu phát, tìm phương án xuất phát theo 4 phương pháp, xử lý suy biến (ô-chọn-không), tính thế vị và vẽ chu trình điều chỉnh</p>
           </div>
           <div>
             <select id="tp-preset" onchange="loadTPPreset(this.value)" class="border border-amber-400 bg-amber-50 text-slate-900 rounded-lg px-3 py-2 text-sm font-semibold">
