@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hệ Thống Học & Giải Bài Tập Tối Ưu Hóa </title>
+  <title>Hệ Thống Học & Giải Bài Tập Tối Ưu Hóa - IT6095</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- KaTeX hiển thị công thức toán học chuẩn giáo trình -->
@@ -27,13 +27,16 @@
   <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white shadow-lg">
     <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
       <div>
+        <span class="bg-amber-400 text-slate-900 text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider">Học phần IT6095</span>
         <h1 class="text-2xl md:text-3xl font-extrabold mt-1">Web Học Tập & Giải Tự Động Môn Tối Ưu Hóa</h1>
+        <p class="text-blue-200 text-sm mt-0.5">Chuẩn form trình bày Đề cương bài giảng & Phiếu bài tập của Trường</p>
       </div>
       <div class="flex flex-wrap gap-2">
-        <button onclick="switchMainTab('theory')" id="nav-theory" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📚 Bài giảng & Video </button>
-        <button onclick="switchMainTab('lp')" id="nav-lp" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">🧮 Giải QHTT & Đối Ngẫu </button>
-        <button onclick="switchMainTab('tp')" id="nav-tp" class="px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-bold text-sm transition">🚚 Giải Bài Toán Vận Tải </button>
-        <button onclick="switchMainTab('exercises')" id="nav-exercises" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📝 Ngân Hàng Bài Tập </button>
+        <button onclick="switchMainTab('theory')" id="nav-theory" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📚 Bài giảng & Video (5 Chương)</button>
+        <button onclick="switchMainTab('geometry')" id="nav-geometry" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📐 QHTT – Phương pháp hình học</button>
+        <button onclick="switchMainTab('lp')" id="nav-lp" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">🧮 Giải QHTT & Đối Ngẫu (Bài 2, 3)</button>
+        <button onclick="switchMainTab('tp')" id="nav-tp" class="px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-bold text-sm transition">🚚 Giải Bài Toán Vận Tải (Bài 4)</button>
+        <button onclick="switchMainTab('exercises')" id="nav-exercises" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition">📝 Ngân Hàng Bài Tập Trường</button>
       </div>
     </div>
   </header>
@@ -45,7 +48,7 @@
     <!-- ========================================================= -->
     <section id="sec-theory" class="hidden space-y-6">
       <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
-        <h2 class="text-xl font-bold text-blue-900 mb-4">Hệ thống Chương trình Tối Ưu Hóa </h2>
+        <h2 class="text-xl font-bold text-blue-900 mb-4">Hệ thống Chương trình Học phần Tối Ưu Hóa (IT6095)</h2>
         <div class="grid grid-cols-1 md:grid-cols-5 gap-2 mb-6">
           <button onclick="showChapter(1)" id="chap-btn-1" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 1:</b> Bài toán tối ưu hóa tổng quát</button>
           <button onclick="showChapter(2)" id="chap-btn-2" class="p-3 rounded-lg border text-left text-sm bg-blue-50 border-blue-500 font-semibold"><b>Chương 2:</b> QHTT & Phương pháp đơn hình</button>
@@ -60,6 +63,27 @@
       </div>
     </section>
 
+
+    <!-- PHƯƠNG PHÁP HÌNH HỌC: BÀI 2 - MỤC 2.2.4 -->
+    <section id="sec-geometry" class="hidden space-y-5">
+      <div class="bg-white rounded-xl border border-slate-200 shadow p-5 md:p-7">
+        <h2 class="text-xl font-bold text-blue-900">📐 Giải QHTT hai biến bằng phương pháp hình học</h2>
+        <p class="text-sm text-slate-600 mt-2">Theo mục 2.2.4, Đề cương Bài 2 – IT6095. Xác định đường biên, miền phương án D, các đỉnh, đường mức và nghiệm tối ưu.</p>
+        <div class="flex flex-wrap gap-3 mt-5 items-end">
+          <label class="text-sm font-semibold">Bài mẫu<select id="geo-example" onchange="geoLoadExample(this.value)" class="block border rounded px-3 py-2 mt-1 bg-white"><option value="production">Ví dụ 2.4 – Lập kế hoạch sản xuất</option><option value="a">Bài tập a – Trang 20 bài giảng</option><option value="b">Bài tập b – Trang 20 bài giảng</option><option value="empty">Miền nghiệm rỗng</option><option value="unbounded">Hàm mục tiêu không bị chặn</option><option value="multiple">Nhiều phương án tối ưu</option></select></label>
+          <label class="text-sm font-semibold">Tối ưu<select id="geo-type" class="block border rounded px-3 py-2 mt-1"><option value="max">Max</option><option value="min">Min</option></select></label>
+          <label class="text-sm font-semibold">Hệ số x₁<input id="geo-c1" type="number" step="any" value="4" class="block w-24 border rounded px-3 py-2 mt-1"></label>
+          <label class="text-sm font-semibold">Hệ số x₂<input id="geo-c2" type="number" step="any" value="5" class="block w-24 border rounded px-3 py-2 mt-1"></label>
+          <label class="flex items-center gap-2 text-sm font-semibold pb-2"><input type="checkbox" id="geo-nonnegative" checked> x₁, x₂ ≥ 0</label>
+        </div>
+        <h3 class="font-bold mt-6 mb-2">Các ràng buộc: a·x₁ + b·x₂ (≤, ≥, =) c</h3>
+        <div class="overflow-x-auto"><table class="min-w-[550px] w-full text-sm border-collapse"><thead><tr class="bg-blue-50"><th class="p-2">STT</th><th class="p-2">Hệ số x₁</th><th class="p-2">Hệ số x₂</th><th class="p-2">Dấu</th><th class="p-2">Vế phải</th><th class="p-2">Xóa</th></tr></thead><tbody id="geo-rows"></tbody></table></div>
+        <div class="flex flex-wrap gap-2 mt-4"><button onclick="geoAddRow()" class="bg-slate-100 border rounded-lg px-4 py-2 font-semibold">+ Thêm ràng buộc</button><button onclick="geoSolve()" class="bg-blue-700 hover:bg-blue-800 text-white rounded-lg px-5 py-2 font-bold">📈 Vẽ đồ thị & giải từng bước</button></div>
+        <p class="text-xs text-slate-500 mt-3">Hỗ trợ hệ số thực, ràng buộc ≤ / ≥ / =, Max / Min và biến không ràng buộc dấu. Đồ thị thể hiện cửa sổ quan sát hữu hạn, không đồng nghĩa miền nghiệm luôn bị chặn.</p>
+      </div>
+      <div id="geo-output" class="space-y-5" aria-live="polite"></div>
+    </section>
+
     <!-- ========================================================= -->
     <!-- PHÂN KHU 2: BỘ GIẢI QHTT, PHƯƠNG PHÁP M & ĐỐI NGẪU       -->
     <!-- ========================================================= -->
@@ -67,12 +91,12 @@
       <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4 mb-5">
           <div>
-            <h2 class="text-xl font-bold text-blue-900">Bộ Giải Quy Hoạch Tuyến Tính & Bài Toán Đối Ngẫu </h2>
+            <h2 class="text-xl font-bold text-blue-900">Bộ Giải Quy Hoạch Tuyến Tính & Bài Toán Đối Ngẫu (Chuẩn IT6095)</h2>
             <p class="text-sm text-slate-600">Tự động đưa về dạng chính tắc, lập bài toán đối ngẫu, giải từng bước bằng Đơn hình / Phương pháp phạt M (hiển thị phân số chính xác)</p>
           </div>
           <div class="flex flex-wrap gap-2">
             <select id="lp-preset" onchange="loadLPPreset(this.value)" class="border border-blue-300 bg-blue-50 text-blue-900 rounded-lg px-3 py-2 text-sm font-medium">
-              <option value="">-- Chọn bài mẫu trong Đề cương  --</option>
+              <option value="">-- Chọn bài mẫu trong Đề cương / Phiếu BT --</option>
               <option value="ex2_5">Đề cương Bài 2 - Ví dụ 2.5 (Đơn hình chuẩn Max)</option>
               <option value="ex2_6">Đề cương Bài 2 - Ví dụ 2.6 (Phương pháp phạt M)</option>
               <option value="hw2_4b">Phiếu BT Bài 2 - Bài 4b (f_max = 152)</option>
@@ -101,7 +125,7 @@
             <input type="number" id="lp-m" value="3" min="1" max="8" onchange="buildLPInputGrid()" class="border rounded px-3 py-1.5 w-20 text-sm font-semibold" />
           </div>
           <div class="mt-4 md:mt-5 flex gap-2">
-            <button onclick="solveLP()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg shadow transition">🚀 Giải từng bước theo Form chuẩn</button>
+            <button onclick="solveLP()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg shadow transition">🚀 Giải từng bước theo Form Trường</button>
             <button onclick="generateDualOnly()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-900 font-semibold px-4 py-2 rounded-lg transition">🔄 Viết Bài Toán Đối Ngẫu</button>
           </div>
         </div>
@@ -121,8 +145,8 @@
       <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4 mb-5">
           <div>
-            <h2 class="text-xl font-bold text-blue-900">Bộ Giải Bài Toán Vận Tải Bằng Phương Pháp Thế Vị (Chuẩn Bài 4 )</h2>
-            <p class="text-sm text-slate-600">Tự động kiểm tra cân bằng thu phát, tìm phương án xuất phát theo 4 phương pháp, xử lý suy biến (ô-chọn-không), tính thế vị và vẽ chu trình điều chỉnh</p>
+            <h2 class="text-xl font-bold text-blue-900">Bộ Giải Bài Toán Vận Tải Bằng Phương Pháp Thế Vị (Chuẩn Bài 4 - IT6095)</h2>
+            <p class="text-sm text-slate-600">Tự động kiểm tra cân bằng thu phát, tìm phương án xuất phát theo 4 phương pháp, xử lý suy biến (ô-chọn-không), tính thế vị \(U_i, V_j\), \(\Delta_{ij} = (U_i + V_j) - c_{ij}\) và vẽ chu trình điều chỉnh</p>
           </div>
           <div>
             <select id="tp-preset" onchange="loadTPPreset(this.value)" class="border border-amber-400 bg-amber-50 text-slate-900 rounded-lg px-3 py-2 text-sm font-semibold">
@@ -177,7 +201,7 @@
     <!-- ========================================================= -->
     <section id="sec-exercises" class="hidden space-y-6">
       <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
-        <h2 class="text-xl font-bold text-blue-900 mb-2">Tuyển Tập Phiếu Giao Bài Tập & Đề Ôn Tập </h2>
+        <h2 class="text-xl font-bold text-blue-900 mb-2">Tuyển Tập Phiếu Giao Bài Tập & Đề Ôn Tập (IT6095)</h2>
         <p class="text-sm text-slate-600 mb-6">Bấm vào nút <b>"Giải tự động bài này"</b> để nạp thẳng đề bài vào bộ giải và xem từng bảng biến đổi chi tiết.</p>
         <div id="exercise-bank-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </div>
@@ -186,7 +210,7 @@
   </main>
 
   <!-- ========================================================= -->
-  <!-- JAVASCRIPT ENGINE: PHÂN SỐ CHÍNH XÁC + THUẬT TOÁN   -->
+  <!-- JAVASCRIPT ENGINE: PHÂN SỐ CHÍNH XÁC + THUẬT TOÁN IT6095  -->
   <!-- ========================================================= -->
   <script>
     // -------------------------------------------------------------
@@ -249,7 +273,7 @@
     // 2. ĐIỀU HƯỚNG TAB & NỘI DUNG 5 CHƯƠNG HỌC
     // -------------------------------------------------------------
     function switchMainTab(tab) {
-      ['theory', 'lp', 'tp', 'exercises'].forEach(t => {
+      ['theory', 'geometry', 'lp', 'tp', 'exercises'].forEach(t => {
         document.getElementById(`sec-${t}`).classList.add('hidden');
         const btn = document.getElementById(`nav-${t}`);
         btn.className = 'px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition';
@@ -277,7 +301,7 @@
           <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
             <li><b>Dạng chuẩn:</b> Hàm mục tiêu $\\sum c_j x_j \\to \\max$ với ràng buộc $\\sum a_{ij}x_j \\le b_i, x_j \\ge 0$ (hoặc $\\to \\min$ với $\\sum a_{ij}x_j \\ge b_i, x_j \\ge 0$).</li>
             <li><b>Dạng chính tắc:</b> Hệ ràng buộc đẳng thức $\\sum_{j=1}^n a_{ij}x_j = b_i$ ($b_i \\ge 0$) và $x_j \\ge 0$. Ràng buộc $\\le$ cộng thêm biến phụ $+x_{n+i}$, ràng buộc $\\ge$ trừ đi biến phụ $-x_{n+i}$.</li>
-            <li><b>Công thức tính ước lượng chuẩn :</b> $\\Delta_k = z_k - c_k = \\sum_{j \\in J} z_{jk}c_j - c_k$.</li>
+            <li><b>Công thức tính ước lượng chuẩn IT6095:</b> $\\Delta_k = z_k - c_k = \\sum_{j \\in J} z_{jk}c_j - c_k$.</li>
             <li><b>Tiêu chuẩn tối ưu & Chọn cột xoay:</b>
               <br/>• <i>Bài toán Max:</i> Tối ưu khi $\\Delta_k \\ge 0, \\forall k$. Chọn cột xoay $\\Delta_s = \\min\\{\\Delta_k \\mid \\Delta_k < 0\\}$.
               <br/>• <i>Bài toán Min:</i> Tối ưu khi $\\Delta_k \\le 0, \\forall k$. Chọn cột xoay $\\Delta_s = \\max\\{\\Delta_k \\mid \\Delta_k > 0\\}$.
@@ -799,7 +823,7 @@
           }
         }
 
-        // Vẽ Bảng vận tải đúng chuẩn 
+        // Vẽ Bảng vận tải đúng chuẩn IT6095
         let tableHtml = `<div class="overflow-x-auto my-3">
           <table class="border-collapse border border-slate-400 mx-auto text-sm">
             <thead>
@@ -1055,7 +1079,7 @@
       return { type, n, m, c, A, signs, b };
     }
 
-    // Tự động viết bài toán đối ngẫu chuẩn Chương 3 
+    // Tự động viết bài toán đối ngẫu chuẩn Chương 3 IT6095
     function buildDualHtml(prob) {
       const { type, n, m, c, A, signs, b } = prob;
       const dualType = type === 'min' ? 'max' : 'min';
@@ -1101,7 +1125,7 @@
       renderMath();
     }
 
-    // Giải QHTT bằng Phương pháp Đơn hình / Phương pháp phạt M chuẩn Bài 2 
+    // Giải QHTT bằng Phương pháp Đơn hình / Phương pháp phạt M chuẩn Bài 2 IT6095
     function solveLP() {
       const prob = readLPFromUI();
       const { type, n, m } = prob;
@@ -1206,7 +1230,7 @@
           deltaM[k] = zM.sub(cM[k]);
         }
 
-        // Kiểm tra điều kiện tối ưu & Chọn cột xoay s chuẩn 
+        // Kiểm tra điều kiện tối ưu & Chọn cột xoay s chuẩn IT6095
         let pivotCol = -1;
         for (let k = 0; k < totalVars; k++) {
           if (removedArtificial.has(k)) continue;
@@ -1417,7 +1441,7 @@
       {
         tag: "Phiếu BT Bài 2 - Câu 4b",
         title: "Giải QHTT bằng phương pháp đơn hình (Max)",
-        desc: "$f(x) = 6x_1 + 10x_2 + 12x_3 \\to \\max$ với $x_1+2x_2+4x_3 \\le 32;\\; 2x_1+x_2+2x_3 \\le 42;\\; 3x_1+2x_2+2x_3 \\le 30$. Đáp số : $x=(0,14,1,0,26,0), f_{\\max}=152$.",
+        desc: "$f(x) = 6x_1 + 10x_2 + 12x_3 \\to \\max$ với $x_1+2x_2+4x_3 \\le 32;\\; 2x_1+x_2+2x_3 \\le 42;\\; 3x_1+2x_2+2x_3 \\le 30$. Đáp số của trường: $x=(0,14,1,0,26,0), f_{\\max}=152$.",
         action: () => { switchMainTab('lp'); loadLPPreset('hw2_4b'); }
       },
       {
@@ -1435,7 +1459,7 @@
       {
         tag: "Phiếu BT Bài 2 & 3 - Câu 3h",
         title: "Giải QHTT 6 biến bằng đơn hình",
-        desc: "$f(x) = 5x_1 + 4x_2 + 5x_3 + 2x_4 + x_5 + 3x_6 \\to \\min$. Đáp án : $x^*=(7; 5; 0; 12; 0; 0)$ và $f(x^*)=79$.",
+        desc: "$f(x) = 5x_1 + 4x_2 + 5x_3 + 2x_4 + x_5 + 3x_6 \\to \\min$. Đáp án của trường: $x^*=(7; 5; 0; 12; 0; 0)$ và $f(x^*)=79$.",
         action: () => { switchMainTab('lp'); loadLPPreset('hw2_4h'); }
       },
       {
@@ -1480,6 +1504,113 @@
       `).join('');
     }
 
+
+    // BỘ GIẢI HÌNH HỌC QHTT 2 BIẾN – độc lập với các module đơn hình/vận tải.
+    const GEO_EPS=1e-8;
+    const GEO_EXAMPLES={
+      production:{c:[4,5],type:'max',rows:[[2,1,'<=',8],[1,2,'<=',7],[0,1,'<=',3]],positive:true},
+      a:{c:[5,4],type:'max',rows:[[1,2,'<=',8],[1,-2,'<=',4],[3,2,'<=',12]],positive:true},
+      b:{c:[1,4],type:'max',rows:[[2,3,'<=',22],[1,1,'<=',10],[0,1,'<=',6]],positive:true},
+      empty:{c:[1,1],type:'min',rows:[[1,1,'<=',3],[-1,1,'>=',4]],positive:true},
+      unbounded:{c:[2,1],type:'max',rows:[[1,-1,'>=',0]],positive:true},
+      multiple:{c:[1,1],type:'max',rows:[[1,1,'<=',4]],positive:true}
+    };
+    function geoAddRow(row=[1,1,'<=',5]){
+      const tr=document.createElement('tr');tr.className='border-t border-slate-200';
+      tr.innerHTML=`<td class="text-center geo-index p-1"></td><td class="p-1"><input type="number" step="any" class="geo-a border rounded p-2 w-full" value="${row[0]}"></td><td class="p-1"><input type="number" step="any" class="geo-b border rounded p-2 w-full" value="${row[1]}"></td><td class="p-1"><select class="geo-op border rounded p-2 w-full"><option value="<=">≤</option><option value=">=">≥</option><option value="=">=</option></select></td><td class="p-1"><input type="number" step="any" class="geo-d border rounded p-2 w-full" value="${row[3]}"></td><td class="p-1 text-center"><button class="text-red-600 font-bold px-2" onclick="this.closest('tr').remove();geoReindex()" aria-label="Xóa ràng buộc">✕</button></td>`;
+      tr.querySelector('select').value=row[2];document.getElementById('geo-rows').appendChild(tr);geoReindex();
+    }
+    function geoReindex(){document.querySelectorAll('#geo-rows .geo-index').forEach((e,i)=>e.textContent=i+1);}
+    function geoLoadExample(key){
+      const v=GEO_EXAMPLES[key];if(!v)return;
+      document.getElementById('geo-type').value=v.type;
+      document.getElementById('geo-c1').value=v.c[0];document.getElementById('geo-c2').value=v.c[1];
+      document.getElementById('geo-nonnegative').checked=v.positive;
+      document.getElementById('geo-rows').innerHTML='';v.rows.forEach(geoAddRow);
+      geoSolve();
+    }
+    function geoNum(x){if(!Number.isFinite(x))return String(x);if(Math.abs(x)<1e-9)return '0';return Number(x.toFixed(6)).toLocaleString('vi-VN',{maximumFractionDigits:6});}
+    function geoExpr(a,b){return `${geoNum(a)}x₁ ${b<0?'−':'+'} ${geoNum(Math.abs(b))}x₂`;}
+    function geoHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function geoNormalize(rows){let out=[];rows.forEach((r,i)=>{if(r.op==='='){out.push({a:r.a,b:r.b,d:r.d,label:i+1});out.push({a:-r.a,b:-r.b,d:-r.d,label:i+1});}else if(r.op==='>=')out.push({a:-r.a,b:-r.b,d:-r.d,label:i+1});else out.push({a:r.a,b:r.b,d:r.d,label:i+1});});return out;}
+    function geoClip(poly,h){let next=[];for(let i=0;i<poly.length;i++){
+      let p=poly[i],q=poly[(i+1)%poly.length],vp=h.a*p[0]+h.b*p[1]-h.d,vq=h.a*q[0]+h.b*q[1]-h.d;
+      let pin=vp<=GEO_EPS,qin=vq<=GEO_EPS;
+      if(pin)next.push(p);
+      if(pin!==qin){let t=vp/(vp-vq);next.push([p[0]+t*(q[0]-p[0]),p[1]+t*(q[1]-p[1])]);}
+    }return geoUnique(next);}
+    function geoUnique(ps){let out=[];ps.forEach(p=>{if(!out.some(q=>Math.hypot(p[0]-q[0],p[1]-q[1])<1e-7))out.push(p);});return out;}
+    function geoBox(M){return [[-M,-M],[M,-M],[M,M],[-M,M]];}
+    function geoPolygon(hs,M){return hs.reduce((p,h)=>p.length?geoClip(p,h):[],geoBox(M));}
+    function geoIntersections(hs){let ps=[];for(let i=0;i<hs.length;i++)for(let j=i+1;j<hs.length;j++){
+      let a=hs[i],b=hs[j],det=a.a*b.b-a.b*b.a;if(Math.abs(det)<GEO_EPS)continue;
+      const x=(a.d*b.b-a.b*b.d)/det,y=(a.a*b.d-a.d*b.a)/det;
+      if(hs.every(h=>h.a*x+h.b*y<=h.d+1e-7*Math.max(1,Math.abs(h.d))))ps.push([x,y]);
+    }return geoUnique(ps);}
+    function geoRecession(hs,c,type){
+      const dirs=geoPolygon(hs.map(h=>({a:h.a,b:h.b,d:0})),1);
+      const factor=type==='max'?1:-1;
+      return dirs.some(d=>factor*(c[0]*d[0]+c[1]*d[1])>1e-8);
+    }
+    function geoSvg(poly,hs,vertices,optPts,c,value,extent,unbounded){
+      const W=740,H=470,pad=48,scale=Math.min((W-2*pad)/(2*extent),(H-2*pad)/(2*extent));
+      const sx=x=>W/2+x*scale,sy=y=>H/2-y*scale;
+      const coords=ps=>ps.map(p=>`${sx(p[0]).toFixed(2)},${sy(p[1]).toFixed(2)}`).join(' ');
+      let parts=[`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto bg-white rounded-lg border" role="img" aria-label="Đồ thị miền phương án, ràng buộc và đường mức hàm mục tiêu">`];
+      const tick=Math.max(1,Math.ceil(extent/8));
+      for(let v=-Math.ceil(extent/tick)*tick;v<=extent;v+=tick){let x=sx(v),y=sy(v);parts.push(`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#e2e8f0"/><line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#e2e8f0"/>`);if(v!==0)parts.push(`<text x="${x+2}" y="${sy(0)+14}" font-size="11" fill="#64748b">${geoNum(v)}</text><text x="${sx(0)+5}" y="${y-3}" font-size="11" fill="#64748b">${geoNum(v)}</text>`);}
+      parts.push(`<line x1="0" y1="${sy(0)}" x2="${W}" y2="${sy(0)}" stroke="#334155" stroke-width="2"/><line x1="${sx(0)}" y1="0" x2="${sx(0)}" y2="${H}" stroke="#334155" stroke-width="2"/><text x="${W-20}" y="${sy(0)-8}" font-size="16">x₁</text><text x="${sx(0)+9}" y="18" font-size="16">x₂</text>`);
+      if(poly.length>=3)parts.push(`<polygon points="${coords(poly)}" fill="#60a5fa" fill-opacity=".25" stroke="#2563eb" stroke-width="2"/>`);
+      else if(poly.length===2)parts.push(`<polyline points="${coords(poly)}" stroke="#2563eb" stroke-width="4"/>`);
+      else if(poly.length===1)parts.push(`<circle cx="${sx(poly[0][0])}" cy="${sy(poly[0][1])}" r="5" fill="#2563eb"/>`);
+      hs.forEach((h,i)=>{if(h.label==='x1'||h.label==='x2')return;let a=h.a,b=h.b,d=h.d,ends=[];
+        if(Math.abs(b)>GEO_EPS){ends.push([-extent,(d+a*extent)/b],[extent,(d-a*extent)/b]);}
+        else if(Math.abs(a)>GEO_EPS){ends.push([d/a,-extent],[d/a,extent]);}
+        if(ends.length)parts.push(`<line x1="${sx(ends[0][0])}" y1="${sy(ends[0][1])}" x2="${sx(ends[1][0])}" y2="${sy(ends[1][1])}" stroke="#64748b" stroke-dasharray="7 5" stroke-width="1.5"/>`);
+      });
+      if(value!==null&&(Math.abs(c[0])+Math.abs(c[1])>GEO_EPS)){
+        const d=value;let ps=Math.abs(c[1])>GEO_EPS?[[-extent,(d+c[0]*extent)/c[1]],[extent,(d-c[0]*extent)/c[1]]]:[[d/c[0],-extent],[d/c[0],extent]];
+        parts.push(`<line x1="${sx(ps[0][0])}" y1="${sy(ps[0][1])}" x2="${sx(ps[1][0])}" y2="${sy(ps[1][1])}" stroke="#dc2626" stroke-width="3"/><text x="${W-185}" y="24" font-size="13" fill="#dc2626">Đường mức tối ưu</text>`);
+      }
+      vertices.forEach((p,i)=>parts.push(`<circle cx="${sx(p[0])}" cy="${sy(p[1])}" r="4" fill="#1e40af"/><text x="${sx(p[0])+7}" y="${sy(p[1])-9}" fill="#1e3a8a" font-size="12" font-weight="bold">${String.fromCharCode(65+i)} (${geoNum(p[0])}; ${geoNum(p[1])})</text>`));
+      optPts.forEach(p=>parts.push(`<circle cx="${sx(p[0])}" cy="${sy(p[1])}" r="8" fill="none" stroke="#dc2626" stroke-width="3"/>`));
+      if(unbounded)parts.push(`<text x="12" y="${H-12}" font-size="12" fill="#b45309">Miền D có thể còn kéo dài ra ngoài khung hình</text>`);
+      return parts.join('')+'</svg>';
+    }
+    function geoSolve(){
+      const dest=document.getElementById('geo-output');
+      try{
+        const get=id=>{let s=document.getElementById(id).value;if(s.trim()==='')throw Error('Không được để trống hệ số.');let x=Number(s);if(!Number.isFinite(x))throw Error('Hệ số không hợp lệ.');return x;};
+        const c=[get('geo-c1'),get('geo-c2')],type=document.getElementById('geo-type').value;
+        let rows=Array.from(document.querySelectorAll('#geo-rows tr')).map(tr=>{const read=cl=>{let s=tr.querySelector(cl).value;if(s.trim()==='')throw Error('Hãy điền đầy đủ các ràng buộc.');const n=Number(s);if(!Number.isFinite(n))throw Error('Ràng buộc không hợp lệ.');return n;};return {a:read('.geo-a'),b:read('.geo-b'),op:tr.querySelector('.geo-op').value,d:read('.geo-d')};});
+        if(!rows.length)throw Error('Cần ít nhất một ràng buộc.');
+        if(rows.length>24)throw Error('Vui lòng nhập tối đa 24 ràng buộc để đồ thị rõ ràng.');
+        const positive=document.getElementById('geo-nonnegative').checked;
+        const hs=geoNormalize(rows);if(positive){hs.push({a:-1,b:0,d:0,label:'x1'},{a:0,b:-1,d:0,label:'x2'});}
+        const scale=Math.max(10,...rows.map(r=>Math.abs(r.d)/(Math.hypot(r.a,r.b)||1)))*4;
+        const M=Math.max(40,scale), polygon=geoPolygon(hs,M),vertices=geoIntersections(hs);
+        let feasible=polygon.length>0,unbounded=feasible&&geoRecession(hs,c,type),values=vertices.map(p=>c[0]*p[0]+c[1]*p[1]);
+        const sign=type==='max'?1:-1;
+        let best=values.length?(type==='max'?Math.max(...values):Math.min(...values)):null;
+        // Nếu miền D không có đỉnh (ví dụ chứa một đường thẳng), tối ưu vẫn có thể tồn tại.
+        // Dùng đỉnh cắt trên cửa sổ để xác định mức, nhưng không gọi các điểm này là đỉnh của D.
+        const polyValues=polygon.map(p=>c[0]*p[0]+c[1]*p[1]);
+        if(!unbounded&&feasible&&polyValues.length){let v=type==='max'?Math.max(...polyValues):Math.min(...polyValues);if(best===null||sign*v>sign*best+1e-7)best=v;}
+        const optimal=(!unbounded&&feasible&&best!==null);
+        let opts=optimal?vertices.filter(p=>Math.abs(c[0]*p[0]+c[1]*p[1]-best)<1e-6):[];
+        if(optimal&&!opts.length)opts=polygon.filter(p=>Math.abs(c[0]*p[0]+c[1]*p[1]-best)<1e-6);
+        const many=optimal&&(Math.abs(c[0])+Math.abs(c[1])<GEO_EPS||opts.length>1||polygon.filter(p=>Math.abs(c[0]*p[0]+c[1]*p[1]-best)<1e-6).length>1);
+        const range=Math.max(8,...polygon.flat().map(v=>Math.abs(v)),...vertices.flat().map(v=>Math.abs(v)));
+        const extent=Math.min(Math.max(8,Math.ceil(range*1.13)),Math.max(100,M*1.15));
+        const table=vertices.length?`<div class="overflow-x-auto"><table class="w-full text-sm border-collapse"><thead><tr class="bg-blue-50"><th class="border p-2">Đỉnh</th><th class="border p-2">x₁</th><th class="border p-2">x₂</th><th class="border p-2">f(x)</th></tr></thead><tbody>${vertices.map((p,i)=>`<tr class="${optimal&&Math.abs(values[i]-best)<1e-6?'bg-green-50 font-bold':''}"><td class="border p-2 text-center">${String.fromCharCode(65+i)}</td><td class="border p-2 text-center">${geoNum(p[0])}</td><td class="border p-2 text-center">${geoNum(p[1])}</td><td class="border p-2 text-center">${geoNum(values[i])}</td></tr>`).join('')}</tbody></table></div>`:'<p>Miền nghiệm không có đỉnh hữu hạn xác định từ giao các đường biên.</p>';
+        const constraints=rows.map((r,i)=>`<li>(${i+1}) ${geoExpr(r.a,r.b)} ${r.op==='>='?'≥':r.op==='<= '||r.op==='<='?'≤':'='} ${geoNum(r.d)}</li>`).join('');
+        const intercept=rows.map((r,i)=>{if(Math.abs(r.a)+Math.abs(r.b)<GEO_EPS)return `<li>Đường (${i+1}): ${geoNum(r.d)} ${r.op==='>='?'≤':'≥'} 0 (ràng buộc hằng).</li>`;const x=Math.abs(r.a)>GEO_EPS?`x₂ = 0 ⇒ x₁ = ${geoNum(r.d/r.a)}`:'đường song song trục x₁';const y=Math.abs(r.b)>GEO_EPS?`x₁ = 0 ⇒ x₂ = ${geoNum(r.d/r.b)}`:'đường song song trục x₂';return `<li>(${i+1}) ${geoExpr(r.a,r.b)} = ${geoNum(r.d)}: ${x}; ${y}.</li>`;}).join('');
+        const status=!feasible?'Miền D rỗng ⇒ bài toán vô nghiệm.':unbounded?`Hàm mục tiêu ${type==='max'?'không bị chặn trên':'không bị chặn dưới'} trên D ⇒ không có giá trị tối ưu hữu hạn.`:many?`Có nhiều phương án tối ưu; giá trị ${type} f = ${geoNum(best)}. Các điểm trên phần giao của D với đường mức tối ưu đều đạt giá trị này.`:`Phương án tối ưu: x* = (${geoNum(opts[0]?.[0]??0)}; ${geoNum(opts[0]?.[1]??0)}), f${type} = ${geoNum(best)}.`;
+        const content=`<div class="bg-white rounded-xl shadow border p-5"><h3 class="text-lg font-bold text-blue-900">Bước 1. Phát biểu bài toán</h3><p class="mt-2 font-semibold">f(x) = ${geoExpr(c[0],c[1])} → ${type.toUpperCase()}</p><ul class="list-disc pl-6 mt-2 space-y-1">${constraints}${positive?'<li>x₁ ≥ 0, x₂ ≥ 0</li>':'<li>x₁, x₂ không ràng buộc dấu</li>'}</ul></div><div class="bg-white rounded-xl shadow border p-5"><h3 class="text-lg font-bold text-blue-900">Bước 2. Lập các đường thẳng biên và xác định nửa mặt phẳng</h3><ul class="list-disc pl-6 mt-3 space-y-1 text-sm">${intercept}</ul><p class="text-sm mt-3">Giao các nửa mặt phẳng thỏa mãn đồng thời hệ ràng buộc tạo thành miền phương án D (có thể rỗng, bị chặn hoặc không bị chặn).</p></div><div class="bg-white rounded-xl shadow border p-5"><h3 class="text-lg font-bold text-blue-900">Bước 3. Vẽ miền phương án D và đường mức</h3><p class="text-sm mt-2 mb-3">Miền màu xanh: phần D trong cửa sổ quan sát; nét đứt xám: đường thẳng biên; đường đỏ: đường mức tại giá trị tối ưu (nếu có).</p>${geoSvg(polygon,hs,vertices,opts,c,optimal?best:null,extent,geoRecession(hs,[1,0],'max')||geoRecession(hs,[0,1],'max')||geoRecession(hs,[-1,0],'max')||geoRecession(hs,[0,-1],'max'))}<p class="text-xs text-slate-500 mt-2">Hình minh họa tự động, có thể thu/phóng bằng trình duyệt. Tọa độ và kết quả tính từ hệ ràng buộc đã nhập.</p></div><div class="bg-white rounded-xl shadow border p-5"><h3 class="text-lg font-bold text-blue-900">Bước 4. Tìm giao điểm, thử các phương án cực biên</h3>${table}</div><div class="bg-white rounded-xl shadow border p-5"><h3 class="text-lg font-bold text-blue-900">Bước 5. Dịch chuyển đường mức và kết luận</h3><p class="mt-3">Xét các đường mức ${geoExpr(c[0],c[1])} = α. Với bài toán ${type.toUpperCase()}, dịch chuyển song song theo ${type==='max'?'chiều':'chiều ngược'} véc tơ pháp tuyến (${geoNum(c[0])}; ${geoNum(c[1])}) để ${type==='max'?'tăng':'giảm'} α.</p><p class="mt-3 font-bold text-${!feasible||unbounded?'amber':'green'}-800">${status}</p></div>`;
+        dest.innerHTML=content;
+      }catch(e){dest.innerHTML=`<div class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">Không thể giải: ${geoHtml(e.message)}</div>`;}
+    }
+
     function renderMath() {
       if (window.renderMathInElement) {
         renderMathInElement(document.body, {
@@ -1494,6 +1625,7 @@
     // Khởi tạo trang web khi tải xong
     window.addEventListener('DOMContentLoaded', () => {
       showChapter(2);
+      geoLoadExample('production');
       buildLPInputGrid(LP_PRESETS.ex2_5);
       buildTPInputGrid(TP_PRESETS.ex4_1);
       renderExerciseBank();
