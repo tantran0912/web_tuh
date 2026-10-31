@@ -123,6 +123,7 @@
           <div class="mt-4 md:mt-5 flex gap-2">
             <button onclick="solveLP()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg shadow transition">🚀 Giải từng bước theo chuẩn</button>
             <button onclick="generateDualOnly()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-900 font-semibold px-4 py-2 rounded-lg transition">🔄 Viết Bài Toán Đối Ngẫu</button>
+<button onclick="solveDualSimplex()" class="bg-teal-700 text-white font-semibold px-4 py-2 rounded-lg">⚖️ Giải bằng đơn hình đối ngẫu</button>
           </div>
         </div>
 
@@ -282,9 +283,11 @@
     const CHAPTER_DATA = {
       1: {
         title: "Chương 1: Giải bài toán QHTT bằng phương pháp hình học",
+        videoType: "mp4",
+        videoSrc: "videos/Geometric_Linear_Programming_T_FOREN.mp4",
         summary: `
           <div class="space-y-4 text-sm leading-relaxed">
-            <p class="text-slate-500"> – Phương pháp hình học.</p>
+            <p class="text-slate-500">Theo đề cương Bài 2, mục 2.2.4 – Phương pháp đồ thị.</p>
             <div>
               <h4 class="font-bold text-blue-900 mb-2">1. Bài toán QHTT hai biến và miền phương án</h4>
               <p>Xét bài toán dạng chuẩn hai biến:</p>
@@ -348,32 +351,127 @@
       },
       2: {
         title: "Chương 2: Bài toán quy hoạch tuyến tính và phương pháp đơn hình",
+        videoType: "mp4",
+        videoSrc: "videos/Simplex_Method_Lesson_T_FOREN.mp4",
         summary: `
-          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
-            <li><b>Dạng chuẩn:</b> Hàm mục tiêu $\\sum c_j x_j \\to \\max$ với ràng buộc $\\sum a_{ij}x_j \\le b_i, x_j \\ge 0$ (hoặc $\\to \\min$ với $\\sum a_{ij}x_j \\ge b_i, x_j \\ge 0$).</li>
-            <li><b>Dạng chính tắc:</b> Hệ ràng buộc đẳng thức $\\sum_{j=1}^n a_{ij}x_j = b_i$ ($b_i \\ge 0$) và $x_j \\ge 0$. Ràng buộc $\\le$ cộng thêm biến phụ $+x_{n+i}$, ràng buộc $\\ge$ trừ đi biến phụ $-x_{n+i}$.</li>
-            <li><b>Công thức tính ước lượng chuẩn :</b> $\\Delta_k = z_k - c_k = \\sum_{j \\in J} z_{jk}c_j - c_k$.</li>
-            <li><b>Tiêu chuẩn tối ưu & Chọn cột xoay:</b>
-              <br/>• <i>Bài toán Max:</i> Tối ưu khi $\\Delta_k \\ge 0, \\forall k$. Chọn cột xoay $\\Delta_s = \\min\\{\\Delta_k \\mid \\Delta_k < 0\\}$.
-              <br/>• <i>Bài toán Min:</i> Tối ưu khi $\\Delta_k \\le 0, \\forall k$. Chọn cột xoay $\\Delta_s = \\max\\{\\Delta_k \\mid \\Delta_k > 0\\}$.
-            </li>
-            <li><b>Phương pháp phạt (Bài toán M):</b> Bổ sung biến giả tạo với hệ số $-M$ (cho Max) hoặc $+M$ (cho Min). Tách dòng ước lượng thành $\\Delta_k = \\delta_k + \\eta_k M$.</li>
-          </ul>
+<div class="space-y-4 text-sm leading-relaxed"><section><h4 class="font-bold text-blue-900 mb-2">1. Bài toán QHTT và các dạng biểu diễn</h4>
+<p>Bài toán quy hoạch tuyến tính (QHTT) tìm cực đại hoặc cực tiểu của hàm tuyến tính $f(x)=\\sum_{j=1}^{n}c_jx_j$ với các ràng buộc tuyến tính. Một phương án phải thỏa tất cả ràng buộc; phương án tối ưu là phương án cho giá trị mục tiêu tốt nhất.</p>
+<div class="overflow-x-auto">$$\\begin{aligned}\\text{Chuẩn tắc Max: }&\\max c^Tx,\\quad Ax\\le b,\\quad x\\ge0.\\\\\\text{Chuẩn tắc Min: }&\\min c^Tx,\\quad Ax\\ge b,\\quad x\\ge0.\\\\\\text{Chính tắc: }&\\max/\\min c^Tx,\\quad Ax=b,\\quad x\\ge0.\\end{aligned}$$</div>
+<p>Để chuẩn bị cơ sở xuất phát, nếu một hàng có vế phải âm, nhân cả hàng với $-1$ và đảo chiều bất đẳng thức. Đổi Min sang Max bằng cách xét $-f$; sau khi giải, đổi dấu giá trị tối ưu để trở lại bài toán ban đầu.</p></section><section><h4 class="font-bold text-blue-900 mb-2">2. Chuyển bài toán về dạng chính tắc</h4>
+<ol class="list-decimal pl-5 space-y-2">
+<li><b>Biến tự do:</b> Đặt $x_j=x_j^+-x_j^-$ với $x_j^+,x_j^-\\ge0$, thay vào toàn bộ hệ và hàm mục tiêu. Nếu $x_j\\le0$, đặt $x_j=-y_j$ với $y_j\\ge0$.</li>
+<li><b>Ràng buộc $\\le$:</b> Thêm biến phụ $s_i\\ge0$: $A_ix+s_i=b_i$. Biến phụ biểu diễn lượng tài nguyên còn dư.</li>
+<li><b>Ràng buộc $\\ge$:</b> Trừ biến dư $s_i\\ge0$: $A_ix-s_i=b_i$. Biến dư biểu diễn lượng vượt mức tối thiểu.</li>
+<li><b>Ràng buộc $=$:</b> Giữ nguyên. Biến phụ và biến dư có hệ số 0 trong hàm mục tiêu.</li>
+</ol>
+<p class="mt-2">Ví dụ: $x_1+2x_2\\le6$ trở thành $x_1+2x_2+s_1=6$; $2x_1+x_2\\ge3$ trở thành $2x_1+x_2-s_2=3$. Chuyển thành đẳng thức chưa bảo đảm đã có cơ sở khả thi; chỉ thêm biến giả khi cần tạo cơ sở xuất phát.</p></section><section><h4 class="font-bold text-blue-900 mb-2">3. Cơ sở, phương án xuất phát và bảng đơn hình</h4>
+<p>Với hệ $Ax=b$ gồm $m$ phương trình độc lập, chọn $m$ cột độc lập tạo ma trận cơ sở $B$. Cho các biến ngoài cơ sở bằng 0, giải $x_B=B^{-1}b$. Nếu $x_B\\ge0$, ta có một phương án cơ sở khả thi.</p>
+<p class="mt-2">Trong bài Max với $Ax\\le b$, $b\\ge0$, các biến phụ tạo ma trận đơn vị. Cho các biến gốc bằng 0 thì biến phụ bằng $b_i$, có ngay cơ sở xuất phát. Bảng đơn hình ghi hệ số mục tiêu $c_j$, biến cơ sở, hệ số cơ sở $c_B$, cột phương án $\\bar b$ và các hệ số $\\bar a_{ik}$ của hệ đã biến đổi.</p>
+<div class="overflow-x-auto">$$\\bar A=B^{-1}A,\\qquad \\bar b=B^{-1}b,\\qquad f_0=\\sum_{i=1}^m c_{B_i}\\bar b_i,\\qquad \\Delta_k=\\sum_{i=1}^m c_{B_i}\\bar a_{ik}-c_k.$$</div>
+<p>Website dùng quy ước $\\Delta_k=z_k-c_k$. Từ đó $f=f_0-\\sum_{k\\notin B}\\Delta_kx_k$: tăng biến ngoài cơ sở có $\\Delta_k&lt;0$ sẽ cải thiện bài Max; có $\\Delta_k&gt;0$ sẽ cải thiện bài Min.</p></section><section><h4 class="font-bold text-blue-900 mb-2">4. Quy trình đơn hình thông thường</h4>
+<ol class="list-decimal pl-5 space-y-2">
+<li><b>Kiểm tra tối ưu:</b> Max tối ưu khi mọi $\\Delta_k\\ge0$; Min tối ưu khi mọi $\\Delta_k\\le0$.</li>
+<li><b>Chọn cột xoay $s$:</b> Với Max, chọn $\\Delta_s$ âm nhỏ nhất; với Min, chọn $\\Delta_s$ dương lớn nhất. Đó là biến vào cơ sở vì nó cải thiện hàm mục tiêu theo quy ước trên. Khi bằng nhau có thể chọn chỉ số nhỏ nhất, theo quy tắc nhất quán.</li>
+<li><b>Chọn dòng xoay $r$:</b> Chỉ xét $\\bar a_{is}&gt;0$, tính $\\theta_i=\\bar b_i/\\bar a_{is}$, lấy tỷ số nhỏ nhất. Vì $x_{B_i}=\\bar b_i-\\bar a_{is}x_s\\ge0$, tỷ số này giới hạn lượng tăng của biến vào cơ sở. Biến tại dòng $r$ ra khỏi cơ sở.</li>
+<li><b>Xoay bảng:</b> Phần tử trục $p=\\bar a_{rs}$. Chia dòng trục cho $p$, rồi khử các phần tử khác trong cột $s$ về 0:</li>
+</ol>
+<div class="overflow-x-auto">$$R_r'=R_r/p,\\qquad R_i'=R_i-\\bar a_{is}R_r'\\quad(i\\ne r).$$</div>
+<p>Thực hiện trên cả cột phương án, thay biến cơ sở, tính lại $f_0$ và $\\Delta$, lặp đến tối ưu. Nếu có cột cải thiện mà mọi hệ số trong cột đều không dương, hàm mục tiêu không bị chặn theo hướng đó.</p></section><section><h4 class="font-bold text-blue-900 mb-2">5. Ví dụ minh họa – Giải đơn hình từng bước</h4>
+<div class="overflow-x-auto">$$\\max f=3x_1+2x_2,\\qquad\\begin{cases}x_1+x_2\\le4,\\\\2x_1+x_2\\le6,\\\\x_1,x_2\\ge0.\\end{cases}$$</div>
+<p><b>Lập bảng đầu:</b> Thêm $s_1,s_2\\ge0$. Cơ sở $(s_1,s_2)$, phương án $(x_1,x_2,s_1,s_2)=(0,0,4,6)$, $c_B=(0,0)$, $f_0=0$.</p></section><div class="overflow-x-auto my-3"><table class="w-full border-collapse text-center"><thead><tr><th scope="col" class="border p-2">Cơ sở</th><th scope="col" class="border p-2">$c_B$</th><th scope="col" class="border p-2">$\\bar b$</th><th scope="col" class="border p-2">$x_1$</th><th scope="col" class="border p-2">$x_2$</th><th scope="col" class="border p-2">$s_1$</th><th scope="col" class="border p-2">$s_2$</th></tr></thead><tbody><tr><td class="border p-2">$s_1$</td><td class="border p-2">0</td><td class="border p-2">4</td><td class="border p-2">1</td><td class="border p-2">1</td><td class="border p-2">1</td><td class="border p-2">0</td></tr><tr><td class="border p-2">$s_2$</td><td class="border p-2">0</td><td class="border p-2">6</td><td class="border p-2">2</td><td class="border p-2">1</td><td class="border p-2">0</td><td class="border p-2">1</td></tr><tr><td class="border p-2">$\\Delta$</td><td class="border p-2"></td><td class="border p-2">0</td><td class="border p-2">-3</td><td class="border p-2">-2</td><td class="border p-2">0</td><td class="border p-2">0</td></tr></tbody></table></div><p><b>Lần xoay 1:</b> Chọn $x_1$ vì $\\Delta_1=-3$ âm nhỏ nhất. Các tỷ số là $4/1=4$ và $6/2=3$, nên $s_2$ ra cơ sở, trục bằng 2. Chia dòng 2 cho 2 rồi lấy dòng 1 trừ dòng 2 mới:</p><div class="overflow-x-auto my-3"><table class="w-full border-collapse text-center"><thead><tr><th scope="col" class="border p-2">Cơ sở</th><th scope="col" class="border p-2">$c_B$</th><th scope="col" class="border p-2">$\\bar b$</th><th scope="col" class="border p-2">$x_1$</th><th scope="col" class="border p-2">$x_2$</th><th scope="col" class="border p-2">$s_1$</th><th scope="col" class="border p-2">$s_2$</th></tr></thead><tbody><tr><td class="border p-2">$s_1$</td><td class="border p-2">0</td><td class="border p-2">1</td><td class="border p-2">0</td><td class="border p-2">$1/2$</td><td class="border p-2">1</td><td class="border p-2">$-1/2$</td></tr><tr><td class="border p-2">$x_1$</td><td class="border p-2">3</td><td class="border p-2">3</td><td class="border p-2">1</td><td class="border p-2">$1/2$</td><td class="border p-2">0</td><td class="border p-2">$1/2$</td></tr><tr><td class="border p-2">$\\Delta$</td><td class="border p-2"></td><td class="border p-2">9</td><td class="border p-2">0</td><td class="border p-2">$-1/2$</td><td class="border p-2">0</td><td class="border p-2">$3/2$</td></tr></tbody></table></div><p><b>Lần xoay 2:</b> Chọn $x_2$ vì $\\Delta_2=-1/2&lt;0$. Tỷ số $1/(1/2)=2$ và $3/(1/2)=6$, nên $s_1$ ra cơ sở. Chia dòng 1 cho $1/2$ rồi khử hệ số $x_2$ ở dòng 2:</p><div class="overflow-x-auto my-3"><table class="w-full border-collapse text-center"><thead><tr><th scope="col" class="border p-2">Cơ sở</th><th scope="col" class="border p-2">$c_B$</th><th scope="col" class="border p-2">$\\bar b$</th><th scope="col" class="border p-2">$x_1$</th><th scope="col" class="border p-2">$x_2$</th><th scope="col" class="border p-2">$s_1$</th><th scope="col" class="border p-2">$s_2$</th></tr></thead><tbody><tr><td class="border p-2">$x_2$</td><td class="border p-2">2</td><td class="border p-2">2</td><td class="border p-2">0</td><td class="border p-2">1</td><td class="border p-2">2</td><td class="border p-2">-1</td></tr><tr><td class="border p-2">$x_1$</td><td class="border p-2">3</td><td class="border p-2">2</td><td class="border p-2">1</td><td class="border p-2">0</td><td class="border p-2">-1</td><td class="border p-2">1</td></tr><tr><td class="border p-2">$\\Delta$</td><td class="border p-2"></td><td class="border p-2">10</td><td class="border p-2">0</td><td class="border p-2">0</td><td class="border p-2">1</td><td class="border p-2">1</td></tr></tbody></table></div><p>Mọi $\\Delta_k\\ge0$, nên tối ưu. Các biến ngoài cơ sở $s_1=s_2=0$, đọc được $x_1=x_2=2$. Kiểm tra $2+2=4$, $2\\cdot2+2=6$; kết luận $f_{\\max}=3\\cdot2+2\\cdot2=10$.</p><section><h4 class="font-bold text-blue-900 mb-2">6. Phương pháp phạt M – Khi chưa có cơ sở khả thi</h4>
+<p>Thêm biến giả $a_i\\ge0$ để tạo cơ sở xuất phát với vế phải không âm. Bài Max dùng $f_M=f-M\\sum a_i$; bài Min dùng $f_M=f+M\\sum a_i$, trong đó $M$ là số dương đủ lớn, được xét theo ý nghĩa ký hiệu.</p>
+<ol class="list-decimal pl-5 space-y-2 mt-2">
+<li>Lập bảng với cơ sở gồm các cột đơn vị sẵn có và các biến giả cần thiết. Tính lại dòng $\\Delta$ theo đúng hệ số $c_B$, kể cả $\\pm M$.</li>
+<li>Viết $\\Delta_k=\\eta_kM+\\delta_k$. Khi so sánh, xét $\\eta_k$ trước; nếu bằng nhau mới xét $\\delta_k$. Chọn cột, dòng và xoay theo quy tắc Max hoặc Min ở trên.</li>
+<li>Khi bài toán phụ tối ưu, nếu còn biến giả dương thì bài gốc vô nghiệm. Nếu mọi biến giả bằng 0, lấy các biến gốc làm nghiệm và tính giá trị bằng hàm mục tiêu gốc.</li>
+<li>Biến giả còn trong cơ sở với giá trị 0 cần được đưa ra bằng phép xoay hợp lệ; nếu hàng tương ứng dư thừa thì loại hàng đó trước khi tiếp tục trên bài gốc.</li>
+</ol>
+<p class="mt-2"><b>Ví dụ:</b> $\\min f=2x_1+x_2$ với $x_1+x_2\\ge2$, $x_1,x_2\\ge0$. Viết $x_1+x_2-s+a=2$ và $f_M=2x_1+x_2+Ma$.</p>
+<p class="mt-2">Ban đầu $a=2$, $c_B=M$, nên $\\Delta=(M-2,M-1,-M,0)$ theo thứ tự $(x_1,x_2,s,a)$. Với Min chọn $x_2$ vì $M-1$ dương lớn nhất. Tỷ số $2/1=2$, đưa $a$ ra và $x_2$ vào.</p>
+<p class="mt-2">Sau xoay, $c_B=1$, $\\Delta=(-1,0,-1,1-M)$, mọi ước lượng không dương khi $M$ đủ lớn. Biến giả $a=0$, nghiệm gốc $(x_1,x_2)=(0,2)$, $f_{\\min}=2$. Kiểm tra trực tiếp: $2x_1+x_2=(x_1+x_2)+x_1\\ge2$, nên không có phương án nào tốt hơn.</p></section><section><h4 class="font-bold text-blue-900 mb-2">7. Những tình huống cần nhận biết</h4>
+<ul class="list-disc pl-5 space-y-2">
+<li><b>Suy biến:</b> Một biến cơ sở bằng 0; tỷ số nhỏ nhất có thể bằng 0 nên phép xoay có thể không cải thiện giá trị mục tiêu. Quy tắc Bland chọn biến vào có chỉ số nhỏ nhất trong các biến cải thiện và phá hòa biến ra theo chỉ số giúp tránh chu trình.</li>
+<li><b>Nhiều nghiệm tối ưu:</b> Ở bảng tối ưu, biến ngoài cơ sở có $\\Delta_k=0$ có thể cho nghiệm tối ưu khác nếu tăng được biến đó một lượng dương mà vẫn khả thi. Chỉ riêng ước lượng bằng 0 chưa đủ kết luận có nghiệm khác.</li>
+<li><b>Vô nghiệm và không bị chặn:</b> Vô nghiệm nghĩa là không có phương án thỏa hệ; không bị chặn nghĩa là có phương án nhưng giá trị mục tiêu có thể cải thiện vô hạn.</li>
+<li><b>Đọc kết quả:</b> Biến ngoài cơ sở bằng 0, biến cơ sở bằng cột phương án; khôi phục các biến đã đổi và kiểm tra nghiệm trên đề bài ban đầu.</li>
+</ul></section></div>
         `,
-        videoNote: "Video hướng dẫn: Giải bài toán QHTT bằng phương pháp đồ thị, lập bảng đơn hình và bảng đánh thuế M."
+        videoNote: "Video hướng dẫn: Chuyển dạng bài toán QHTT, giải bằng đơn hình thông thường và phương pháp phạt M."
       },
       3: {
         title: "Chương 3: Bài toán vận tải và phương pháp thế vị giải bài toán vận tải",
+        videoType: "youtube",
+        videoSrc: "https://www.youtube.com/embed/hok-ojKnAKg",
         summary: `
-          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
-            <li><b>Bước 1 (Cân bằng thu phát):</b> Nếu $\\sum a_i > \\sum b_j$ thêm cột thu ảo $b_{n+1} = \\sum a_i - \\sum b_j$ ($c_{i,n+1}=0$). Nếu $\\sum a_i < \\sum b_j$ thêm hàng phát ảo $a_{m+1} = \\sum b_j - \\sum a_i$ ($c_{m+1,j}=0$). Ưu tiên phân phối ô thực trước, ô ảo sau.</li>
-            <li><b>Bước 2 (Tìm PACB xuất phát):</b> Góc Tây Bắc, Cực tiểu cước phí toàn bảng, Cực tiểu cước phí theo hàng, Cực tiểu cước phí theo cột. Đủ $m+n-1$ ô sử dụng (nếu thiếu bổ sung <i>ô-chọn-không</i>).</li>
-            <li><b>Bước 3 (Phương pháp Thế vị):</b>
-              <br/>• Tính thế vị $U_i, V_j$ tại các ô chọn: $U_i + V_j = c_{ij}$ (cho $U_1 = 0$).
-              <br/>• Tính ước lượng cho ô trống: $\\Delta_{ij} = (U_i + V_j) - c_{ij}$.
-              <br/>• Tối ưu khi $\\Delta_{ij} \\le 0, \\forall (i,j) \\notin G$. Nếu có $\\Delta_{ij} > 0$, chọn ô có $\\Delta_{ij}$ lớn nhất làm đỉnh $+$, lập chu trình xen kẽ $+, -$, tìm $\\theta = \\min\\{x_{ij} \\mid (i,j) \\in K^-\\}$ và điều chỉnh.
-            </li>
-          </ul>
+<div class="space-y-4 text-sm leading-relaxed"><section><h4 class="font-bold text-blue-900 mb-2">1. Mô hình bài toán vận tải</h4>
+<p>Có $m$ nơi phát với lượng hàng $a_i$, $n$ nơi thu với nhu cầu $b_j$ và chi phí vận chuyển một đơn vị $c_{ij}$. Biến $x_{ij}\\ge0$ là lượng hàng chuyển từ nơi phát $i$ đến nơi thu $j$. Bài toán cân bằng có mô hình:</p>
+<div class="overflow-x-auto">$$\\min Z=\\sum_{i=1}^m\\sum_{j=1}^n c_{ij}x_{ij},\\qquad\\begin{cases}\\sum_{j=1}^n x_{ij}=a_i &(i=1,\\ldots,m),\\\\\\sum_{i=1}^m x_{ij}=b_j &(j=1,\\ldots,n),\\\\x_{ij}\\ge0.\\end{cases}$$</div>
+<p>Tổng hàng phát phải bằng tổng nhu cầu: $\\sum_i a_i=\\sum_j b_j$. Một phương án hợp lệ phải bảo toàn cả tổng hàng từng hàng và từng cột.</p></section><section><h4 class="font-bold text-blue-900 mb-2">2. Cân bằng thu – phát trước khi giải</h4>
+<ul class="list-disc pl-5 space-y-2">
+<li>Nếu $\\sum a_i&gt;\\sum b_j$, thêm nơi thu ảo với $b_{n+1}=\\sum a_i-\\sum b_j$. Lượng chuyển vào cột ảo biểu diễn hàng còn dư.</li>
+<li>Nếu $\\sum a_i&lt;\\sum b_j$, thêm nơi phát ảo với $a_{m+1}=\\sum b_j-\\sum a_i$. Lượng từ hàng ảo biểu diễn nhu cầu chưa được đáp ứng.</li>
+<li>Chi phí ô ảo thường đặt bằng 0 trong mô hình cân bằng thông thường. Nếu đề bài quy định chi phí lưu kho hoặc phạt thiếu hàng, dùng đúng chi phí đó.</li>
+</ul>
+<p class="mt-2">Ví dụ: Tổng phát 50, tổng thu 40 thì thêm một cột thu ảo có nhu cầu 10. Sau khi giải cần diễn giải lượng ở ô ảo theo ý nghĩa của bài toán, không coi là chuyến vận chuyển thực.</p></section><section><h4 class="font-bold text-blue-900 mb-2">3. Tìm phương án cơ sở xuất phát</h4>
+<ol class="list-decimal pl-5 space-y-2">
+<li><b>Góc Tây Bắc:</b> Bắt đầu ở ô trên cùng bên trái, phân phối $x_{ij}=\\min(a_i^{\\mathrm{còn}},b_j^{\\mathrm{còn}})$. Trừ lượng này khỏi cung và cầu còn lại; hết cung thì xuống hàng, đủ cầu thì sang cột.</li>
+<li><b>Cực tiểu cước phí toàn bảng:</b> Trong các hàng, cột còn cung hoặc cầu, chọn ô có chi phí nhỏ nhất và phân phối lượng lớn nhất có thể. Cập nhật cung, cầu rồi lặp lại; phá hòa theo quy tắc nhất quán.</li>
+<li><b>Cực tiểu theo hàng hoặc cột:</b> Xử lý lần lượt từng hàng hoặc từng cột; trong phần đang xét, chọn ô có chi phí nhỏ nhất còn khả năng phân phối.</li>
+</ol>
+<p class="mt-2">Gọi $G$ là tập ô cơ sở. Với bảng đã bỏ các hàng hoặc cột tổng bằng 0, một cơ sở vận tải có $m+n-1$ ô và không tạo chu trình. Nếu số ô phân phối dương ít hơn số đó, bổ sung ô cơ sở có lượng 0 sao cho không tạo chu trình: đây là <b>ô-chọn-không</b>, không phải hàng thực tế.</p>
+<p class="mt-2">Khi một lần phân phối làm đồng thời hết cung và đủ cầu, có thể xuất hiện suy biến. Chọn thêm ô 0 hợp lệ để giữ đủ cơ sở; luôn kiểm tra tổng từng hàng và từng cột sau khi lập phương án.</p></section><section><h4 class="font-bold text-blue-900 mb-2">4. Tính thế vị và ước lượng các ô ngoài cơ sở</h4>
+<p>Đặt $U_i$ cho hàng phát $i$, $V_j$ cho cột thu $j$. Trên mọi ô cơ sở, giải hệ:</p>
+<div class="overflow-x-auto">$$U_i+V_j=c_{ij}\\quad((i,j)\\in G).$$</div>
+<p>Cho trước một thế vị, thường $U_1=0$, rồi suy ra lần lượt $V_j=c_{ij}-U_i$ hoặc $U_i=c_{ij}-V_j$. Ô cơ sở có lượng 0 vẫn tham gia hệ thế vị. Với cơ sở hợp lệ liên thông, cách này xác định được tất cả thế vị.</p>
+<p class="mt-2">Với mỗi ô ngoài cơ sở, tính theo quy ước của website:</p>
+<div class="overflow-x-auto">$$\\Delta_{ij}=U_i+V_j-c_{ij}.$$</div>
+<ul class="list-disc pl-5 space-y-2">
+<li>Nếu mọi $\\Delta_{ij}\\le0$, phương án tối ưu cho bài toán Min.</li>
+<li>Nếu có $\\Delta_{ij}&gt;0$, chọn ô có ước lượng dương lớn nhất để đưa vào cơ sở: chi phí có thể giảm $\\Delta_{ij}$ trên mỗi đơn vị điều chỉnh theo chu trình.</li>
+</ul></section><section><h4 class="font-bold text-blue-900 mb-2">5. Lập chu trình và điều chỉnh phương án</h4>
+<ol class="list-decimal pl-5 space-y-2">
+<li>Đánh dấu $+$ tại ô vào cơ sở. Nối các đoạn ngang và dọc qua ô cơ sở để tạo một chu trình kín; các đỉnh đổi hướng còn lại đều là ô thuộc $G$.</li>
+<li>Gán dấu xen kẽ $+,-,+,-$ quanh chu trình. Mỗi hàng hoặc cột tham gia có một ô cộng và một ô trừ nên tổng cung, cầu được bảo toàn.</li>
+<li>Chọn lượng điều chỉnh lớn nhất vẫn giữ mọi ô không âm:</li>
+</ol>
+<div class="overflow-x-auto">$$\\theta=\\min_{(i,j)\\in K^-}x_{ij},\\qquad x'_{ij}=\\begin{cases}x_{ij}+\\theta &(i,j)\\in K^+,\\\\x_{ij}-\\theta &(i,j)\\in K^-,\\\\x_{ij} &\\text{ngoài chu trình}.\\end{cases}$$</div>
+<p>Đưa ô mới vào cơ sở; chọn một ô dấu trừ đạt 0 để ra cơ sở. Nếu nhiều ô cùng đạt 0, giữ các ô 0 cần thiết để cơ sở vẫn đủ $m+n-1$ ô và không có chu trình. Chi phí mới thỏa $Z'=Z-\\theta\\Delta_{ij}$ với $(i,j)$ là ô vào cơ sở. Tính lại thế vị, ước lượng và lặp đến tối ưu.</p></section><section><h4 class="font-bold text-blue-900 mb-2">6. Ví dụ minh họa – Từ phương án đầu đến tối ưu</h4>
+<p>Hai nơi phát có $a=(20,30)$, ba nơi thu có $b=(10,25,15)$. Tổng cung và cầu cùng bằng 50; chi phí đơn vị:</p>
+<div class="overflow-x-auto">$$C=\\begin{bmatrix}2&3&1\\\\5&4&8\\end{bmatrix}.$$</div>
+<p><b>Phương án Góc Tây Bắc:</b> Lần lượt phân phối $x_{11}=10$, $x_{12}=10$, $x_{22}=15$, $x_{23}=15$. Có đúng $2+3-1=4$ ô cơ sở.</p>
+<div class="overflow-x-auto">$$X^{(0)}=\\begin{bmatrix}10&10&0\\\\0&15&15\\end{bmatrix},\\qquad Z_0=10\\cdot2+10\\cdot3+15\\cdot4+15\\cdot8=230.$$</div>
+<p><b>Lần điều chỉnh 1 – Tính thế vị:</b></p>
+<ol class="list-decimal pl-5 space-y-2">
+<li>Cho $U_1=0$.</li>
+<li>Ô $(1,1)$: $V_1=2-U_1=2$.</li>
+<li>Ô $(1,2)$: $V_2=3-U_1=3$.</li>
+<li>Ô $(2,2)$: $U_2=4-V_2=1$.</li>
+<li>Ô $(2,3)$: $V_3=8-U_2=7$.</li>
+</ol>
+<p class="mt-2">Ô trống $(1,3)$ có $\\Delta_{13}=0+7-1=6$; ô $(2,1)$ có $\\Delta_{21}=1+2-5=-2$. Chọn $(1,3)$ vì có ước lượng dương lớn nhất.</p>
+<div class="overflow-x-auto">$$K:(1,3)^+\\to(1,2)^-\\to(2,2)^+\\to(2,3)^-\\to(1,3),\\qquad\\theta=\\min(10,15)=10.$$</div>
+<p>Ô $(1,2)$ ra cơ sở. Cộng 10 ở ô dấu cộng, trừ 10 ở ô dấu trừ:</p>
+<div class="overflow-x-auto">$$X^{(1)}=\\begin{bmatrix}10&0&10\\\\0&25&5\\end{bmatrix},\\qquad Z_1=230-10\\cdot6=170.$$</div>
+<p><b>Lần điều chỉnh 2 – Tính lại thế vị:</b></p>
+<ol class="list-decimal pl-5 space-y-2">
+<li>$U_1=0$.</li>
+<li>Ô $(1,1)$ cho $V_1=2$.</li>
+<li>Ô $(1,3)$ cho $V_3=1$.</li>
+<li>Ô $(2,3)$ cho $U_2=8-1=7$.</li>
+<li>Ô $(2,2)$ cho $V_2=4-7=-3$.</li>
+</ol>
+<p class="mt-2">Các ô ngoài cơ sở: $\\Delta_{12}=0-3-3=-6$, $\\Delta_{21}=7+2-5=4$. Chọn $(2,1)$ vì $\\Delta_{21}&gt;0$.</p>
+<div class="overflow-x-auto">$$K:(2,1)^+\\to(1,1)^-\\to(1,3)^+\\to(2,3)^-\\to(2,1),\\qquad\\theta=\\min(10,5)=5.$$</div>
+<p>Ô $(2,3)$ ra cơ sở; phương án sau điều chỉnh là:</p>
+<div class="overflow-x-auto">$$X^*=\\begin{bmatrix}5&0&15\\\\5&25&0\\end{bmatrix},\\qquad Z^*=170-5\\cdot4=150.$$</div>
+<p><b>Kiểm tra tối ưu:</b> Cho $U_1=0$, từ các ô cơ sở lần lượt có $V_1=2$, $V_3=1$, $U_2=5-2=3$, $V_2=4-3=1$. Hai ô ngoài cơ sở có $\\Delta_{12}=0+1-3=-2$, $\\Delta_{23}=3+1-8=-4$. Tất cả không dương, nên phương án tối ưu.</p>
+<p class="mt-2">Kiểm tra tổng hàng: $5+0+15=20$, $5+25+0=30$; tổng cột: $5+5=10$, $0+25=25$, $15+0=15$. Chi phí trực tiếp $5\\cdot2+15\\cdot1+5\\cdot5+25\\cdot4=150$.</p></section><section><h4 class="font-bold text-blue-900 mb-2">7. Suy biến, nhiều phương án tối ưu và kiểm tra kết quả</h4>
+<ul class="list-disc pl-5 space-y-2">
+<li><b>Suy biến:</b> Cơ sở có ô bằng 0; có thể xảy ra $\\theta=0$. Khi đó cơ sở thay đổi nhưng phương án và chi phí chưa đổi. Cần phá hòa nhất quán để tránh lặp cơ sở.</li>
+<li><b>Nhiều phương án tối ưu:</b> Ở bảng tối ưu, nếu ô ngoài cơ sở có $\\Delta_{ij}=0$ và chu trình cho phép điều chỉnh với $\\theta&gt;0$, ta thu được phương án tối ưu khác cùng chi phí.</li>
+<li><b>Thế vị:</b> Có thể chọn một thế vị khác làm mốc 0; các giá trị $U_i,V_j$ thay đổi nhưng tổng $U_i+V_j$ và các ước lượng không đổi.</li>
+<li><b>Kết luận:</b> Kiểm tra không âm, tổng từng hàng, từng cột, số ô cơ sở và dấu ước lượng; tính chi phí trên lượng phân phối cuối cùng rồi diễn giải cả các ô ảo nếu có.</li>
+</ul></section></div>
         `,
         videoNote: "Video hướng dẫn: Giải mẫu bài toán vận tải cân bằng, không cân bằng và cách xử lý suy biến (ô-chọn-không)."
       }
@@ -396,16 +494,25 @@
             ${num === 3 ? `<button onclick="switchMainTab('tp')" class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Mở Bộ Giải Vận Tải (Chương 3)</button>` : ''}
           </div>
         </div>
-        <div class="bg-slate-900 text-white p-5 rounded-xl flex flex-col justify-between">
+        <div class="bg-slate-900 text-white p-5 rounded-xl flex flex-col self-start w-full">
           <div>
             <span class="text-xs uppercase tracking-wider bg-red-600 px-2 py-0.5 rounded font-bold">Video Bài Giảng & Chữa Bài Tập</span>
             <h4 class="font-bold text-base mt-2">${data.title}</h4>
             <p class="text-xs text-slate-300 mt-2">${data.videoNote}</p>
           </div>
-          <div class="my-4 bg-slate-800 border border-slate-700 rounded-lg h-44 flex flex-col items-center justify-center text-center p-4">
-            <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-xl mb-2">▶</div>
-            <p class="text-xs text-slate-300">Khung nhúng Video (Thay link YouTube/Drive bài giảng của bạn vào thuộc tính <code>iframe</code>)</p>
+          <div class="my-4 bg-black border border-slate-700 rounded-lg overflow-hidden aspect-video">
+            ${data.videoType === 'mp4' ? `
+              <video class="w-full h-full" controls playsinline preload="metadata" aria-label="${data.title}">
+                <source src="${data.videoSrc}" type="video/mp4">
+                Trình duyệt chưa hỗ trợ video. <a href="${data.videoSrc}">Mở video bài giảng</a>.
+              </video>
+            ` : `
+              <iframe class="w-full h-full" src="${data.videoSrc}" title="${data.title}" loading="lazy"
+                style="border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            `}
           </div>
+          ${data.videoType === 'youtube' ? '<a href="https://youtu.be/hok-ojKnAKg" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-300 underline mb-4">Xem video trên YouTube</a>' : ''}
           <button onclick="switchMainTab('exercises')" class="w-full bg-amber-400 text-slate-900 font-bold py-2 rounded-lg text-sm">Luyện Bài Tập Chương Này</button>
         </div>
       `;
@@ -911,7 +1018,7 @@
               ${tableHtml}
               <div class="mt-3 text-sm space-y-2">
                 <p class="font-bold text-slate-700">✓ Tính thế vị $U_i, V_j$ ($U_i + V_j = c_{ij}, \\forall (i,j) \\in G$):</p>
-                <p class="text-slate-600">${uvSteps.join('; &nbsp; ')}.</p>
+                <ol class="uv-steps list-decimal pl-5 space-y-1 text-slate-600">${uvSteps.map(step => `<li>${step}.</li>`).join('')}</ol>
                 <p class="font-bold text-slate-700 mt-2">✓ Tính các ước lượng $\\Delta_{ij} = (U_i + V_j) - c_{ij}$ đối với các ô không sử dụng:</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-50 p-3 rounded border">${deltaListHtml}</div>
                 <div class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg text-green-950">
@@ -955,13 +1062,13 @@
               ${tableHtml}
               <div class="mt-3 text-sm space-y-2">
                 <p class="font-bold text-slate-700">✓ Tính thế vị $U_i, V_j$ ($U_i + V_j = c_{ij}, \\forall (i,j) \\in G$):</p>
-                <p class="text-slate-600">${uvSteps.join('; &nbsp; ')}.</p>
+                <ol class="uv-steps list-decimal pl-5 space-y-1 text-slate-600">${uvSteps.map(step => `<li>${step}.</li>`).join('')}</ol>
                 <p class="font-bold text-slate-700 mt-2">✓ Tính các $\\Delta_{ij} = (U_i + V_j) - c_{ij}$ đối với các ô không sử dụng:</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-50 p-3 rounded border">${deltaListHtml}</div>
                 <div class="mt-3 p-3 bg-amber-50 border border-amber-300 rounded-lg">
                   <p class="font-bold text-amber-900">✓ Điều chỉnh phương án:</p>
                   <p>Ta thấy tồn tại $\\Delta_{ij} > 0$ nên phương án chưa tối ưu. Chọn ô <b>$(${enterCell.r+1}, ${enterCell.c+1})$</b> có $\\Delta_{${enterCell.r+1}${enterCell.c+1}} = ${enterCell.dVal} > 0$ lớn nhất làm ô vi phạm, gán ô $(${enterCell.r+1}, ${enterCell.c+1}) \\in K^+$.</p>
-                  <p>Chu trình điều chỉnh $K$: $${cycleStr}$$</p>
+                  <p>Chu trình điều chỉnh $K$: $${cycleStr}$</p>
                   <p>Tiến hành phá vỡ chu trình với lượng điều chỉnh: $$\\theta = \\min\\{x_{ij} \\mid (i,j) \\in K^-\\} = ${theta}$$</p>
                   ${tieNote}
                 </div>
@@ -1138,10 +1245,201 @@
             <p><b>Hàm mục tiêu đối ngẫu:</b> $$g(y) = ${objTerms} \\to \\${dualType}$$</p>
             <p><b>Hệ ràng buộc đối ngẫu:</b></p>
             <div>$$\\begin{cases} ${consLines.join(' \\\\ ')} \\end{cases}$$</div>
-            <p><b>Điều kiện dấu của biến đối ngẫu:</b> $${yConds.join(', \\quad ')}$$</p>
+            <p><b>Điều kiện dấu của biến đối ngẫu:</b> $${yConds.join(', \\quad ')}$</p>
           </div>
         </div>
       `;
+    }
+
+    function dualMatrix(rows) {
+      return '\\begin{bmatrix}'+rows.map(row=>row.map(v=>v.tex()).join('&')).join('\\\\')+'\\end{bmatrix}';
+    }
+    function dualSumTerms(values, other) {
+      return values.map((v,i)=>`(${v.tex()})(${other[i].tex()})`).join('+') || '0';
+    }
+    function dualDisplay(tex) {return `<div class="overflow-x-auto my-2">$$${tex}$$</div>`;}
+    function dualRowOperations(ops,N) {
+      return ops.map(op=>{
+        if(op.kind==='swap')return `<li>Đổi chỗ $R_{${op.i+1}}$ và $R_{${op.r+1}}$ để có phần tử trục khác 0.</li>`;
+        const label=j=>j===N?'b':`a_{${j+1}}`;
+        let title=op.kind==='divide'?`R_{${op.i+1}}'=R_{${op.i+1}}/(${op.p.tex()})`:`R_{${op.i+1}}'=R_{${op.i+1}}-(${op.q.tex()})R_{${op.r+1}}'`;
+        const calculations=op.after.map((v,j)=>op.kind==='divide'
+          ? `${label(j)}':\\quad \\frac{${op.before[j].tex()}}{${op.p.tex()}}=${v.tex()}`
+          : `${label(j)}':\\quad (${op.before[j].tex()})-(${op.q.tex()})(${op.pivot[j].tex()})=${v.tex()}`);
+        return `<li>${dualDisplay(title)}<details class="border rounded p-2 bg-white"><summary class="cursor-pointer text-blue-800">Chi tiết từng hệ số và vế phải của dòng ${op.i+1}</summary>${calculations.map(dualDisplay).join('')}</details><p>Dòng sau biến đổi, theo thứ tự các biến rồi vế phải:</p>${dualDisplay(dualMatrix([op.after]))}</li>`;
+      }).join('');
+    }
+    function dualInitialHtml(res) {
+      if(!res.initial)return '';
+      const init=res.initial, J=init.basis, m=res.A.length;
+      const B=res.A.map(row=>J.map(j=>row[j]));
+      let h='<div class="bg-white border rounded-xl p-5 space-y-3 dual-initial"><h4 class="font-bold text-blue-900">Giai đoạn 1 — Tìm cơ sở đối ngẫu và giả phương án</h4><h5 class="font-bold">1. Hệ chính tắc và bài toán đối ngẫu tương ứng</h5>';
+      h+=dualDisplay(`A=${dualMatrix(res.A)},\\quad b=${dualMatrix(res.b.map(v=>[v]))},\\quad c^T=${dualMatrix([res.c])}.`);
+      h+=`<p>Với bài Min chính tắc $Ax=b,\\ x\\ge0$, đối ngẫu là $\\max b^Ty$, $A^Ty\\le c$, các biến $y_i$ tự do về dấu. Các biến phụ đã đưa điều kiện dấu của đối ngẫu vào hệ $A^Ty\\le c$.</p>`;
+      if(res.signedCandidate && !res.signedCandidate.accepted){
+        const bad=res.signedCandidate.d.map((v,j)=>({v,j})).filter(o=>o.v.gt(0));
+        h+=`<p class="bg-amber-50 border p-3 rounded">Thử cơ sở cột đơn vị có dấu $J=\\{${res.signedCandidate.basis.map(j=>j+1).join(',')}\\}$: ${bad.map(({v,j})=>`$\\Delta_{${j+1}}=${v.tex()}&gt;0$`).join(', ')}. Cơ sở này chưa thỏa điều kiện đơn hình đối ngẫu của bài Min; cần chọn cơ sở khác trước khi xoay. Nếu bảng mẫu có ước lượng dương ở đây, không được bỏ qua bước kiểm tra này.</p>`;
+      }
+      h+=`<h5 class="font-bold">2. Chọn các cột độc lập và tìm phương án cực biên đối ngẫu</h5><p>Tự chọn một cơ sở thỏa điều kiện. Có thể tồn tại nhiều cơ sở hợp lệ, nên bảng trung gian có thể khác ví dụ trong đề cương.</p>`;
+      h+=dualDisplay(`J=\\{${J.map(j=>j+1).join(',')}\\},\\quad B=(${J.map(j=>`A_{${j+1}}`).join(',')})=${dualMatrix(B)},\\quad \\det B=${init.setup.determinant.tex()}\\ne0.`);
+      h+='<p>Giải hệ các ràng buộc đối ngẫu đạt dấu bằng $B^Ty^0=c_B$:</p>';
+      h+=dualDisplay(`\\begin{cases}${J.map(j=>res.A.map((row,i)=>`(${row[j].tex()})y_{${i+1}}`).join('+')+'='+res.c[j].tex()).join('\\\\')}\\end{cases}`);
+      h+=dualDisplay(`B^{-1}=${dualMatrix(init.setup.inverse)},\\quad y^0=(B^{-1})^Tc_B=${dualMatrix(init.y.map(v=>[v]))}.`);
+      init.y.forEach((v,i)=>{h+=dualDisplay(`y^0_{${i+1}}=${dualSumTerms(J.map(j=>res.c[j]),init.setup.inverse.map(row=>row[i]))}=${v.tex()}`);});
+      h+='<h5 class="font-bold">3. Kiểm tra tất cả ràng buộc đối ngẫu</h5><ol class="list-decimal pl-5 space-y-2">';
+      h+=init.checks.map(({j,lhs,rhs})=>`<li>${dualDisplay(`A_{${j+1}}^Ty^0=${dualSumTerms(res.A.map(row=>row[j]),init.y)}=${lhs.tex()}\\le ${rhs.tex()}`)}${J.includes(j)?'Ràng buộc thuộc cơ sở đạt dấu bằng.':lhs.eq(rhs)?'Ràng buộc ngoài cơ sở cũng đạt dấu bằng; cơ sở đối ngẫu suy biến.':'Ràng buộc ngoài cơ sở thỏa dấu nhỏ hơn.'}</li>`).join('');
+      h+='</ol><p>Vì $\\det B\\ne0$ và mọi ràng buộc đối ngẫu đều thỏa, $y^0$ là phương án cực biên đối ngẫu hợp lệ.</p><h5 class="font-bold">4. Tìm giả phương án và lập bảng ban đầu</h5><p>Đặt các biến ngoài $J$ bằng 0, giải $Bx_B=b$:</p>';
+      h+=dualDisplay(`x_B=B^{-1}b=${dualMatrix(init.T.map(row=>[row[res.N]]))}.`);
+      init.T.forEach((row,i)=>{h+=dualDisplay(`x_{J[i]+1}=${dualSumTerms(init.setup.inverse[i],res.b)}=${row[res.N].tex()}`);});
+      h+='<p>Giả phương án có thể chứa thành phần âm; đây chưa phải phương án chấp nhận được của bài gốc. Biến đổi $[A\\mid b]$ để các cột thuộc $J$ thành ma trận đơn vị:</p>';
+      h+=dualDisplay(`\\bar A=B^{-1}A,\\qquad \\bar b=B^{-1}b.`);
+      h+='<ol class="list-decimal pl-5 space-y-3">'+dualRowOperations(init.setup.operations,res.N)+'</ol>';
+      if(!init.setup.operations.length)h+='<p>Các cột cơ sở đã là ma trận đơn vị, không cần biến đổi dòng.</p>';
+      h+='<h5 class="font-bold">5. Tính dòng ước lượng ban đầu</h5>'+dualEstimatesHtml(res,init.T,J);
+      return h+'</div>';
+    }
+    function dualEstimatesHtml(res,T,basis) {
+      const cb=basis.map(j=>res.c[j]);
+      let h='<ol class="list-decimal pl-5 space-y-2">';
+      res.c.forEach((v,j)=>{
+        const column=T.map(row=>row[j]);const d=cb.reduce((s,c,i)=>s.add(c.mul(column[i])),new Frac(0)).sub(v);
+        h+=`<li>${dualDisplay(`\\Delta_{${j+1}}=${dualSumTerms(cb,column)}-(${v.tex()})=${d.tex()}\\le0`)}</li>`;
+      });
+      const value=cb.reduce((s,c,i)=>s.add(c.mul(T[i][res.N])),new Frac(0));
+      return h+'</ol>'+dualDisplay(`f_B=${dualSumTerms(cb,T.map(row=>row[res.N]))}=${value.tex()}`);
+    }
+    function dualArithmeticHtml(res,st) {
+      if(st.s<0)return '';
+      const p=st.T[st.r][st.s], pivot=st.T[st.r].map(v=>v.div(p));
+      const operations=[{kind:'divide',i:st.r,p,before:st.T[st.r],after:pivot}];
+      st.T.forEach((row,i)=>{if(i!==st.r)operations.push({kind:'eliminate',i,r:st.r,q:row[st.s],before:row,pivot,after:st.nextT[i]});});
+      let h='<div class="dual-arithmetic space-y-3 border-t pt-3"><h5 class="font-bold">Bước 5 — Thay số và biến đổi từng dòng</h5><ol class="list-decimal pl-5 space-y-3">'+dualRowOperations(operations,res.N)+'</ol>';
+      h+=`<p>Cơ sở mới $J'=\\{${st.nextBasis.map(j=>j+1).join(',')}\\}$. Tính lại từng ước lượng với hệ số mục tiêu của cơ sở mới:</p>`;
+      return h+dualEstimatesHtml(res,st.nextT,st.nextBasis)+'<p>Quay lại bước kiểm tra cột phương án ở bảng tiếp theo.</p></div>';
+    }
+    function dualFinalProofHtml(res) {
+      if(res.status!=='optimal')return '';
+      const J=res.finalBasis,y=res.finalY;
+      const dualValue=res.b.reduce((sum,v,i)=>sum.add(v.mul(y[i])),new Frac(0));
+      const minValue=res.type==='max'?res.value.neg():res.value;
+      if(!dualValue.eq(minValue))throw Error('Giá trị mục tiêu gốc và đối ngẫu không khớp.');
+      let h='<div class="border-t mt-4 pt-4"><h5 class="font-bold">Kiểm chứng bằng phương án tối ưu đối ngẫu</h5><p>Từ cơ sở cuối, giải $B^Ty^*=c_B$:</p>';
+      h+=dualDisplay(`\\begin{cases}${J.map(j=>res.A.map((row,i)=>`(${row[j].tex()})y_{${i+1}}`).join('+')+'='+res.c[j].tex()).join('\\\\')}\\end{cases}\\quad\\Rightarrow\\quad y^*=${dualMatrix(y.map(v=>[v]))}`);
+      h+='<p>Đây là vectơ đối ngẫu của hệ chính tắc đã chuẩn hóa dấu hàng. Nếu đổi dấu một hàng khi chuẩn hóa, đổi dấu thành phần đối ngẫu tương ứng để trở lại cách viết ban đầu.</p><ul class="list-disc pl-5">';
+      res.c.forEach((c,j)=>{
+        const lhs=res.A.reduce((sum,row,i)=>sum.add(row[j].mul(y[i])),new Frac(0));if(lhs.gt(c))throw Error('Phương án đối ngẫu cuối chưa hợp lệ.');
+        h+=`<li>${dualDisplay(`A_{${j+1}}^Ty^*=${dualSumTerms(res.A.map(row=>row[j]),y)}=${lhs.tex()}\\le${c.tex()}`)}</li>`;
+      });
+      return h+'</ul>'+dualDisplay(`b^Ty^*=${dualSumTerms(res.b,y)}=${dualValue.tex()}=c^Tx^*`)+`<p>Hai phương án đều khả thi và có cùng giá trị mục tiêu, xác nhận tối ưu theo định lý đối ngẫu${res.type==='max'?' cho bài Min tương đương; nghiệm bài Max đã được đổi lại dấu giá trị ở trên':''}.</p></div>`;
+    }
+
+    function dualSimplexCompute(prob) {
+      const F = x => new Frac(x), zero = () => F(0);
+      let A = prob.A.map(row => row.map(F)), b = prob.b.map(F);
+      const n = prob.n, m = prob.m, notes = [];
+      let c = prob.c.map(x => prob.type === 'max' ? F(x).neg() : F(x));
+      if (prob.type === 'max') notes.push('Đổi Max f thành Min (−f); cuối cùng đổi lại dấu giá trị mục tiêu.');
+      for (let i=0;i<m;i++) if(prob.signs[i] !== '=') {
+        if(prob.signs[i] === '>=') { A[i]=A[i].map(v=>v.neg()); b[i]=b[i].neg(); notes.push(`Ràng buộc ${i+1}: nhân −1 để đổi ≥ thành ≤, giữ vế phải âm nếu có.`); }
+        A.forEach((row,r)=>row.push(F(r===i?1:0))); c.push(zero());
+        notes.push(`Thêm biến phụ x${c.length} vào ràng buộc ${i+1}, hệ số mục tiêu bằng 0.`);
+      }
+      const N=c.length;
+      function canonical(basis, record = false) {
+        const inverse=A.map((_,i)=>A.map((_,j)=>F(i===j?1:0))), operations=[];
+        let determinant=F(1);
+        let T=A.map((row,i)=>[...row,b[i]]);
+        for(let k=0;k<m;k++) {
+          let r=k; while(r<m && T[r][basis[k]].eq(0)) r++;
+          if(r===m) return null;
+          if(r!==k) { [T[k],T[r]]=[T[r],T[k]]; [inverse[k],inverse[r]]=[inverse[r],inverse[k]]; determinant=determinant.neg(); if(record) operations.push({kind:'swap',i:k,r}); }
+          let p=T[k][basis[k]]; determinant=determinant.mul(p);
+          const oldRow=[...T[k]]; T[k]=T[k].map(v=>v.div(p));inverse[k]=inverse[k].map(v=>v.div(p));
+          if(record && !p.eq(1)) operations.push({kind:'divide',i:k,p,before:oldRow,after:[...T[k]]});
+          for(let i=0;i<m;i++) if(i!==k) {let q=T[i][basis[k]];const old=[...T[i]];
+            T[i]=T[i].map((v,j)=>v.sub(q.mul(T[k][j])));inverse[i]=inverse[i].map((v,j)=>v.sub(q.mul(inverse[k][j])));
+            if(record && !q.eq(0))operations.push({kind:'eliminate',i,r:k,q,before:old,pivot:[...T[k]],after:[...T[i]]});
+          }
+        }
+        if(record) T.setup={inverse,operations,determinant};
+        return T;
+      }
+      function delta(T,B) { return c.map((v,j)=>B.reduce((s,k,i)=>s.add(c[k].mul(T[i][j])),zero()).sub(v)); }
+      let basis=null,T=null, attempts=0;
+      function search(B,start) {
+        if(basis || attempts>=20000) return;
+        if(B.length===m) {attempts++;let t=canonical(B);if(t && delta(t,B).every(v=>!v.gt(0))) {basis=[...B];T=t;}return;}
+        for(let j=start;j<=N-(m-B.length);j++) {search([...B,j],j+1);if(basis || attempts>=20000)break;}
+      }
+      const signedBasis=A.map((_,i)=>c.findIndex((_,j)=>A[i][j].val()!==0 && (A[i][j].eq(1)||A[i][j].eq(-1)) && A.every((row,r)=>r===i || row[j].eq(0))));
+      let signedCandidate=null;
+      if(signedBasis.every(j=>j>=0) && new Set(signedBasis).size===m) {
+        const t=canonical(signedBasis), d=delta(t,signedBasis);
+        signedCandidate={basis:signedBasis,d,accepted:d.every(v=>!v.gt(0))};
+        if(signedCandidate.accepted){basis=[...signedBasis];T=t;}
+      }
+      if(!basis) search([],0);
+      const result={notes,n,N,c,A,b,signedCandidate,steps:[],type:prob.type};
+      if(!basis) return {...result,status:'unsupported',message:attempts>=20000?'Đã đạt giới hạn tìm cơ sở. Chưa xác định được cơ sở thỏa điều kiện đơn hình đối ngẫu.':'Chưa tìm được cơ sở độc lập thỏa Δ ≤ 0 cho bài Min tương đương. Điều này không có nghĩa bài toán vô nghiệm. Hãy dùng nút Giải từng bước theo chuẩn để giải bằng đơn hình/phạt M.'};
+      T=canonical(basis,true);
+      const y=A.map((_,i)=>basis.reduce((sum,j,k)=>sum.add(c[j].mul(T.setup.inverse[k][i])),zero()));
+      result.initial={basis:[...basis],T:T.map(row=>[...row]),setup:T.setup,y,checks:c.map((v,j)=>({j,lhs:A.reduce((sum,row,i)=>sum.add(row[j].mul(y[i])),zero()),rhs:v}))};
+      notes.push('Chọn các cột độc lập, biến đổi Gauss–Jordan thành ma trận đơn vị; kiểm tra Δk = ΣcB·zik − ck ≤ 0 trước khi bắt đầu.');
+      const seen=new Set();
+      for(let iteration=0;iteration<150;iteration++) {
+        const key=basis.join(',');if(seen.has(key)) return {...result,status:'limit',message:'Cơ sở bị lặp do suy biến; dừng để tránh vòng lặp. Chưa kết luận tối ưu.'};seen.add(key);
+        const d=delta(T,basis), value=basis.reduce((s,k,i)=>s.add(c[k].mul(T[i][N])),zero());
+        if(d.some(v=>v.gt(0))) throw Error('Mất điều kiện khả thi đối ngẫu.');
+        let r=-1;for(let i=0;i<m;i++) if(T[i][N].lt(0) && (r<0 || T[i][N].lt(T[r][N])))r=i;
+        const step={T:T.map(row=>[...row]),basis:[...basis],d,value,r,s:-1,ratios:[]};result.steps.push(step);
+        if(r<0) {const finalInverse=canonical(basis,true).setup.inverse;result.finalY=A.map((_,i)=>basis.reduce((sum,j,k)=>sum.add(c[j].mul(finalInverse[k][i])),zero())); result.finalBasis=[...basis];let x=Array.from({length:N},zero);basis.forEach((j,i)=>x[j]=T[i][N]);return {...result,status:'optimal',x,value:prob.type==='max'?value.neg():value};}
+        let s=-1,best=null;
+        for(let j=0;j<N;j++) if(!basis.includes(j) && T[r][j].lt(0)) {
+          const q=d[j].div(T[r][j]);step.ratios.push({j,q});if(s<0 || q.lt(best)){s=j;best=q;}
+        }
+        step.s=s;
+        if(s<0)return {...result,status:'infeasible',message:'Dòng có vế phải âm nhưng mọi hệ số ngoài cơ sở đều không âm. Với x ≥ 0, đẳng thức này không thể thỏa mãn: bài toán vô nghiệm.'};
+        const p=T[r][s];T[r]=T[r].map(v=>v.div(p));
+        for(let i=0;i<m;i++)if(i!==r){const q=T[i][s];T[i]=T[i].map((v,j)=>v.sub(q.mul(T[r][j])));}
+        basis[r]=s;
+        step.nextT=T.map(row=>[...row]);step.nextBasis=[...basis];step.nextD=delta(T,basis);step.nextValue=basis.reduce((sum,j,i)=>sum.add(c[j].mul(T[i][N])),zero());
+      }
+      return {...result,status:'limit',message:'Đạt giới hạn 150 phép xoay; chưa kết luận tối ưu.'};
+    }
+
+    function solveDualSimplex() {
+      const out=document.getElementById('lp-output');
+      try {
+        const prob=readLPFromUI();
+        if([...prob.c,...prob.b,...prob.A.flat()].some(v=>!Number.isFinite(v.n)||!Number.isFinite(v.d)||v.d===0))throw Error('Vui lòng nhập đầy đủ các hệ số hữu hạn.');
+        const res=dualSimplexCompute(prob);
+        const math=v=>`$${v.tex()}$`;
+        const initialHtml=dualInitialHtml(res); 
+        let html=`<div class="bg-white rounded-xl p-5 border space-y-3"><h3 class="font-bold text-lg text-blue-900">Giải bằng thuật toán đơn hình đối ngẫu — Đề cương Bài 3</h3><p>Giải chính bài toán đang nhập. Quy ước $\\Delta_k=z_k-c_k$. Xét bài Min tương đương: duy trì $\\Delta_k\\le0$, sửa các vế phải âm cho đến khi phương án khả thi.</p><h4 class="font-bold">1. Đưa về chính tắc và tìm cơ sở xuất phát</h4><ol class="list-decimal pl-5 space-y-2">${res.notes.map(t=>`<li>${t}</li>`).join('')}</ol></div>`;
+        html+=initialHtml;
+        res.steps.forEach((st,index)=>{
+          html+=`<div class="bg-white rounded-xl border p-5 space-y-3"><h4 class="font-bold text-blue-900">Bảng đơn hình đối ngẫu ${index}</h4><p>Cơ sở: ${st.basis.map(j=>`$x_{${j+1}}$`).join(', ')}. $f_B=${st.value.tex()}$${prob.type==='max'?' (hàm Min tương đương)':''}.</p><div class="overflow-x-auto"><table class="border-collapse text-center w-full text-sm"><thead><tr><th class="border p-2">$c_B$</th><th class="border p-2">Cơ sở</th><th class="border p-2">Phương án</th>${res.c.map((v,j)=>`<th class="border p-2">$x_{${j+1}}$<br>$c_{${j+1}}=${v.tex()}$</th>`).join('')}</tr></thead><tbody>`;
+          st.T.forEach((row,i)=>{html+=`<tr class="${i===st.r?'bg-amber-50':''}"><td class="border p-2">${math(res.c[st.basis[i]])}</td><td class="border p-2">$x_{${st.basis[i]+1}}$</td><td class="border p-2 font-bold">${math(row[res.N])}</td>${row.slice(0,res.N).map((v,j)=>`<td class="border p-2">${i===st.r&&j===st.s?`<span class="pivot-circle">${math(v)}</span>`:math(v)}</td>`).join('')}</tr>`;});
+          html+=`<tr class="bg-indigo-50"><td colspan="3" class="border p-2">$\\Delta_k=\\sum c_{B_i}z_{ik}-c_k$</td>${st.d.map(v=>`<td class="border p-2">${math(v)}</td>`).join('')}</tr></tbody></table></div><p>Mọi $\\Delta_k\\le0$: điều kiện khả thi đối ngẫu được bảo toàn.</p>`;
+          if(st.r<0)html+='<p class="font-bold text-green-800">Mọi vế phải đều không âm. Phương án vừa khả thi vừa thỏa tiêu chuẩn tối ưu, nên dừng.</p>';
+          else {
+            html+=`<p><b>Chọn dòng xoay:</b> Dòng ${st.r+1} (nếu hòa lấy dòng đầu tiên từ trên xuống), biến $x_{${st.basis[st.r]+1}}$, vì vế phải ${math(st.T[st.r][res.N])} âm nhỏ nhất. Phương án cơ sở hiện tại chưa khả thi.</p><p><b>Chọn cột xoay:</b> Chỉ xét $z_{${st.r+1},k}&lt;0$, tính $\\theta_k=\\Delta_k/z_{${st.r+1},k}$.</p><ul class="list-disc pl-5">${st.ratios.map(({j,q})=>`<li>$\\theta_{${j+1}}=\\frac{${st.d[j].tex()}}{${st.T[st.r][j].tex()}}=${q.tex()}$.</li>`).join('')}</ul>`;
+            if(st.s>=0)html+=`<p>Chọn cột $x_{${st.s+1}}$ có tỷ số nhỏ nhất để bảo toàn $\\Delta_k\\le0$ sau phép xoay; nếu bằng nhau chọn chỉ số cột nhỏ nhất. Biến $x_{${st.basis[st.r]+1}}$ ra cơ sở.</p><p><b>Biến đổi bảng:</b> Phần tử trục $p=${st.T[st.r][st.s].tex()}$. Chia cả dòng ${st.r+1}, kể cả vế phải, cho $p$; sau đó khử cột xoay ở các dòng khác:</p><div class="overflow-x-auto">$$R_r'=R_r/p,\\qquad R_i'=R_i-z_{is}R_r'\\ (i\\ne r).$$</div><p>Cập nhật cơ sở và tính lại dòng ước lượng để được bảng kế tiếp.</p>`;
+          }
+          html+=dualArithmeticHtml(res,st);
+          html+='</div>';
+        });
+        html+=`<div class="rounded-xl border p-5 ${res.status==='optimal'?'bg-green-50':'bg-amber-50'}"><h4 class="font-bold">Kết luận</h4>`;
+        if(res.status==='optimal') {
+          const x=res.x.slice(0,prob.n);
+          const objective=prob.c.reduce((sum,v,j)=>sum.add(v.mul(x[j])),new Frac(0));
+          if(!objective.eq(res.value)||x.some(v=>v.lt(0)))throw Error('Kiểm tra nghiệm cuối không đạt.');
+          for(let i=0;i<prob.m;i++){const lhs=prob.A[i].reduce((sum,v,j)=>sum.add(v.mul(x[j])),new Frac(0));if(prob.signs[i]==='='?!lhs.eq(prob.b[i]):prob.signs[i]==='<='?lhs.gt(prob.b[i]):lhs.lt(prob.b[i]))throw Error('Nghiệm chưa thỏa ràng buộc gốc.');}
+          html+=`<div class="overflow-x-auto">$$x^*=(${x.map(v=>v.tex()).join(',')}),\\qquad f_{\\${prob.type}}=${res.value.tex()}.$$</div><p><b>Kiểm tra trên các ràng buộc gốc:</b></p><ul class="list-disc pl-5">`;
+          prob.A.forEach((row,i)=>{const lhs=row.reduce((s,v,j)=>s.add(v.mul(x[j])),new Frac(0));html+=`<li>Ràng buộc ${i+1}: $${lhs.tex()} ${prob.signs[i]==='<='?'\\le':prob.signs[i]==='>='?'\\ge':'='} ${prob.b[i].tex()}$.</li>`;});html+=`</ul><p>Các biến ngoài cơ sở bằng 0; các biến cơ sở được đọc từ cột phương án. Phương án đầy đủ (kể cả biến phụ):</p><div class="overflow-x-auto">$$x=(${res.x.map(v=>v.tex()).join(',')}).$$</div><p>Thay vào hàm mục tiêu gốc:</p><div class="overflow-x-auto">$$f(x^*)=${prob.c.map((v,j)=>`(${v.tex()})(${x[j].tex()})`).join('+')}=${objective.tex()}.$$</div>`;
+        }else html+=`<p>${res.message}</p>`;
+        out.innerHTML=html+dualFinalProofHtml(res)+'</div>';renderMath();
+      }catch(e){out.innerHTML='<div class="bg-amber-50 border p-5 rounded-xl"></div>';out.firstChild.textContent='Không thể thực hiện: '+e.message;}
     }
 
     function generateDualOnly() {
@@ -1304,6 +1602,30 @@
           return `$${r.tex()} ${mCoef.gt(0) ? '+' : ''} ${mStr}$`;
         }
 
+        // Explain the existing choice without changing the pivot algorithm.
+        let pivotReason = '';
+        if (pivotCol !== -1) {
+          const improving = [];
+          for (let k = 0; k < totalVars; k++) {
+            if (removedArtificial.has(k)) continue;
+            const signImproves = type === 'max'
+              ? deltaM[k].lt(0) || (deltaM[k].eq(0) && deltaReal[k].lt(0))
+              : deltaM[k].gt(0) || (deltaM[k].eq(0) && deltaReal[k].gt(0));
+            if (signImproves) improving.push(k);
+          }
+          const candidates = improving.map(k => `$\\Delta_{${k+1}}$ = ${fmtCoef(deltaReal[k], deltaM[k])}`).join('; ');
+          const tied = improving.filter(k => deltaM[k].eq(deltaM[pivotCol]) && deltaReal[k].eq(deltaReal[pivotCol]));
+          const rule = type === 'max' ? 'âm nhỏ nhất' : 'dương lớn nhất';
+          const condition = type === 'max' ? '$\\Delta_k\\ge0$' : '$\\Delta_k\\le0$';
+          pivotReason = `<p class="pivot-reason">• <b>Lý do chọn cột:</b> Bài toán ${type === 'max' ? 'Max' : 'Min'} tối ưu khi mọi ${condition}. Các ước lượng còn vi phạm là: ${candidates}. Chọn $A_{${pivotCol+1}}$ vì $\\Delta_{${pivotCol+1}}$ = ${fmtCoef(deltaReal[pivotCol], deltaM[pivotCol])} là giá trị ${rule}, cho hướng cải thiện hàm mục tiêu.</p>`;
+          if (hasBigM) {
+            pivotReason += `<p class="pivot-reason">Với $\\Delta_k=\\eta_kM+\\delta_k$, so sánh hệ số $\\eta_k$ của $M$ trước; nếu bằng nhau mới so sánh phần hằng $\\delta_k$. Cột được chọn có $\\eta_{${pivotCol+1}}=${deltaM[pivotCol].tex()}$, $\\delta_{${pivotCol+1}}=${deltaReal[pivotCol].tex()}$; không thay $M$ bằng một số cụ thể.</p>`;
+          }
+          if (tied.length > 1) {
+            pivotReason += `<p class="pivot-reason">Có ${tied.length} cột cùng ước lượng tốt nhất; chọn cột có chỉ số nhỏ nhất là $A_{${pivotCol+1}}$ theo quy tắc phá hòa của bộ giải.</p>`;
+          }
+        }
+
         let tbl = `<div class="overflow-x-auto my-3">
           <table class="border-collapse border border-slate-400 mx-auto text-sm text-center">
             <thead>
@@ -1402,7 +1724,7 @@
           break;
         } else if (pivotRow === -1) {
           status = 'unbounded';
-          stepNote = `<p class="text-red-700 font-bold">• Tại cột $A_{${pivotCol+1}}$ vi phạm điều kiện tối ưu nhưng mọi phần tử $z_{j,${pivotCol+1}} \\le 0$. Vậy <b>hàm mục tiêu không bị chặn</b> và bài toán không có phương án tối ưu.</p>`;
+          stepNote = `${pivotReason}<p class="text-red-700 font-bold">• Tại cột $A_{${pivotCol+1}}$ vi phạm điều kiện tối ưu nhưng mọi phần tử $z_{j,${pivotCol+1}} \\le 0$. Vậy <b>hàm mục tiêu không bị chặn</b> và bài toán không có phương án tối ưu.</p>`;
           tablesHtml += `<div class="bg-white rounded-xl shadow p-5 border-l-4 border-red-600">
             <h4 class="font-bold text-blue-900">Bảng đơn hình bước ${step}</h4>
             ${tbl}${stepNote}
@@ -1414,6 +1736,7 @@
           stepNote = `
             <div class="text-xs md:text-sm bg-slate-50 p-3 rounded border space-y-1">
               <p>• <b>Chọn cột xoay:</b> Cột $A_{${pivotCol+1}}$ (đưa biến $x_{${pivotCol+1}}$ vào cơ sở).</p>
+              ${pivotReason}
               <p>• <b>Chọn dòng xoay:</b> Dòng của biến cơ sở $x_{${leavingVar+1}}$ với tỷ số nhỏ nhất $\\theta = \\frac{${b[pivotRow].tex()}}{${pivotElem.tex()}} = ${minTheta.tex()}$ (đẩy $x_{${leavingVar+1}}$ ra khỏi cơ sở).</p>
               <p>• <b>Phần tử trục:</b> $z_{${pivotRow+1},${pivotCol+1}} = ${pivotElem.tex()}$. Biến đổi bảng theo công thức: <i>Dòng mới = Dòng cũ – (Dòng chính × Phần tử xoay)</i>.</p>
             </div>
