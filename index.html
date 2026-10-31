@@ -47,12 +47,10 @@
     <section id="sec-theory" class="hidden space-y-6">
       <div class="bg-white rounded-xl shadow p-6 border border-slate-200">
         <h2 class="text-xl font-bold text-blue-900 mb-4">Hệ thống Chương trình Tối Ưu Hóa </h2>
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-2 mb-6">
-          <button onclick="showChapter(1)" id="chap-btn-1" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 1:</b> Bài toán tối ưu hóa tổng quát</button>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-6">
+          <button onclick="showChapter(1)" id="chap-btn-1" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 1:</b> Giải bài toán QHTT bằng phương pháp hình học</button>
           <button onclick="showChapter(2)" id="chap-btn-2" class="p-3 rounded-lg border text-left text-sm bg-blue-50 border-blue-500 font-semibold"><b>Chương 2:</b> QHTT & Phương pháp đơn hình</button>
-          <button onclick="showChapter(3)" id="chap-btn-3" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 3:</b> Bài toán QHTT đối ngẫu</button>
-          <button onclick="showChapter(4)" id="chap-btn-4" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 4:</b> Bài toán vận tải & Thế vị</button>
-          <button onclick="showChapter(5)" id="chap-btn-5" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 5:</b> Tối ưu hóa rời rạc</button>
+          <button onclick="showChapter(3)" id="chap-btn-3" class="p-3 rounded-lg border text-left text-sm hover:bg-blue-50 transition"><b>Chương 3:</b> Bài toán vận tải & Thế vị</button>
         </div>
 
         <div id="chapter-content" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -283,15 +281,70 @@
 
     const CHAPTER_DATA = {
       1: {
-        title: "Chương 1: Bài toán tối ưu hóa tổng quát",
+        title: "Chương 1: Giải bài toán QHTT bằng phương pháp hình học",
         summary: `
-          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
-            <li><b>Phát biểu bài toán tổng quát:</b> Tìm cực trị (cực đại hoặc cực tiểu) của hàm mục tiêu $f(x)$ trên miền ràng buộc $D \\subset \\mathbb{R}^n$.</li>
-            <li><b>Phân loại bài toán tối ưu:</b> Quy hoạch tuyến tính (hàm mục tiêu và các ràng buộc đều tuyến tính), Quy hoạch phi tuyến, Quy hoạch rời rạc / nguyên.</li>
-            <li><b>Tập lồi và Điểm cực biên:</b> Tập $D$ là tập lồi nếu với mọi $x^1, x^2 \\in D$ thì $\\alpha x^1 + (1-\\alpha)x^2 \\in D$ ($0 \\le \\alpha \\le 1$).</li>
-          </ul>
+          <div class="space-y-4 text-sm leading-relaxed">
+            <p class="text-slate-500"> – Phương pháp hình học.</p>
+            <div>
+              <h4 class="font-bold text-blue-900 mb-2">1. Bài toán QHTT hai biến và miền phương án</h4>
+              <p>Xét bài toán dạng chuẩn hai biến:</p>
+              <div class="overflow-x-auto">$$f(x)=c_1x_1+c_2x_2\\to\\max,\\qquad
+                D=\\left\\{(x_1,x_2)\\mid a_{i1}x_1+a_{i2}x_2\\le b_i,\\ i=1,\\ldots,m;\\ x_1,x_2\\ge0\\right\\}.$$</div>
+              <p>Mỗi bất phương trình tuyến tính xác định một nửa mặt phẳng có bờ là đường thẳng $a_{i1}x_1+a_{i2}x_2=b_i$. Giao các nửa mặt phẳng với góc phần tư thứ nhất là miền phương án $D$, một miền lồi, có thể rỗng hoặc không bị chặn.</p>
+            </div>
+            <div>
+              <h4 class="font-bold text-blue-900 mb-2">2. Đường mức và hướng tăng của hàm mục tiêu</h4>
+              <p>Với $(c_1,c_2)\\ne(0,0)$, phương trình $c_1x_1+c_2x_2=\\alpha$ là một đường mức. Trên cùng đường mức, hàm mục tiêu có giá trị không đổi bằng $\\alpha$. Khi $\\alpha$ thay đổi, ta được các đường thẳng song song, cùng vectơ pháp tuyến $\\vec c=(c_1,c_2)$.</p>
+              <p class="mt-2">Tịnh tiến đường mức theo hướng $\\vec c$ làm mức tăng; theo hướng ngược lại làm mức giảm. Thật vậy, với $t&gt;0$:</p>
+              <div class="overflow-x-auto">$$f(x+t\\vec c)=f(x)+t(c_1^2+c_2^2)&gt;f(x).$$</div>
+              <p>Đối với Max, tìm đường mức có giá trị lớn nhất còn giao với $D$. Điểm thuộc $D$ trên đường mức giới hạn là phương án tối ưu. Đối với Min, dịch chuyển theo hướng ngược $\\vec c$.</p>
+            </div>
+            <div>
+              <h4 class="font-bold text-blue-900 mb-2">3. Các bước giải bằng phương pháp hình học</h4>
+              <ol class="list-decimal pl-5 space-y-2">
+                <li><b>Vẽ các đường biên:</b> Thay từng bất phương trình bằng phương trình đường thẳng. Tìm hai điểm phân biệt để vẽ, thường bằng cách lần lượt cho $x_1=0$ và $x_2=0$ khi thực hiện được.</li>
+                <li><b>Xác định miền phương án:</b> Thử một điểm không nằm trên đường biên, chẳng hạn $O(0,0)$ nếu phù hợp, để chọn nửa mặt phẳng thỏa bất phương trình. Lấy giao tất cả các miền với $x_1,x_2\\ge0$.</li>
+                <li><b>Vẽ đường mức:</b> Chọn một giá trị $\\alpha$ thuận tiện, vẽ $c_1x_1+c_2x_2=\\alpha$ và xác định vectơ $\\vec c$.</li>
+                <li><b>Dịch chuyển đường mức:</b> Giữ các đường mức song song và dịch theo hướng tăng (Max) hoặc giảm (Min) đến vị trí giới hạn còn giao miền phương án.</li>
+                <li><b>Tính nghiệm và kết luận:</b> Giải hệ các đường biên tại điểm tiếp xúc để tìm tọa độ, kiểm tra toàn bộ ràng buộc rồi thay vào hàm mục tiêu. Với miền đa giác bị chặn, có thể tính giá trị hàm mục tiêu ở các đỉnh để kiểm chứng.</li>
+              </ol>
+            </div>
+            <div class="bg-white rounded-lg border border-blue-200 p-4">
+              <h4 class="font-bold text-blue-900 mb-2">4. Ví dụ 2.4 trong đề cương – Lập kế hoạch sản xuất tối ưu</h4>
+              <div class="overflow-x-auto">$$f=4x_1+5x_2\\to\\max,\\qquad
+                \\begin{cases}2x_1+x_2\\le8,\\\\x_1+2x_2\\le7,\\\\x_2\\le3,\\\\x_1,x_2\\ge0.\\end{cases}$$</div>
+              <p><b>Bước 1–2:</b> Đường $2x_1+x_2=8$ đi qua $(4,0)$ và $(0,8)$; đường $x_1+2x_2=7$ đi qua $(7,0)$ và $(0,7/2)$; đường $x_2=3$ song song trục $Ox_1$. Giữ phía thỏa từng dấu $\\le$ và phần thuộc góc phần tư thứ nhất.</p>
+              <p class="mt-2">Miền phương án là ngũ giác có các đỉnh $(0,0)$, $(4,0)$, $(3,2)$, $(1,3)$, $(0,3)$.</p>
+              <p class="mt-2"><b>Bước 3–4:</b> Vẽ đường mức $4x_1+5x_2=10$ qua $(5/2,0)$ và $(0,2)$. Dịch chuyển song song theo $\\vec c=(4,5)$ đến điểm giới hạn là giao của hai đường:</p>
+              <div class="overflow-x-auto">$$\\begin{cases}2x_1+x_2=8,\\\\x_1+2x_2=7\\end{cases}
+                \\Rightarrow 3x_1=9\\Rightarrow x_1=3,\\quad x_2=2.$$</div>
+              <p><b>Bước 5:</b> Kiểm tra $2\\cdot3+2=8$, $3+2\\cdot2=7$, $2\\le3$ và hai biến không âm. So sánh giá trị tại các đỉnh:</p>
+              <div class="overflow-x-auto mt-2">
+                <table class="w-full border-collapse text-center">
+                  <thead><tr><th scope="col" class="border p-2">Đỉnh</th><th scope="col" class="border p-2">$f=4x_1+5x_2$</th></tr></thead>
+                  <tbody>
+                    <tr><td class="border p-2">$(0,0)$</td><td class="border p-2">0</td></tr>
+                    <tr><td class="border p-2">$(4,0)$</td><td class="border p-2">16</td></tr>
+                    <tr class="bg-blue-50 font-bold"><td class="border p-2">$(3,2)$</td><td class="border p-2">22</td></tr>
+                    <tr><td class="border p-2">$(1,3)$</td><td class="border p-2">19</td></tr>
+                    <tr><td class="border p-2">$(0,3)$</td><td class="border p-2">15</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="mt-2 font-semibold">Kết luận: $x^*=(3,2)$, $f_{\\max}=4\\cdot3+5\\cdot2=22$. Công ty nên sản xuất 3 sản phẩm loại A và 2 sản phẩm loại B, đạt lợi nhuận lớn nhất 22 triệu.</p>
+            </div>
+            <div>
+              <h4 class="font-bold text-blue-900 mb-2">5. Các trường hợp cần nhận biết</h4>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>$D=\\varnothing$: bài toán không có phương án chấp nhận được.</li>
+                <li>Nếu đường mức giới hạn gặp miền tại đúng một đỉnh thì có nghiệm tối ưu duy nhất; nếu trùng một cạnh thì mọi điểm trên cạnh đó đều tối ưu.</li>
+                <li>Nếu có thể tiếp tục dịch đường mức theo hướng cải thiện mà vẫn giao với $D$ và giá trị mục tiêu tăng hoặc giảm vô hạn thì bài toán không có giá trị tối ưu hữu hạn. Miền không bị chặn vẫn có thể có nghiệm tối ưu hữu hạn.</li>
+                <li>Nếu $c_1=c_2=0$ và $D\\ne\\varnothing$, hàm mục tiêu bằng 0 tại mọi phương án, nên mọi điểm của $D$ đều tối ưu.</li>
+              </ul>
+            </div>
+          </div>
         `,
-        videoNote: "Video bài giảng: Cách lập mô hình toán học từ bài toán kinh tế thực tế & nhận diện tập lồi."
+        videoNote: "Video bài giảng: Giải bài toán QHTT hai biến bằng phương pháp hình học – miền phương án, đường mức và Ví dụ 2.4."
       },
       2: {
         title: "Chương 2: Bài toán quy hoạch tuyến tính và phương pháp đơn hình",
@@ -310,22 +363,7 @@
         videoNote: "Video hướng dẫn: Giải bài toán QHTT bằng phương pháp đồ thị, lập bảng đơn hình và bảng đánh thuế M."
       },
       3: {
-        title: "Chương 3: Bài toán quy hoạch tuyến tính đối ngẫu",
-        summary: `
-          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
-            <li><b>Sơ đồ đối ngẫu tổng quát:</b> Bài toán gốc $(P): f(x) = \\langle c, x \\rangle \\to \\min$ tương ứng với bài toán đối ngẫu $(P'): g(y) = \\langle b, y \\rangle \\to \\max$.</li>
-            <li><b>Quy tắc dấu (Gốc Min $\\leftrightarrow$ Đối ngẫu Max):</b>
-              <br/>• Ràng buộc $i$ dạng $\\ge b_i \\leftrightarrow y_i \\ge 0$; dạng $= b_i \\leftrightarrow y_i$ tùy ý; dạng $\\le b_i \\leftrightarrow y_i \\le 0$.
-              <br/>• Biến $x_j \\ge 0 \\leftrightarrow$ Ràng buộc đối ngẫu thứ $j$ dạng $\\le c_j$.
-            </li>
-            <li><b>Định lý độ lệch bù:</b> $\\langle Ax - b, y \\rangle = 0$ và $\\langle c - A'y, x \\rangle = 0$.</li>
-            <li><b>Thuật toán đơn hình đối ngẫu:</b> Khi bảng có $\\Delta_k \\le 0$ nhưng cột phương án có $x_r < 0$: chọn dòng xoay có $x_r$ âm nhỏ nhất, chọn cột xoay theo $\\min\\left\\{\\frac{\\Delta_k}{z_{rk}} \\mid z_{rk} < 0\\right\\}$.</li>
-          </ul>
-        `,
-        videoNote: "Video hướng dẫn: Cách viết nhanh bài toán đối ngẫu, dạng bài dùng Định lý độ lệch bù và Đơn hình đối ngẫu."
-      },
-      4: {
-        title: "Chương 4: Bài toán vận tải và phương pháp thế vị giải bài toán vận tải",
+        title: "Chương 3: Bài toán vận tải và phương pháp thế vị giải bài toán vận tải",
         summary: `
           <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
             <li><b>Bước 1 (Cân bằng thu phát):</b> Nếu $\\sum a_i > \\sum b_j$ thêm cột thu ảo $b_{n+1} = \\sum a_i - \\sum b_j$ ($c_{i,n+1}=0$). Nếu $\\sum a_i < \\sum b_j$ thêm hàng phát ảo $a_{m+1} = \\sum b_j - \\sum a_i$ ($c_{m+1,j}=0$). Ưu tiên phân phối ô thực trước, ô ảo sau.</li>
@@ -338,22 +376,11 @@
           </ul>
         `,
         videoNote: "Video hướng dẫn: Giải mẫu bài toán vận tải cân bằng, không cân bằng và cách xử lý suy biến (ô-chọn-không)."
-      },
-      5: {
-        title: "Chương 5: Bài toán tối ưu hóa rời rạc và các phương pháp giải",
-        summary: `
-          <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
-            <li><b>Quy hoạch tuyến tính nguyên:</b> Các biến $x_j$ đòi hỏi nhận giá trị nguyên ($x_j \\in \\mathbb{Z}_+$).</li>
-            <li><b>Phương pháp mặt phẳng cắt Gomory:</b> Giải bài toán nới lỏng bằng đơn hình, sau đó sinh lát cắt từ dòng có phần lẻ lớn nhất để thu hẹp miền ràng buộc.</li>
-            <li><b>Phương pháp Nhánh và Cận (Branch and Bound):</b> Phân nhánh theo biến chưa nguyên và đánh giá cận để tìm nghiệm nguyên tối ưu.</li>
-          </ul>
-        `,
-        videoNote: "Video hướng dẫn: Giải bài toán quy hoạch nguyên bằng lát cắt Gomory và sơ đồ cây Nhánh - Cận."
       }
     };
 
     function showChapter(num) {
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 3; i++) {
         const b = document.getElementById(`chap-btn-${i}`);
         b.className = i === num
           ? "p-3 rounded-lg border text-left text-sm bg-blue-50 border-blue-500 font-semibold text-blue-900"
@@ -365,8 +392,8 @@
           <h3 class="text-lg font-bold text-blue-900 mb-3">${data.title}</h3>
           ${data.summary}
           <div class="mt-5 pt-4 border-t flex gap-3">
-            ${num === 2 || num === 3 ? `<button onclick="switchMainTab('lp')" class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Mở Bộ Giải Chương ${num}</button>` : ''}
-            ${num === 4 ? `<button onclick="switchMainTab('tp')" class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Mở Bộ Giải Vận Tải (Chương 4)</button>` : ''}
+            ${num === 2 ? `<button onclick="switchMainTab('lp')" class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Mở Bộ Giải Chương ${num}</button>` : ''}
+            ${num === 3 ? `<button onclick="switchMainTab('tp')" class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Mở Bộ Giải Vận Tải (Chương 3)</button>` : ''}
           </div>
         </div>
         <div class="bg-slate-900 text-white p-5 rounded-xl flex flex-col justify-between">
@@ -884,7 +911,7 @@
               ${tableHtml}
               <div class="mt-3 text-sm space-y-2">
                 <p class="font-bold text-slate-700">✓ Tính thế vị $U_i, V_j$ ($U_i + V_j = c_{ij}, \\forall (i,j) \\in G$):</p>
-                <div class="text-slate-600 space-y-1 pl-3 border-l-2 border-blue-200">${uvSteps.map((item, index) => `<div class="leading-relaxed"><span class="text-slate-400 mr-2">${index + 1}.</span>${item}</div>`).join('')}</div>
+                <p class="text-slate-600">${uvSteps.join('; &nbsp; ')}.</p>
                 <p class="font-bold text-slate-700 mt-2">✓ Tính các ước lượng $\\Delta_{ij} = (U_i + V_j) - c_{ij}$ đối với các ô không sử dụng:</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-50 p-3 rounded border">${deltaListHtml}</div>
                 <div class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg text-green-950">
@@ -928,13 +955,13 @@
               ${tableHtml}
               <div class="mt-3 text-sm space-y-2">
                 <p class="font-bold text-slate-700">✓ Tính thế vị $U_i, V_j$ ($U_i + V_j = c_{ij}, \\forall (i,j) \\in G$):</p>
-                <div class="text-slate-600 space-y-1 pl-3 border-l-2 border-blue-200">${uvSteps.map((item, index) => `<div class="leading-relaxed"><span class="text-slate-400 mr-2">${index + 1}.</span>${item}</div>`).join('')}</div>
+                <p class="text-slate-600">${uvSteps.join('; &nbsp; ')}.</p>
                 <p class="font-bold text-slate-700 mt-2">✓ Tính các $\\Delta_{ij} = (U_i + V_j) - c_{ij}$ đối với các ô không sử dụng:</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-50 p-3 rounded border">${deltaListHtml}</div>
                 <div class="mt-3 p-3 bg-amber-50 border border-amber-300 rounded-lg">
                   <p class="font-bold text-amber-900">✓ Điều chỉnh phương án:</p>
                   <p>Ta thấy tồn tại $\\Delta_{ij} > 0$ nên phương án chưa tối ưu. Chọn ô <b>$(${enterCell.r+1}, ${enterCell.c+1})$</b> có $\\Delta_{${enterCell.r+1}${enterCell.c+1}} = ${enterCell.dVal} > 0$ lớn nhất làm ô vi phạm, gán ô $(${enterCell.r+1}, ${enterCell.c+1}) \\in K^+$.</p>
-                  <p>Chu trình điều chỉnh $K$: $${cycleStr}$</p>
+                  <p>Chu trình điều chỉnh $K$: $${cycleStr}$$</p>
                   <p>Tiến hành phá vỡ chu trình với lượng điều chỉnh: $$\\theta = \\min\\{x_{ij} \\mid (i,j) \\in K^-\\} = ${theta}$$</p>
                   ${tieNote}
                 </div>
@@ -1384,17 +1411,9 @@
         } else {
           let leavingVar = basisVars[pivotRow];
           let pivotElem = A[pivotRow][pivotCol];
-          // Giải thích lý do chọn cột dựa trên dòng ước lượng của chính bảng hiện tại.
-          const chosenEstimate = fmtCoef(deltaReal[pivotCol], deltaM[pivotCol]);
-          const columnRule = type === 'max'
-            ? `Với bài toán Max, chỉ xét các cột có $\\Delta_k < 0$ và chọn $\\Delta_s = \\min\\{\\Delta_k \\mid \\Delta_k < 0\\}$.`
-            : `Với bài toán Min, chỉ xét các cột có $\\Delta_k > 0$ và chọn $\\Delta_s = \\max\\{\\Delta_k \\mid \\Delta_k > 0\\}$.`;
-          const bigMRule = hasBigM
-            ? ` Vì $\\Delta_k = \\delta_k + \\eta_k M$ và $M$ rất lớn, ta so sánh hệ số $\\eta_k$ trước; nếu bằng nhau thì mới so sánh $\\delta_k$.`
-            : '';
           stepNote = `
             <div class="text-xs md:text-sm bg-slate-50 p-3 rounded border space-y-1">
-              <p>• <b>Chọn cột xoay:</b> ${columnRule}${bigMRule} Tại bảng này, cột $A_{${pivotCol+1}}$ có ước lượng ${chosenEstimate}, là ước lượng ${type === 'max' ? 'nhỏ nhất trong các ước lượng âm' : 'lớn nhất trong các ước lượng dương'}. Vì vậy chọn cột $A_{${pivotCol+1}}$ và đưa biến $x_{${pivotCol+1}}$ vào cơ sở.</p>
+              <p>• <b>Chọn cột xoay:</b> Cột $A_{${pivotCol+1}}$ (đưa biến $x_{${pivotCol+1}}$ vào cơ sở).</p>
               <p>• <b>Chọn dòng xoay:</b> Dòng của biến cơ sở $x_{${leavingVar+1}}$ với tỷ số nhỏ nhất $\\theta = \\frac{${b[pivotRow].tex()}}{${pivotElem.tex()}} = ${minTheta.tex()}$ (đẩy $x_{${leavingVar+1}}$ ra khỏi cơ sở).</p>
               <p>• <b>Phần tử trục:</b> $z_{${pivotRow+1},${pivotCol+1}} = ${pivotElem.tex()}$. Biến đổi bảng theo công thức: <i>Dòng mới = Dòng cũ – (Dòng chính × Phần tử xoay)</i>.</p>
             </div>
